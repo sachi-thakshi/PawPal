@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pets Account Settings</title>
+    <link rel="stylesheet" href="../css/pet-accounts-settings.css">
+    <link rel="icon" href="../assets/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+     <header class="header custom-navbar">
+            <nav class="navbar navbar-expand-lg custom-navbar">
+        <div class="container-fluid">
+        <!-- Brand Logo -->
+        <a href="../pages/pet-owner-dashboard.html" class="navbar-brand logo header-a" id="nav-logo">PawPal</a>
+
+        <!-- Toggler for mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar content -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <!-- Left-aligned links -->
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+                <a class="nav-link active header-a" aria-current="page" href="../pages/pet-owner-dashboard.html">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header-a" href="../pages/about-us.html">About Us</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle header-a" href="#" role="button" data-bs-toggle="dropdown"
+                aria-expanded="false">Shop</a>
+                <ul class="dropdown-menu">
+                <li><a class="dropdown-item nav-a" href="../pages/our-shop.html">Our Shop</a></li>
+                <li><a class="dropdown-item nav-a" href="../pages/shopping-cart.html">Cart</a></li>
+                <li><a class="dropdown-item nav-a" href="../pages/checkout.html">Checkout</a></li>
+                </ul>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header-a" href="../pages/pet-accounts-settings.html">Your Pets</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header-a" href="#footer">Contact Info</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link header-a" href="../pages/gallery.html">Gallery</a>
+            </li>
+            </ul>
+
+            <!-- Right-aligned user avatar -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <div id="user-avatar" class="user-avatar-placeholder rounded-circle text-white d-flex justify-content-center align-items-center">
+                        <!-- Avatar image or initial will be inserted here -->
+                    </div>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                    <li><a class="dropdown-item" href="../pages/pet-owner-account-settings.html">Account Settings</a></li>
+                    <li><a class="dropdown-item" href="../pages/authentication.html">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+
+            </div>
+            </div>
+            </nav>
+    </header>
+
+    <main>
+        <button class="addPetBtn" id="addPetBtn"><span>Add Pet + </span></button>
+        <div class="pets-grid" id="petsContainer">
+        <!-- Pet cards will be added here by JavaScript -->
+        </div>
+
+    <div class="modal" id="petModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            
+            <div class="modal-header">
+                <div class="profile-pic-container" id="petImagesContainer">
+                    <img src="" alt="Pet image" class="profile-pic" id="modalPetImage">
+                    <button class="upload-btn" id="uploadTrigger">+</button>
+                    <input type="file" id="imageUpload" accept="image/*"/>
+                </div>
+
+                <h2 class="modal-pet-name" id="modalPetName"></h2>
+                <div class="modal-pet-type" id="modalPetType"></div>
+            </div>
+            
+            <div class="modal-section">
+                <h3 class="section-title">Basic Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Name:</span>
+                    <span class="info-value" id="petNameValue">Buddy</span>
+                    <input type="text" class="input-field" id="petNameInput" style="display: none;">
+                    <button class="edit-btn" data-field="petName">Edit</button>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Type:</span>
+                    <span class="info-value" id="petTypeValue">Dog</span>
+                    <select class="input-field" id="petTypeInput" style="display: none;">
+                        <option value="Dog">Dog</option>
+                        <option value="Cat">Cat</option>
+                        <option value="Bird">Bird</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <button class="edit-btn" data-field="petType">Edit</button>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Breed:</span>
+                    <span class="info-value" id="petBreedValue">Golden Retriever</span>
+                    <input type="text" class="input-field" id="petBreedInput" style="display: none;">
+                    <button class="edit-btn" data-field="petBreed">Edit</button>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Age:</span>
+                    <span class="info-value" id="petAgeValue">3 years</span>
+                    <input type="text" class="input-field" id="petAgeInput" style="display: none;">
+                    <button class="edit-btn" data-field="petAge">Edit</button>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h3 class="section-title">Health Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Veterinarian:</span>
+                    <span class="info-value" id="petVetValue">Dr. Smith at Paws & Claws</span>
+                    <input type="text" class="input-field" id="petVetInput" style="display: none;">
+                    <button class="edit-btn" data-field="petVet">Edit</button>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Medical Notes:</span>
+                    <span class="info-value" id="petMedicalValue">Allergies to chicken</span>
+                    <textarea class="input-field" id="petMedicalInput" style="display: none;"></textarea>
+                    <button class="edit-btn" data-field="petMedical">Edit</button>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h3 class="section-title">Vaccination Records</h3>
+                <table class="vaccination-table" id="vaccinationTable">
+                    <thead>
+                        <tr>
+                            <th>Vaccine</th>
+                            <th>Date Given</th>
+                            <th>Due Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="vaccinationTableBody">
+                        <!-- Vaccination records will be added here -->
+                    </tbody>
+                </table>
+                <button class="add-vaccination-btn" id="addVaccinationBtn">Add Vaccination</button>
+            </div>
+            
+            <div class="modal-section">
+                <h3 class="section-title">Care Information</h3>
+                <div class="info-row">
+                    <span class="info-label">Food:</span>
+                    <span class="info-value" id="petFoodValue">Royal Canin, 2 cups daily</span>
+                    <input type="text" class="input-field" id="petFoodInput" style="display: none;">
+                    <button class="edit-btn" data-field="petFood">Edit</button>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Routine:</span>
+                    <span class="info-value" id="petRoutineValue">Walk 3x daily, brush weekly</span>
+                    <textarea class="input-field" id="petRoutineInput" style="display: none;"></textarea>
+                    <button class="edit-btn" data-field="petRoutine">Edit</button>
+                </div>
+            </div>
+            <button id="saveAllBtn" class="btn btn-primary" style="margin-top: 20px; width: 100%;">Save All</button>
+
+        </div>
+    </div>
+
+    <!-- Add Vaccination Modal -->
+    <div class="modal" id="vaccinationModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" id="closeVaccinationModal">&times;</span>
+            <h2 style="color: #6a21a5; margin-bottom: 20px;">Add Vaccination Record</h2>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: #6a21a5; font-weight: 600;">Vaccine Name</label>
+                <input type="text" class="input-field" id="vaccineNameInput" placeholder="e.g., Rabies, DHPP, etc.">
+            </div>
+            
+            <div style="margin-bottom: 15px;">
+                <label style="display: block; margin-bottom: 5px; color: #6a21a5; font-weight: 600;">Date Given</label>
+                <input type="date" class="input-field" id="vaccineDateInput">
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; margin-bottom: 5px; color: #6a21a5; font-weight: 600;">Due Date</label>
+                <input type="date" class="input-field" id="vaccineDueDateInput">
+            </div>
+            
+            <button class="save-btn" id="saveVaccinationBtn" style="width: 100%;">Save Vaccination Record</button>
+        </div>
+    </div>
+    </main>
+    
+
+    <footer class="footer" id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-6 footer-col">
+                <h3>PawPal</h3>
+                <address>
+                    123 Pet Friendly Avenue<br>
+                    Galle<br>
+                    <br>
+                    Phone: 091 123 4567<br>
+                    Email: hello@pawpal.com
+                </address>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="../pages/pet-owner-dashboard.html" class="footer-a">Home</a></li>
+                    <li><a href="../pages/about-us.html" class="footer-a">About Us</a></li>
+                    <li><a href="../pages/pet-adoption.html" class="footer-a">Adoption</a></li>
+                    <li><a href="../pages/gallery.html" class="footer-a">Gallery</a></li>
+                    <li><a href="../pages/pet-owner-account-settings.html" class="footer-a">My Account</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-4 col-md-6 footer-col">
+                <h3>Pet Services</h3>
+                <ul>
+                    <li><a href="../pages/pet-adoption.html" class="footer-a">Pet Adoption</a></li>
+                    <li><a href="../pages/vet-appoinments.html" class="footer-a">Vet Appointments</a></li>
+                    <li><a href="../pages/lost-&-found.html" class="footer-a">Lost & Found</a></li>
+                    <li><a href="../pages/pet-care-tips.html" class="footer-a">Care Tips</a></li>
+                    <li><a href="../pages/pet-blogs.html" class="footer-a">Pet Blogs</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="row">
+                <div class="col-md-6 copyright">
+                    <p>&copy; 2023 PawPal. All rights reserved. Making pet adoption and care easier since 2020.</p>
+                </div>
+                <div class="col-md-6 footer-social">
+                    <a href="https://www.facebook.com/pawpal" aria-label="Facebook"><i class="fab fa-facebook-f" class="footer-a"></i></a> |
+                    <a href="https://www.instagram.com/pawpal" aria-label="Instagram"><i class="fab fa-instagram" class="footer-a"></i></a> |
+                    <a href="https://www.youtube.com/pawpal" aria-label="YouTube"><i class="fab fa-youtube" class="footer-a"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+     <script src="../js/petAccountsSettings.js"></script>
+    <script src="../js/navBarAvatar.js"></script>
+</body>
+</html>

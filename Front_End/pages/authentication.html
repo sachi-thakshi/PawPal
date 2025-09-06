@@ -1,0 +1,80 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawPal</title>	
+    <link rel="icon" href="../assets/images/logo.png">
+    <link rel="stylesheet" href="../css/authentication.css">
+    
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container" id="container">
+	<div class="form-container sign-up-container">
+		<form action="#">
+			<h1>Create Account</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your email for registration</span>
+			<input type="text" id="signup-username" placeholder="Full Name" />
+			<input type="email" id="signup-email" placeholder="Email" />
+            <input type="text" id="signup-contact" placeholder="Phone Number" />
+			<div class="password-container">
+				<input type="password" id="signup-password" placeholder="Password" />
+				<i class="fas fa-eye toggle-password" toggle="#signup-password"></i>
+			</div>
+
+			<div class="password-container">
+				<input type="password" id="signup-confirm-password" placeholder="Confirm Password" />
+				<i class="fas fa-eye toggle-password" toggle="#signup-confirm-password"></i>
+			</div>
+
+			<button type="button" id="signup-button">Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+		<form action="#">
+			<h1>Sign in</h1>
+			<div class="social-container">
+				<a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+				<a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+			</div>
+			<span>or use your account</span>
+			<input type="email" id="signin-email" placeholder="Email" />
+			<div class="password-container">
+				<input type="password" id="signin-password" placeholder="Password" />
+				<i class="fas fa-eye toggle-password" toggle="#signin-password"></i>
+			</div>
+			<a href="../pages/forgot-password.html">Forgot your password?</a>
+			<button type="button" id="signin-button">Sign In</button>
+		</form>
+	</div>
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+				<h1>Hello, Friend!</h1>
+				<p>Enter your personal details and start journey with us</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="../js/authentication.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</body>
+</html>

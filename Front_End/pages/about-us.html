@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="stylesheet" href="../css/about-us.css">
+    <link rel="icon" href="../assets/images/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body> 
+<header class="header custom-navbar">
+  <nav class="navbar navbar-expand-lg custom-navbar">
+    <div class="container-fluid">
+      <!-- Brand Logo -->
+      <a href="../index.html" class="navbar-brand logo header-a" id="nav-logo">PawPal</a>
+
+      <!-- Toggler for mobile -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- Navbar content -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+        <!-- Left-aligned links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active header-a" aria-current="page" href="../pages/pet-owner-dashboard.html">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link header-a" href="../pages/about-us.html">About Us</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle header-a" href="#" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">Shop</a>
+            <ul class="dropdown-menu">
+              <li><a class="dropdown-item nav-a" href="../pages/our-shop.html">Our Shop</a></li>
+              <li><a class="dropdown-item nav-a" href="../pages/shopping-cart.html">Cart</a></li>
+              <li><a class="dropdown-item nav-a" href="../pages/checkout.html">Checkout</a></li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link header-a" href="../pages/pet-accounts-settings.html">Your Pets</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link header-a" href="#footer">Contact Info</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link header-a" href="../pages/gallery.html">Gallery</a>
+          </li>
+        </ul>
+
+        <!-- Right-aligned user avatar -->
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+          <div id="user-avatar" class="user-avatar-placeholder rounded-circle text-white d-flex justify-content-center align-items-center">
+        <!-- Avatar image or initial will be inserted here -->
+          </div>
+        </a>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+        <li><a class="dropdown-item" href="../pages/pet-owner-account-settings.html">Account Settings</a></li>
+        <li><a class="dropdown-item" href="../pages/authentication.html">Logout</a></li>
+      </ul>
+  </li>
+</ul>
+
+      </div>
+    </div>
+  </nav>
+    </header>
+ 
+
+    <main>
+        <section class="hero">
+            <div class="hero-image">
+                <img src="../assets/images/about-us/about-us%20img1.jpg" alt="Dog Cat and girl" class="main-image">
+            </div>
+            <div class="hero-content">
+                    <div class="section-header">
+                        <span class="section-tag">KNOW MORE US 🐾</span>
+                        <h2 class="section-title">We'll Make Your Pets Really Happy</h2>
+                    </div>
+
+                    <div class="about-description">
+                        <p>
+                            We believe in providing personalized care tailored to each pet’s unique needs. Our team is dedicated to 
+                            promoting lifelong wellness, supporting everything from routine checkups to advanced treatments with 
+                            compassion and expertise.
+                        </p>
+                    </div>
+                    
+                    <div class="experience-highlight">
+                        <div class="experience-badge">
+                            <span class="experience-number">15</span>
+                            <span class="experience-label">Yr<br>Experience</span>
+                        </div>
+                        <div class="experience-text">
+                            <p> * Over 10 years of experience <br>
+                                * 20 talented vets ready to help you <br>
+                                * High-quality products only
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="about-description">
+                        <p>
+                            At PawPal, we are committed to setting the standard in pet care by building strong relationships with 
+                            pets and their families. Our mission is to deliver trusted, high-quality services that prioritize comfort, 
+                            health, and happiness at every stage of life.
+                        </p>
+                    </div>
+
+                </div>    
+        </section>
+
+        <section class="services-section">
+            <span class="section-tag">WHY WE ARE BEST 🐾</span>
+            <h2>See How Petpal can Help</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">❤</div>
+                    <h3 class="service-title">Health Gaurantee</h3>
+                    <p class="service-description">
+                         We ensure every pet receives top-quality care and regular health checks. Our commitment to wellness guarantees a happy, healthy companion for your family.
+                    </p>
+                    <a href="../pages/pet-blogs.html"><button class="read-more-btn-services"><span>Read More  →</span></button></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">🐕</div>
+                    <h3 class="service-title">Ethic Breeding</h3>
+                    <p class="service-description">
+                        Our breeding practices prioritize pet health, temperament, and wellbeing. We partner only with responsible breeders who follow ethical, humane standards.
+                    </p>
+                    <a href="../pages/pet-blogs.html"><button class="read-more-btn-services"><span>Read More  →</span></button></a>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">📱</div>
+                    <h3 class="service-title">Trasparent Policy</h3>
+                    <p class="service-description">
+                        From adoption to aftercare, we keep everything clear and honest. No hidden surprises—just open communication and full transparency every step of the way.
+                    </p>
+                    <a href="../pages/pet-blogs.html"><button class="read-more-btn-services"><span>Read More  →</span></button></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6 footer-col">
+                    <h3>PawPal</h3>
+                    <address>
+                        123 Pet Friendly Avenue<br>
+                        Galle<br>
+                        <br>
+                        Phone: 091 123 4567<br>
+                        Email: hello@pawpal.com
+                    </address>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../pages/pet-owner-dashboard.html" class="footer-a">Home</a></li>
+                        <li><a href="../pages/about-us.html" class="footer-a">About Us</a></li>
+                        <li><a href="../pages/pet-adoption.html" class="footer-a">Adoption</a></li>
+                        <li><a href="../pages/gallery.html" class="footer-a">Gallery</a></li>
+                        <li><a href="../pages/pet-owner-account-settings.html" class="footer-a">My Account</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-6 footer-col">
+                    <h3>Pet Services</h3>
+                    <ul>
+                        <li><a href="../pages/pet-adoption.html" class="footer-a">Pet Adoption</a></li>
+                        <li><a href="../pages/vet-appoinments.html" class="footer-a">Vet Appointments</a></li>
+                        <li><a href="../pages/lost-&-found.html" class="footer-a">Lost & Found</a></li>
+                        <li><a href="../pages/pet-care-tips.html" class="footer-a">Care Tips</a></li>
+                        <li><a href="../pages/pet-blogs.html" class="footer-a">Pet Blogs</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="row">
+                    <div class="col-md-6 copyright">
+                        <p>&copy; 2023 PawPal. All rights reserved. Making pet adoption and care easier since 2020.</p>
+                    </div>
+                    <div class="col-md-6 footer-social">
+                        <a href="https://www.facebook.com/pawpal" aria-label="Facebook"><i class="fab fa-facebook-f" class="footer-a"></i></a> |
+                        <a href="https://www.instagram.com/pawpal" aria-label="Instagram"><i class="fab fa-instagram" class="footer-a"></i></a> |
+                        <a href="https://www.youtube.com/pawpal" aria-label="YouTube"><i class="fab fa-youtube" class="footer-a"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="../js/userDashboard.js"></script>
+    <script src="../js/navBarAvatar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
