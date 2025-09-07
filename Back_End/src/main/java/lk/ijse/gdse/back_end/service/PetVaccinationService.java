@@ -1,56 +1,12 @@
 package lk.ijse.gdse.back_end.service;
 
 import lk.ijse.gdse.back_end.dto.PetVaccinationDTO;
-import lk.ijse.gdse.back_end.entity.Pet;
 import lk.ijse.gdse.back_end.entity.PetVaccination;
-import lk.ijse.gdse.back_end.repository.PetRepository;
-import lk.ijse.gdse.back_end.repository.PetVaccinationRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
-@Service
-@RequiredArgsConstructor
-public class PetVaccinationService {
-    private final PetVaccinationRepository petVaccinationRepository;
-    private final PetRepository petRepository;
-
-    public PetVaccination replaceVaccination(Long petId, PetVaccinationDTO dto) {
-        Pet pet = petRepository.findById(petId)
-                .orElseThrow(() -> new RuntimeException("Pet not found with id: " + petId));
-
-        PetVaccination vaccination;
-
-        if (dto.getPetVaccinationId() != null) {
-            vaccination = petVaccinationRepository.findById(dto.getPetVaccinationId())
-                    .orElse(new PetVaccination());
-        } else {
-            vaccination = new PetVaccination();
-        }
-
-        vaccination.setPet(pet);
-        vaccination.setVaccineName(dto.getVaccineName());
-        vaccination.setDateGiven(dto.getDateGiven());
-        vaccination.setDueDate(dto.getDueDate());
-
-        return petVaccinationRepository.save(vaccination);
-    }
-
-
-    public List<PetVaccination> getVaccinations(Long petId) {
-        Pet pet = petRepository.findById(petId)
-                .orElseThrow(() -> new RuntimeException("Pet not found with id: " + petId));
-        return petVaccinationRepository.findByPet(pet);
-    }
-
-    public void deleteVaccination(Long vaccinationId) {
-        PetVaccination vaccination = petVaccinationRepository.findById(vaccinationId)
-                .orElseThrow(() -> new RuntimeException("Vaccination not found with id: " + vaccinationId));
-        petVaccinationRepository.delete(vaccination);
-    }
+public interface PetVaccinationService {
+    PetVaccination replaceVaccination(Long petId, PetVaccinationDTO dto);
+    List<PetVaccination> getVaccinations(Long petId);
+    void deleteVaccination(Long vaccinationId);
 }
