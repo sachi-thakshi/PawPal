@@ -69,4 +69,8 @@ public class VetAppointmentServiceImpl implements VetAppointmentService {
     public List<VetAppointment> getAppointmentsByServiceType(String serviceType) {
         return vetAppointmentRepository.findByServiceType(serviceType);
     }
+
+    public List<VetAppointment> getAllAppointments() {
+        return vetAppointmentRepository.findAll();
+    }
 }

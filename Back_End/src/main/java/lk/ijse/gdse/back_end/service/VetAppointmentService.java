@@ -16,4 +16,6 @@ public interface VetAppointmentService {
     void deleteAppointment(Long appointmentId);
 
     List<VetAppointment> getAppointmentsByServiceType(String serviceType);
+
+    List<VetAppointment> getAllAppointments();
 }

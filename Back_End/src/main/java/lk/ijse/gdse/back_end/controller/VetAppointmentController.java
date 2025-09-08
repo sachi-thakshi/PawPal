@@ -119,6 +119,27 @@ public class VetAppointmentController {
         ));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<VetAppointmentDTO>>> getAllAppointments(
+            @RequestHeader("Authorization") String authHeader) {
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(401)
+                    .body(new ApiResponse<>(401, "Unauthorized", null));
+        }
+
+        // Optionally verify admin role here
+        String token = authHeader.substring(7);
+        jwtUtil.extractUserId(token); // just to validate token
+
+        List<VetAppointment> appointments = vetAppointmentService.getAllAppointments();
+        List<VetAppointmentDTO> appointmentDTOS = appointments.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new ApiResponse<>(200, "All appointments retrieved successfully", appointmentDTOS));
+    }
+
     private VetAppointmentDTO convertToDTO(VetAppointment appointment) {
         return new VetAppointmentDTO(
                 appointment.getVetAppointmentId(),

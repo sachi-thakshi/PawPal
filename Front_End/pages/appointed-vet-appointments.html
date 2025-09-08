@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="header-appointments">
+    <h1><i class="fas fa-calendar-plus"></i> Vet Appointments</h1>
+    <p>View all vet Appointments</p>
+  </div>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search appointments by name, email, or contact...">
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="user-count">
+      <i class="fas fa-chart-bar"></i>
+      <span id="appointmentsCount">0 Appointments</span>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="appointments-table">
+      <thead>
+      <tr>
+        <th>Pet Owner Name</th>
+        <th>Pet Owner Contact Number</th>
+        <th>Pet Name</th>
+        <th>Service Type</th>
+        <th>Appointment Date & Time</th>
+        <th>Notes</th>
+      </tr>
+      </thead>
+      <tbody id="appointmentsTableBody">
+      <!-- appointments data populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Appointments Details Modal -->
+<div id="userModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-card">
+          <h4><i class="fas fa-info-circle"></i> Vet Appointment Details</h4>
+          <div class="info-item">
+            <span class="info-label">Pet Owner Name:</span>
+            <span class="info-value" id="modalPetOwnerName"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Pet Owner Contact Number:</span>
+            <span class="info-value" id="modalPetOwnerContactNo"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Pet Name:</span>
+            <span class="info-value" id="modalPetName"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Service Type:</span>
+            <span class="info-value" id="modalServiceType"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Appointment Date & Time:</span>
+            <span class="info-value" id="modalADateTime"></span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Notes:</span>
+            <span class="info-value" id="modalNotes"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
