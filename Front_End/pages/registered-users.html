@@ -1,0 +1,98 @@
+<div class="container">
+    <div class="header-users">
+        <h1><i class="fas fa-users"></i> User Management System</h1>
+        <p>Manage and view all system users - Admins and Customers</p>
+    </div>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search users by name, email, or contact...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-list"></i> All Users
+            </button>
+            <button class="filter-btn" data-filter="admin">
+                <i class="fas fa-user-shield"></i> Admins
+            </button>
+            <button class="filter-btn" data-filter="customer">
+                <i class="fas fa-paw"></i> Customers
+            </button>
+        </div>
+        <div class="user-count">
+            <i class="fas fa-chart-bar"></i>
+            <span id="userCount">0 Users</span>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="users-table">
+            <thead>
+            <tr>
+                <th>Avatar</th>
+                <th>User Info</th>
+                <th>Role</th>
+                <th>Contact</th>
+                <th>Address</th>
+            </tr>
+            </thead>
+            <tbody id="usersTableBody">
+            <!-- User data populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- User Details Modal -->
+<div id="userModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">User Details</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="user-profile-section">
+                <img id="modalUserImage" src="" alt="User Avatar" class="user-profile-image" style="display: none;">
+                <div id="modalUserDefault" class="user-profile-default" style="display: none;"></div>
+                <div class="user-profile-info">
+                    <h3 id="modalName"></h3>
+                    <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-bottom: 15px;">
+                        <span id="modalUserRole" class="role-badge"></span>
+                    </div>
+                    <div style="color: #64748b; font-size: 16px;" id="modalUserEmail"></div>
+                </div>
+            </div>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
+                    <div class="info-item">
+                        <span class="info-label">User ID:</span>
+                        <span class="info-value" id="modalUserId"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Username:</span>
+                        <span class="info-value" id="modalUsername"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" id="modalEmail"></span>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h4><i class="fas fa-phone"></i> Contact Information</h4>
+                    <div class="info-item">
+                        <span class="info-label">Phone:</span>
+                        <span class="info-value" id="modalContact"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Address:</span>
+                        <span class="info-value" id="modalAddress"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
