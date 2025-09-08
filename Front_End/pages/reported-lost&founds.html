@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="header-reports">
+    <h1><i class="fas fa-flag"></i> Pet Reports</h1>
+    <p>View all Lost & Found Pet Reports</p>
+  </div>
+
+  <div class="controls-container">
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search reports by pet name, location, or type...">
+      <i class="fas fa-search"></i>
+    </div>
+    <div class="filter-buttons">
+      <button class="filter-btn active" data-filter="ALL">All</button>
+      <button class="filter-btn" data-filter="LOST">Lost</button>
+      <button class="filter-btn" data-filter="FOUND">Found</button>
+    </div>
+    <div class="report-count">
+      <i class="fas fa-chart-bar"></i>
+      <span id="reportCount">0 Reports</span>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="reports-table">
+      <thead>
+      <tr>
+        <th>Pet Name</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Type</th>
+        <th>Reported At</th>
+        <th>Owner</th>
+      </tr>
+      </thead>
+      <tbody id="reportsTableBody">
+      <!-- Reports dynamically inserted here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal for Report Details -->
+<div id="reportModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Pet Report Details</h2>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="info-grid">
+        <div class="info-card">
+          <h4><i class="fas fa-paw"></i> Pet Info</h4>
+          <div class="info-item"><span class="info-label">Pet Name:</span> <span class="info-value" id="modalPetName"></span></div>
+          <div class="info-item"><span class="info-label">Description:</span> <span class="info-value" id="modalDescription"></span></div>
+          <div class="info-item"><span class="info-label">Location:</span> <span class="info-value" id="modalLocation"></span></div>
+          <div class="info-item"><span class="info-label">Type:</span> <span class="info-value" id="modalType"></span></div>
+          <div class="info-item"><span class="info-label">Reported At:</span> <span class="info-value" id="modalReportedAt"></span></div>
+          <div class="info-item"><span class="info-label">Owner:</span> <span class="info-value" id="modalOwner"></span></div>
+          <div class="info-item">
+            <span class="info-label">Image:</span>
+            <img id="modalImage" src="" alt="Pet Image" style="width:100px; height:100px; border-radius:8px; object-fit:cover;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
