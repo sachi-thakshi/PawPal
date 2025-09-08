@@ -2,10 +2,10 @@ package lk.ijse.gdse.back_end.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import lk.ijse.gdse.back_end.dto.PetOwnerDTO;
+import lk.ijse.gdse.back_end.dto.AdminDTO;
 import lk.ijse.gdse.back_end.entity.User;
 import lk.ijse.gdse.back_end.repository.UserRepository;
-import lk.ijse.gdse.back_end.service.PetOwnerService;
+import lk.ijse.gdse.back_end.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,18 +18,18 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class PetOwnerServiceImpl implements PetOwnerService {
+public class AdminServiceImpl implements AdminService {
     private final Cloudinary cloudinary;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public User getPetOwnerByEmail(String email){
+    public User getAdminByEmail(String email){
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
     }
 
-    public void updatePetOwner(String email, PetOwnerDTO dto) {
-        User user = getPetOwnerByEmail(email);
+    public void updateAdmin(String email, AdminDTO dto) {
+        User user = getAdminByEmail(email);
 
         if(dto.getUsername() != null) user.setUsername(dto.getUsername());
         if(dto.getPassword() != null && !dto.getPassword().isEmpty()) {
@@ -42,7 +42,7 @@ public class PetOwnerServiceImpl implements PetOwnerService {
     }
 
     public User uploadProfileImage(String email, MultipartFile file) {
-        User user = getPetOwnerByEmail(email);
+        User user = getAdminByEmail(email);
 
         try {
             // Delete old image from Cloudinary if exists

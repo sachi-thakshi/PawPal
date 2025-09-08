@@ -104,7 +104,7 @@ document.addEventListener("DOMContentLoaded", () => {
 					Swal.fire({ icon: 'success', title: 'Logged In', text: 'Login Successful!', timer: 1500, showConfirmButton: false })
 						.then(() => {
 							if (data.data.role === "ADMIN") {
-								window.location.href = "../pages/admin-dashboard.html";
+								window.location.href = "../pages/admin-homepage.html";
 							} else {
 								window.location.href = "../pages/pet-owner-dashboard.html";
 							}

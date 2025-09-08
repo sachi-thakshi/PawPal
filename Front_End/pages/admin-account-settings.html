@@ -1,0 +1,55 @@
+<div class="settings-card">
+  <div class="settings-header">
+    <div class="profile-pic-container">
+      <!-- Profile image will be populated dynamically -->
+      <img src="" alt="Profile picture" class="profile-pic" id="profileImage">
+      <button class="upload-btn" id="uploadTrigger">+</button>
+      <input type="file" id="imageUpload" accept="image/*" style="display:none">
+    </div>
+    <h2 class="settings-title">Admin Account</h2>
+    <p class="settings-subtitle">Manage your admin profile and personal information</p>
+  </div>
+
+  <!-- Full Name -->
+  <div class="settings-field" data-field="name">
+    <div class="field-header">
+      <span class="field-label">Full Name</span>
+      <button class="edit-btn" data-field="name">Edit</button>
+    </div>
+    <div class="field-value" id="nameValue"></div>
+    <input type="text" class="field-input" id="nameInput">
+  </div>
+
+  <!-- Email Address (read-only) -->
+  <div class="settings-field" data-field="email">
+    <div class="field-header">
+      <span class="field-label">Email Address</span>
+      <button class="edit-btn" data-field="email">Edit</button>
+    </div>
+    <div class="field-value" id="emailValue"></div>
+    <input type="email" class="field-input" id="emailInput" disabled>
+  </div>
+
+  <!-- Phone Number -->
+  <div class="settings-field" data-field="phone">
+    <div class="field-header">
+      <span class="field-label">Phone Number</span>
+      <button class="edit-btn" data-field="phone">Edit</button>
+    </div>
+    <div class="field-value" id="phoneValue"></div>
+    <input type="tel" class="field-input" id="phoneInput">
+  </div>
+
+  <!-- Address -->
+  <div class="settings-field" data-field="address">
+    <div class="field-header">
+      <span class="field-label">Address</span>
+      <button class="edit-btn" data-field="address">Edit</button>
+    </div>
+    <div class="field-value" id="addressValue"></div>
+    <input type="text" class="field-input" id="addressInput">
+  </div>
+
+  <!-- Single Save Button -->
+  <button id="saveAllBtn" class="save-btn">Save</button>
+</div>

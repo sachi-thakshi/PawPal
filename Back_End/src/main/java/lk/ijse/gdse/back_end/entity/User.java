@@ -32,6 +32,9 @@ public class User {
     @Column(name = "profile_image_url", nullable = true)
     private String profileImageUrl;
 
+    @Column(name = "profile_public_id", nullable = true)
+    private String profilePublicId;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     @JsonManagedReference
