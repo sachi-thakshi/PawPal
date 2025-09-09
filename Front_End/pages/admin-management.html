@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="header-admins">
+    <h1><i class="fas fa-user-shield"></i> Admin Management</h1>
+    <p>Manage system administrators</p>
+  </div>
+
+  <!-- Add Admin Form -->
+  <div class="admin-form">
+    <h3>Add New Admin</h3>
+    <form id="adminForm">
+      <div class="form-group">
+        <label for="adminName">Full Name</label>
+        <input type="text" id="adminName" placeholder="Enter full name" required>
+      </div>
+      <div class="form-group">
+        <label for="adminEmail">Email</label>
+        <input type="email" id="adminEmail" placeholder="Enter email" required>
+      </div>
+      <div class="form-group">
+        <label for="adminPhone">Phone</label>
+        <input type="tel" id="adminPhone" placeholder="Enter contact number">
+      </div>
+      <div class="form-group">
+        <label for="adminAddress">Address</label>
+        <input type="text" id="adminAddress" placeholder="Enter address">
+      </div>
+      <div class="form-group">
+        <label for="adminPassword">Password</label>
+        <input type="password" id="adminPassword" placeholder="Enter password" required>
+      </div>
+      <div class="form-group">
+        <label for="adminConfirmPassword">Confirm Password</label>
+        <input type="password" id="adminConfirmPassword" placeholder="Confirm password" required>
+      </div>
+      <div class="form-group">
+        <label for="adminImage">Profile Image</label>
+        <input type="file" id="adminImage" accept="image/*">
+      </div>
+      <button type="submit" class="btn" id="addAdminBtn">Add Admin</button>
+    </form>
+  </div>
+
+  <!-- Admins Table -->
+  <div class="table-container">
+    <h3>Existing Admins</h3>
+    <table class="admins-table">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Profile</th>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody id="adminsTableBody">
+      <!-- Admin rows populated dynamically -->
+      </tbody>
+    </table>
+  </div>
+</div>

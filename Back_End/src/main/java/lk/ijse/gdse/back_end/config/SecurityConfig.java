@@ -40,6 +40,8 @@ public class SecurityConfig {
                                 .requestMatchers("/pet-gallery/**").permitAll() // allow public gallery viewing
                                 .requestMatchers("/pet-report/all").permitAll()       // reports listing
                                 .requestMatchers("/pet-report/type/**").permitAll()  // LOST/FOUND reports
+                                .requestMatchers("/admin/add").permitAll()
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->
