@@ -22,6 +22,7 @@ public class PetServiceImpl implements PetService {
     private final PetRepository petRepository;
     private final UserRepository userRepository;
 
+    @Override
     public List<Pet> getUserPets(String email){
         User owner = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
@@ -29,6 +30,7 @@ public class PetServiceImpl implements PetService {
         return petRepository.findByOwner(owner);
     }
 
+    @Override
     public Pet addPet(String email, PetDTO petDTO){
         User owner = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
@@ -44,6 +46,7 @@ public class PetServiceImpl implements PetService {
         return petRepository.save(pet);
     }
 
+    @Override
     public Pet updatePet(Long petId, PetDTO petDTO){
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found: " + petId));
@@ -56,6 +59,7 @@ public class PetServiceImpl implements PetService {
         return petRepository.save(pet);
     }
 
+    @Override
     public boolean deletePet(Long petId, String email) {
         Optional<Pet> petOpt = petRepository.findById(petId);
 
@@ -78,6 +82,7 @@ public class PetServiceImpl implements PetService {
         return false;
     }
 
+    @Override
     public Pet uploadPetProfileImage(Long petId, MultipartFile file) {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found: " + petId));
@@ -102,6 +107,7 @@ public class PetServiceImpl implements PetService {
         }
     }
 
+    @Override
     public List<Pet> getAllPets() {
         return petRepository.findAll();
     }

@@ -23,11 +23,13 @@ public class PetOwnerServiceImpl implements PetOwnerService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public User getPetOwnerByEmail(String email){
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
     }
 
+    @Override
     public void updatePetOwner(String email, PetOwnerDTO dto) {
         User user = getPetOwnerByEmail(email);
 
@@ -41,6 +43,7 @@ public class PetOwnerServiceImpl implements PetOwnerService {
         userRepository.save(user);
     }
 
+    @Override
     public User uploadProfileImage(String email, MultipartFile file) {
         User user = getPetOwnerByEmail(email);
 

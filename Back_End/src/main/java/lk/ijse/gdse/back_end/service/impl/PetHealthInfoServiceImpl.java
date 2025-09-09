@@ -17,6 +17,7 @@ public class PetHealthInfoServiceImpl implements PetHealthInfoService {
     private final PetHealthInfoRepository petHealthInfoRepository;
     private final PetRepository petRepository;
 
+    @Override
     public PetHealthInfo addOrUpdatePetHealthInfo(Long petId, PetHealthInfoDTO dto){
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found with Id: " + petId));
@@ -39,6 +40,7 @@ public class PetHealthInfoServiceImpl implements PetHealthInfoService {
         return petHealthInfoRepository.save(healthInfo);
     }
 
+    @Override
     public PetHealthInfo getHealthInfoByPet(Long petId){
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found with Id: " + petId));
@@ -47,6 +49,7 @@ public class PetHealthInfoServiceImpl implements PetHealthInfoService {
                 .orElseThrow(() -> new RuntimeException("Pet Health Info not found for Pet with Id: " + petId));
     }
 
+    @Override
     public void deletePetHealthInfo(Long petId){
         PetHealthInfo healthInfo = getHealthInfoByPet(petId);
         petHealthInfoRepository.delete(healthInfo);

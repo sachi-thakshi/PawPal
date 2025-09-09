@@ -18,6 +18,7 @@ public class VetAppointmentServiceImpl implements VetAppointmentService {
     private final UserRepository userRepository;
 
     // Add a new vet appointment
+    @Override
     public VetAppointment addAppointment(Long userId, VetAppointmentDTO appointmentDTO) {
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
@@ -36,6 +37,7 @@ public class VetAppointmentServiceImpl implements VetAppointmentService {
     }
 
     // Get all appointments for a user
+    @Override
     public List<VetAppointment> getAppointmentsByUser(Long userId) {
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
@@ -58,6 +60,7 @@ public class VetAppointmentServiceImpl implements VetAppointmentService {
     }
 
     // Delete an appointment by ID
+    @Override
     public void deleteAppointment(Long appointmentId) {
         VetAppointment appointment = vetAppointmentRepository.findById(appointmentId)
                 .orElseThrow(() -> new RuntimeException("Appointment not found with ID: " + appointmentId));
@@ -66,10 +69,12 @@ public class VetAppointmentServiceImpl implements VetAppointmentService {
     }
 
     // Find appointments by service type
+    @Override
     public List<VetAppointment> getAppointmentsByServiceType(String serviceType) {
         return vetAppointmentRepository.findByServiceType(serviceType);
     }
 
+    @Override
     public List<VetAppointment> getAllAppointments() {
         return vetAppointmentRepository.findAll();
     }

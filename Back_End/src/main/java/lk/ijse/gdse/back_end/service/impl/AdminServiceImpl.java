@@ -25,11 +25,13 @@ public class AdminServiceImpl implements AdminService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    @Override
     public User getAdminByEmail(String email){
         return userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));
     }
 
+    @Override
     public void updateAdmin(String email, AdminDTO dto) {
         User user = getAdminByEmail(email);
 
@@ -43,6 +45,7 @@ public class AdminServiceImpl implements AdminService {
         userRepository.save(user);
     }
 
+    @Override
     public User uploadProfileImage(String email, MultipartFile file) {
         User user = getAdminByEmail(email);
 
@@ -67,10 +70,12 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public List<User> getAllAdmins() {
         return userRepository.findByRole(Role.ADMIN);
     }
 
+    @Override
     public User addAdmin(AdminDTO dto, MultipartFile profileImage) {
         if (userRepository.existsByEmail(dto.getEmail())) {
             throw new RuntimeException("Email already exists: " + dto.getEmail());
@@ -109,6 +114,7 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    @Override
     public void deleteAdminByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("User not found: " + email));

@@ -21,6 +21,7 @@ public class PetGalleryServiceImpl implements PetGalleryService {
     private final PetGalleryRepository petGalleryRepository;
     private final Cloudinary cloudinary;
 
+    @Override
     public PetGallery saveImage(MultipartFile file, String description, User user) throws IOException {
         var uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
         String imageUrl = (String) uploadResult.get("secure_url");
@@ -37,10 +38,12 @@ public class PetGalleryServiceImpl implements PetGalleryService {
         return petGalleryRepository.save(petGallery);
     }
 
+    @Override
     public Optional<PetGallery> getImageById(Long petGalleryId) {
         return petGalleryRepository.findById(petGalleryId);
     }
 
+    @Override
     public void deleteImage(Long petGalleryId) throws IOException {
         Optional<PetGallery> optional = petGalleryRepository.findById(petGalleryId);
         if (optional.isPresent()) {
@@ -56,6 +59,7 @@ public class PetGalleryServiceImpl implements PetGalleryService {
         }
     }
 
+    @Override
     public List<PetGallery> getAllImages() {
         return petGalleryRepository.findAll();
     }

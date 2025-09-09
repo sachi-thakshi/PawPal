@@ -13,6 +13,7 @@ import java.util.List;
 public class AllUsersServiceImpl implements AllUsersService {
     private final UserRepository userRepository;
 
+    @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

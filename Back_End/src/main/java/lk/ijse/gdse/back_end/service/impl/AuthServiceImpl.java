@@ -20,6 +20,7 @@ public class AuthServiceImpl implements AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
 
+    @Override
     public AuthResponseDTO authenticate(AuthDTO authDTO){
         User user = userRepository.findByEmail(authDTO.getEmail())  // user innwada balanwa nathnm exception ekak throw karanwa global exception ekak thiyena nisa
                 .orElseThrow(() -> new RuntimeException("User Not Found"));
@@ -39,6 +40,7 @@ public class AuthServiceImpl implements AuthService {
         );
     }
 
+    @Override
     public String register(RegisterDTO registerDTO){
         if (userRepository.findByEmail(registerDTO.getEmail()).isPresent()){
             throw new RuntimeException("Email Already Exists");

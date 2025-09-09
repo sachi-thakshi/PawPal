@@ -24,6 +24,7 @@ public class PetReportServiceImpl implements PetReportService {
     private final UserRepository userRepository;
     private final Cloudinary cloudinary;
 
+    @Override
     public PetReport addReport(Long userId, PetReportDTO dto, MultipartFile imageFile) {
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
@@ -62,6 +63,7 @@ public class PetReportServiceImpl implements PetReportService {
         }
     }
 
+    @Override
     public List<PetReport> getReportsByUser(Long userId) {
         User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
@@ -69,6 +71,7 @@ public class PetReportServiceImpl implements PetReportService {
         return petReportRepository.findByOwner(owner);
     }
 
+    @Override
     public PetReport updateReport(Long reportId, PetReportDTO dto, MultipartFile imageFile) {
         PetReport report = petReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Pet report not found with ID: " + reportId));
@@ -99,6 +102,7 @@ public class PetReportServiceImpl implements PetReportService {
         return petReportRepository.save(report);
     }
 
+    @Override
     public void deleteReport(Long reportId) {
         PetReport report = petReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Pet report not found with ID: " + reportId));
@@ -112,11 +116,13 @@ public class PetReportServiceImpl implements PetReportService {
     }
 
     // Get all reports by type (LOST or FOUND)
+    @Override
     public List<PetReport> getReportsByType(String type) {
         return petReportRepository.findByType(type);
     }
 
     //Get all recent reports
+    @Override
     public List<PetReport> getAllReportsSorted() {
         return petReportRepository.findAllByOrderByReportedAtDesc();
     }
@@ -129,6 +135,7 @@ public class PetReportServiceImpl implements PetReportService {
         }
     }
 
+    @Override
     public PetReport getReportById(Long reportId) {
         return petReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Pet report not found with ID: " + reportId));

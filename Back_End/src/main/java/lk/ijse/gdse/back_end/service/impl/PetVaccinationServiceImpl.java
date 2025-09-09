@@ -17,6 +17,7 @@ public class PetVaccinationServiceImpl implements PetVaccinationService {
     private final PetVaccinationRepository petVaccinationRepository;
     private final PetRepository petRepository;
 
+    @Override
     public PetVaccination replaceVaccination(Long petId, PetVaccinationDTO dto) {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found with id: " + petId));
@@ -38,13 +39,14 @@ public class PetVaccinationServiceImpl implements PetVaccinationService {
         return petVaccinationRepository.save(vaccination);
     }
 
-
+    @Override
     public List<PetVaccination> getVaccinations(Long petId) {
         Pet pet = petRepository.findById(petId)
                 .orElseThrow(() -> new RuntimeException("Pet not found with id: " + petId));
         return petVaccinationRepository.findByPet(pet);
     }
 
+    @Override
     public void deleteVaccination(Long vaccinationId) {
         PetVaccination vaccination = petVaccinationRepository.findById(vaccinationId)
                 .orElseThrow(() -> new RuntimeException("Vaccination not found with id: " + vaccinationId));
