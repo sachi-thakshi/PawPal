@@ -3,6 +3,7 @@ package lk.ijse.gdse.back_end.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import lk.ijse.gdse.back_end.entity.PetGallery;
+import lk.ijse.gdse.back_end.entity.User;
 import lk.ijse.gdse.back_end.repository.PetGalleryRepository;
 import lk.ijse.gdse.back_end.service.PetGalleryService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class PetGalleryServiceImpl implements PetGalleryService {
     private final PetGalleryRepository petGalleryRepository;
     private final Cloudinary cloudinary;
 
-    public PetGallery saveImage(MultipartFile file, String description) throws IOException {
+    public PetGallery saveImage(MultipartFile file, String description, User user) throws IOException {
         var uploadResult = cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap());
         String imageUrl = (String) uploadResult.get("secure_url");
         String publicId = (String) uploadResult.get("public_id");
@@ -30,6 +31,7 @@ public class PetGalleryServiceImpl implements PetGalleryService {
                 .description(description)
                 .publicId(publicId)
                 .createdAt(LocalDateTime.now())
+                .submittedBy(user) // important
                 .build();
 
         return petGalleryRepository.save(petGallery);

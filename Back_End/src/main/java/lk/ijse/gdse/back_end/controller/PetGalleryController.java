@@ -2,7 +2,9 @@ package lk.ijse.gdse.back_end.controller;
 
 import lk.ijse.gdse.back_end.dto.PetGalleryDTO;
 import lk.ijse.gdse.back_end.entity.PetGallery;
+import lk.ijse.gdse.back_end.entity.User;
 import lk.ijse.gdse.back_end.service.PetGalleryService;
+import lk.ijse.gdse.back_end.service.PetOwnerService;
 import lk.ijse.gdse.back_end.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.stream.Collectors;
 public class PetGalleryController {
     private final PetGalleryService petGalleryService;
     private final JwtUtil jwtUtil;
+    private final PetOwnerService petOwnerService;
 
     private void validateJwt(String authHeader) {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
@@ -34,6 +37,11 @@ public class PetGalleryController {
                 .petGalleryId(petGallery.getPetGalleryId())
                 .imageUrl(petGallery.getImageUrl())
                 .description(petGallery.getDescription())
+                .submittedByEmail(
+                        petGallery.getSubmittedBy() != null
+                                ? petGallery.getSubmittedBy().getEmail()
+                                : "Unknown")
+                .createdAt(petGallery.getCreatedAt())
                 .build();
     }
 
@@ -43,8 +51,15 @@ public class PetGalleryController {
             @RequestParam("file") MultipartFile file,
             @RequestParam(value = "description", required = false) String description
     ) throws IOException {
-        validateJwt(authHeader);
-        PetGallery saved = petGalleryService.saveImage(file, description);
+        // Validate JWT
+        String token = authHeader.substring(7);
+        String email = jwtUtil.extractEmail(token);
+
+        // Find user by email
+        User user = petOwnerService.getPetOwnerByEmail(email);
+
+        PetGallery saved = petGalleryService.saveImage(file, description, user);
+
         return ResponseEntity.ok(convertToDTO(saved));
     }
 

@@ -1,0 +1,55 @@
+<div class="container">
+  <div class="header-gallery">
+    <h1><i class="fas fa-images"></i> Pet Gallery Submissions</h1>
+    <p>View all uploaded pet gallery images and their submitters</p>
+  </div>
+
+  <div class="search-container">
+    <div class="search-box">
+      <input type="text" id="gallerySearchInput" placeholder="Search by description or submitter email...">
+      <i class="fas fa-search"></i>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <table class="gallery-table">
+      <thead>
+      <tr>
+        <th>Image</th>
+        <th>Description</th>
+        <th>Submitted By (Email)</th>
+      </tr>
+      </thead>
+      <tbody id="galleryTableBody">
+      <!-- Gallery data will be populated here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal -->
+<div id="galleryModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modalGalleryTitle">Gallery Details</h2>
+      <span class="close">&times;</span>
+    </div>
+    <div class="modal-body">
+      <div class="gallery-profile">
+        <img id="modalGalleryImage" src="" alt="Gallery Image" class="gallery-image">
+        <div class="gallery-info">
+          <h3 id="modalGalleryDescription"></h3>
+          <div style="margin-top: 10px;">
+            <span style="font-weight:600;">Submitted By:</span> <span id="modalSubmittedByEmail"></span>
+          </div>
+          <div style="margin-top: 5px;">
+            <span style="font-weight:600;">Gallery ID:</span> <span id="modalGalleryId"></span>
+          </div>
+          <div style="margin-top: 5px;">
+            <span style="font-weight:600;">Uploaded At:</span> <span id="modalCreatedAt"></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

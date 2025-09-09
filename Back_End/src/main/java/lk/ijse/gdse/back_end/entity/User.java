@@ -47,4 +47,8 @@ public class User {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<PetReport> petReports;
+
+    @OneToMany(mappedBy = "submittedBy", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<PetGallery> galleries;
 }

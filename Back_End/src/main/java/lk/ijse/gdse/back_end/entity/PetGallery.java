@@ -1,5 +1,6 @@
 package lk.ijse.gdse.back_end.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,4 +27,9 @@ public class PetGallery {
 
     @Column(nullable = false)
     private String publicId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
+    @JsonManagedReference
+    private User submittedBy;
 }

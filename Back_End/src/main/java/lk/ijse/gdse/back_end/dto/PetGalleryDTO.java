@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,6 @@ public class PetGalleryDTO {
     private Long petGalleryId;
     private String imageUrl;
     private String description;
+    private String submittedByEmail;
+    private LocalDateTime createdAt;
 }
