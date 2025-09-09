@@ -8,6 +8,7 @@ import lk.ijse.gdse.back_end.service.PetService;
 import lk.ijse.gdse.back_end.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -96,16 +97,31 @@ public class PetAccountsController {
         );
     }
 
+    @GetMapping("/all")
+//    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<List<PetDTO>>> getAllPets() {
+        List<Pet> pets = petService.getAllPets();
+        List<PetDTO> petDTOs = pets.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(
+                new ApiResponse<>(200, "All pets retrieved successfully", petDTOs)
+        );
+    }
+
     // DTO conversion
     private PetDTO convertToDTO(Pet pet) {
-        return new PetDTO(
-                pet.getPetId(),
-                pet.getName(),
-                pet.getType(),
-                pet.getBreed(),
-                pet.getAge(),
-                pet.getPetProfileImage()
-        );
+        return PetDTO.builder()
+                .petId(pet.getPetId())
+                .name(pet.getName())
+                .type(pet.getType())
+                .breed(pet.getBreed())
+                .age(pet.getAge())
+                .petProfileImage(pet.getPetProfileImage())
+                .ownerName(pet.getOwner() != null ? pet.getOwner().getUsername() : null)
+                .ownerEmail(pet.getOwner() != null ? pet.getOwner().getEmail() : null)
+                .build();
     }
 }
 

@@ -102,6 +102,10 @@ public class PetServiceImpl implements PetService {
         }
     }
 
+    public List<Pet> getAllPets() {
+        return petRepository.findAll();
+    }
+
     private String extractPublicIdFromUrl(String imageUrl) {
         // Example URL: https://res.cloudinary.com/demo/image/upload/v1694000000/sample.jpg
         // Extract "sample" part (without extension)
