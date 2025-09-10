@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawAdmin - Pet Website Dashboard</title>
+    <link rel="icon" href="../assets/images/logo.png">
+
+    <link rel="stylesheet" href="../css/admin-homepage.css">
+    <link rel="stylesheet" href="../css/registered-pet-accounts.css">
+    <link rel="stylesheet" href="../css/registered-users.css">
+    <link rel="stylesheet" href="../css/appointed-vet-appointments.css">
+    <link rel="stylesheet" href="../css/reported-lost&founds.css">
+    <link rel="stylesheet" href="../css/admin-account-settings.css">
+    <link rel="stylesheet" href="../css/admin-management.css">
+    <link rel="stylesheet" href="../css/submitted-pet-gallery.css">
+    <link rel="stylesheet" href="../css/admin-blog.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- Sidebar -->
+    <nav class="sidebar">
+        <div class="brand">
+            <h4><i class="fas fa-paw"></i> PawAdmin</h4>
+        </div>
+
+        <div class="nav-section">Navigation</div>
+        <a href="#" class="nav-link active" data-page="../pages/admin-dashboard.html">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </a>
+
+        <div class="nav-section">Pet Management</div>
+        <a href="#" class="nav-link" data-page="../pages/registered-pet-accounts.html">
+            <i class="fas fa-dog"></i> Pets
+        </a>
+        <a href="#" class="nav-link">
+            <i class="fas fa-heart"></i> Adoptions
+        </a>
+
+        <div class="nav-section">User Management</div>
+        <a href="#" class="nav-link" data-page="../pages/registered-users.html">
+            <i class="fas fa-users"></i> Users
+        </a>
+        <a href="#" class="nav-link" data-page="../pages/admin-management.html">
+            <i class="fas fa-user-plus"></i> Add Admin
+        </a>
+
+        <div class="nav-section">Content</div>
+        <a href="#" class="nav-link" data-page="../pages/appointed-vet-appointments.html">
+            <i class="fas fa-calendar-plus"></i> Vet Appointments
+        </a>
+        <a href="#" class="nav-link" data-page="../pages/reported-lost&founds.html">
+            <i class="fas fa-search"></i> Lost & Found
+        </a>
+        <a href="#" class="nav-link" data-page="../pages/admin-blog.html">
+            <i class="fas fa-newspaper"></i> Blog Posts & Care Tips
+        </a>
+        <a href="#" class="nav-link" data-page="../pages/submitted-pet-gallery.html">
+            <i class="fas fa-images"></i> Gallery
+        </a>
+
+        <div class="nav-section">Settings</div>
+        <a href="#" class="nav-link" data-page="../pages/admin-account-settings.html">
+            <i class="fas fa-cog"></i> My Account Settings
+        </a>
+
+        <a href="../pages/authentication.html" class="nav-link">
+            <i class="fas fa-arrow-left"></i> Logout
+        </a>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent"></div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+    <script src="../js/adminHomepage.js"></script>
+    <script src="../js/adminDashboard.js"></script>
+    <script src="../js/registeredPetAccounts.js"></script>
+    <script src="../js/registeredUsers.js"></script>
+    <script src="../js/appointedVetAppointments.js"></script>
+    <script src="../js/reportedLost&Founds.js"></script>
+    <script src="../js/adminAccountSettings.js"></script>
+    <script src="../js/adminManagement.js"></script>
+    <script src="../js/submittedPetGallery.js"></script>
+    <script src="../js/adminBlog.js"></script>
+</body>
+</html>
