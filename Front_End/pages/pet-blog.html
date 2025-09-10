@@ -84,78 +84,9 @@
         <section class="pet-blogs container my-5" id="petBlogsSection">
             <h2 class="mb-4">Pet Blogs</h2>
 
-            <!-- Category Filter (optional) -->
-            <div class="mb-4">
-                <button class="btn btn-outline-primary me-2 category-btn active" data-category="all">All</button>
-                <button class="btn btn-outline-primary me-2 category-btn" data-category="health">Health</button>
-                <button class="btn btn-outline-primary me-2 category-btn" data-category="training">Training</button>
-                <button class="btn btn-outline-primary me-2 category-btn" data-category="nutrition">Nutrition</button>
-            </div>
-
-            <!-- Blog Post #1 -->
-            <div class="blog-post" data-category="health" data-blog-id="1" style="border:1px solid #ccc; padding:20px; border-radius:8px; margin-bottom:30px;">
-                <img src="../assets/images/pet-blogs/blog1.jpg" alt="Pet health" class="blog-image mb-3" />
-                <h4>Understanding Your Pet’s Health</h4>
-                <p>Learn the basics of keeping your pet healthy with regular vet visits and proper care.</p>
-
-                <!-- Comments display -->
-                <div class="comments mb-3" id="comments-1">
-                <h5>Comments:</h5>
-                <ul class="list-group" id="comments-list-1"></ul>
-                </div>
-
-                <!-- Comment form -->
-                <form class="comment-form" data-blog-id="1">
-                <div class="mb-3">
-                    <label for="commentInput1" class="form-label">Leave a Comment</label>
-                    <textarea class="form-control" id="commentInput1" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit Comment</button>
-                </form>
-            </div>
-
-            <!-- Blog Post #2 -->
-            <div class="blog-post" data-category="training" data-blog-id="2" style="border:1px solid #ccc; padding:20px; border-radius:8px; margin-bottom:30px;">
-                <img src="../assets/images/pet-blogs/blog2.jpg" alt="Dog training" class="blog-image mb-3" />
-                <h4>Training Tips for Your Dog</h4>
-                <p>Discover effective training methods to improve your dog’s behavior.</p>
-
-                <div class="comments mb-3" id="comments-2">
-                <h5>Comments:</h5>
-                <ul class="list-group" id="comments-list-2"></ul>
-                </div>
-
-                <form class="comment-form" data-blog-id="2">
-                <div class="mb-3">
-                    <label for="commentInput2" class="form-label">Leave a Comment</label>
-                    <textarea class="form-control" id="commentInput2" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit Comment</button>
-                </form>
-            </div>
-
-            <!-- Blog Post #3 -->
-            <div class="blog-post" data-category="nutrition" data-blog-id="3" style="border:1px solid #ccc; padding:20px; border-radius:8px; margin-bottom:30px;">
-                <img src="../assets/images/pet-blogs/blog3.png" alt="Cat nutrition" class="blog-image mb-3" />
-                <h4>Nutrition Essentials for Cats</h4>
-                <p>Ensure your cat is getting the right nutrients for a long, happy life.</p>
-
-                <div class="comments mb-3" id="comments-3">
-                <h5>Comments:</h5>
-                <ul class="list-group" id="comments-list-3"></ul>
-                </div>
-
-                <form class="comment-form" data-blog-id="3">
-                <div class="mb-3">
-                    <label for="commentInput3" class="form-label">Leave a Comment</label>
-                    <textarea class="form-control" id="commentInput3" rows="2" required></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit Comment</button>
-                </form>
-            </div>
-
+            <!-- Blog posts will be dynamically inserted here -->
+            <div id="blog-container"></div>
         </section>
-
     </main>
 
     <footer class="footer" id="footer">
@@ -187,8 +118,7 @@
                         <li><a href="../pages/pet-adoption.html" class="footer-a">Pet Adoption</a></li>
                         <li><a href="../pages/vet-appoinments.html" class="footer-a">Vet Appointments</a></li>
                         <li><a href="../pages/lost-&-found.html" class="footer-a">Lost & Found</a></li>
-                        <li><a href="../pages/pet-care-tips.html" class="footer-a">Care Tips</a></li>
-                        <li><a href="../pages/pet-blogs.html" class="footer-a">Pet Blogs</a></li>
+                        <li><a href="../pages/pet-blog.html" class="footer-a">Pet Blogs & Care Tips</a></li>
                     </ul>
                 </div>
             </div>

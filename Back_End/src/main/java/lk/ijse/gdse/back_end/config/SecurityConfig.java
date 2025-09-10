@@ -42,6 +42,7 @@ public class SecurityConfig {
                                 .requestMatchers("/pet-report/type/**").permitAll()  // LOST/FOUND reports
                                 .requestMatchers("/admin/add").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/blog/all").permitAll()
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

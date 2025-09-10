@@ -1,95 +1,190 @@
-// Simulate user data
-  const user = {
-    name: "Alex", // fallback name
-    avatarUrl: null // or provide URL like "/images/alex.jpg"
-  };
+document.addEventListener('DOMContentLoaded', () => {
+  loadBlogs();
+});
 
-  const avatarContainer = document.getElementById("user-avatar");
+async function loadBlogs() {
+  const token = localStorage.getItem('jwtToken');
+  if (!token) {
+    Swal.fire('Error', "No JWT token found. Please login first.", 'error');
+    return;
+  }
 
-  if (user.avatarUrl) {
-    // Create <img> tag if avatar exists
-    const img = document.createElement("img");
-    img.src = user.avatarUrl;
-    img.alt = "User Avatar";
-    img.className = "rounded-circle";
-    img.width = 36;
-    img.height = 36;
-    avatarContainer.innerHTML = '';
-    avatarContainer.appendChild(img);
-  } else {
-    // Show first initial
-    const initial = user.name ? user.name.charAt(0) : "?";
-    avatarContainer.textContent = initial;
+  try {
+    const response = await fetch('http://localhost:8080/blog/all', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch blogs: ${response.status}`);
+    }
+
+    const blogs = await response.json();
+    renderBlogs(blogs, token);
+  } catch (error) {
+    console.error("Error loading blogs:", error);
+    document.getElementById('blog-container').innerHTML =
+        `<div class="alert alert-danger">Failed to load blogs.</div>`;
+    Swal.fire('Error', "Failed to load blogs.", 'error');
+  }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const categoryButtons = document.querySelectorAll('.category-btn');
-  const blogPosts = document.querySelectorAll('.blog-post');
+function renderBlogs(blogs, token) {
+  const container = document.getElementById('blog-container');
+  container.innerHTML = '';
 
-  // Category filter
-  categoryButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      // Set active button style
-      categoryButtons.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
+  blogs.forEach(blog => {
+    const blogDiv = document.createElement('div');
+    blogDiv.classList.add('blog-post', 'mb-4', 'p-3', 'border', 'rounded');
+    blogDiv.innerHTML = `
+            <h3>${blog.title}</h3>
+            <p><strong>Author:</strong> ${blog.authorName}</p>
+            <p>${blog.content}</p>
+            ${blog.imageUrl ? `<img src="${blog.imageUrl}" class="img-fluid mb-3"/>` : ''}
+            <div class="comments mb-2">
+                <h5>Comments:</h5>
+                <ul class="list-group" id="comments-list-${blog.postId}">
+                    ${blog.comments.map(c => renderCommentItem(blog.postId, c)).join('')}
+                </ul>
+            </div>
+            <form class="comment-form" data-blog-id="${blog.postId}">
+                <div class="mb-2">
+                    <textarea class="form-control" rows="2" placeholder="Add a comment" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit Comment</button>
+            </form>
+        `;
 
-      const category = btn.getAttribute('data-category');
-      blogPosts.forEach(post => {
-        if (category === 'all' || post.getAttribute('data-category') === category) {
-          post.style.display = 'block';
-        } else {
-          post.style.display = 'none';
-        }
-      });
-    });
-  });
+    container.appendChild(blogDiv);
 
-  // Handle comments submission and display
-  const commentsData = {}; // store comments in-memory by blog ID
-
-  document.querySelectorAll('.comment-form').forEach(form => {
-    form.addEventListener('submit', e => {
+    // Handle comment submission
+    const form = blogDiv.querySelector('.comment-form');
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      const blogId = form.getAttribute('data-blog-id');
       const textarea = form.querySelector('textarea');
       const commentText = textarea.value.trim();
-
       if (!commentText) return;
 
-      if (!commentsData[blogId]) {
-        commentsData[blogId] = [];
-      }
+      try {
+        const blogId = form.getAttribute('data-blog-id');
+        const res = await fetch(`http://localhost:8080/blog/${blogId}/comment`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ commentText })
+        });
 
-      // Add comment to data
-      commentsData[blogId].push(commentText);
+        if (!res.ok) throw new Error(`Failed to post comment: ${res.status}`);
 
-      // Update comment list UI
-      const commentList = document.getElementById(`comments-list-${blogId}`);
-      const newComment = document.createElement('li');
-      newComment.classList.add('list-group-item');
-      newComment.textContent = commentText;
-      commentList.appendChild(newComment);
+        const newComment = await res.json();
+        const commentList = document.getElementById(`comments-list-${blogId}`);
+        commentList.innerHTML += renderCommentItem(blogId, newComment);
 
-      // Clear textarea
-      textarea.value = '';
-    });
-  });
-});
+        // Clear textarea
+        textarea.value = '';
+        attachCommentActions(blogId, newComment, token);
 
-document.querySelectorAll('.category-btn').forEach(button => {
-  button.addEventListener('click', () => {
-    // Remove active class from all buttons
-    document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-    button.classList.add('active');
+        Swal.fire('Success', 'Comment posted successfully!', 'success');
 
-    const category = button.getAttribute('data-category');
-    document.querySelectorAll('.blog-post').forEach(post => {
-      if(category === 'all' || post.getAttribute('data-category') === category) {
-        post.style.display = 'block';
-      } else {
-        post.style.display = 'none';
+      } catch (err) {
+        console.error("Error posting comment:", err);
+        Swal.fire('Error', 'Failed to post comment.', 'error');
       }
     });
+
+    // Attach edit/delete for existing comments
+    blog.comments.forEach(c => attachCommentActions(blog.postId, c, token));
   });
-});
+}
+
+function renderCommentItem(blogId, comment) {
+  const username = comment.username || 'Unknown';
+  const commentedClass = 'commented';
+  return `
+    <li class="list-group-item d-flex justify-content-between align-items-start ${commentedClass}" id="comment-${comment.commentId}">
+      <span>${username}: ${comment.commentText}</span>
+      ${isCurrentUser(username) ? `
+        <div>
+          <button class="btn btn-sm btn-secondary me-1 edit-comment-btn" data-comment-id="${comment.commentId}" data-blog-id="${blogId}">Edit</button>
+          <button class="btn btn-sm btn-danger delete-comment-btn" data-comment-id="${comment.commentId}" data-blog-id="${blogId}">Delete</button>
+        </div>
+      ` : ''}
+    </li>
+  `;
+}
+
+function isCurrentUser(commentUsername) {
+  const currentUser = localStorage.getItem('username');
+  return currentUser && currentUser === commentUsername;
+}
+
+function attachCommentActions(blogId, comment, token) {
+  const editBtn = document.querySelector(`#comment-${comment.commentId} .edit-comment-btn`);
+  const deleteBtn = document.querySelector(`#comment-${comment.commentId} .delete-comment-btn`);
+
+  if (editBtn) {
+    editBtn.addEventListener('click', async () => {
+      const { value: newText } = await Swal.fire({
+        title: 'Edit your comment',
+        input: 'textarea',
+        inputValue: comment.commentText,
+        showCancelButton: true
+      });
+
+      if (!newText) return;
+
+      try {
+        const res = await fetch(`http://localhost:8080/blog/comment/${comment.commentId}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({ commentText: newText })
+        });
+
+        if (!res.ok) throw new Error("Failed to edit comment");
+        comment.commentText = newText;
+        document.querySelector(`#comment-${comment.commentId} span`).textContent = `${comment.username}: ${newText}`;
+        Swal.fire('Success', 'Comment edited successfully!', 'success');
+      } catch (err) {
+        console.error("Error editing comment:", err);
+        Swal.fire('Error', 'Failed to edit comment.', 'error');
+      }
+    });
+  }
+
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', async () => {
+      const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'Cancel'
+      });
+
+      if (!result.isConfirmed) return;
+
+      try {
+        const res = await fetch(`http://localhost:8080/blog/comment/${comment.commentId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+
+        if (!res.ok) throw new Error("Failed to delete comment");
+        document.getElementById(`comment-${comment.commentId}`).remove();
+        Swal.fire('Deleted!', 'Comment has been deleted.', 'success');
+      } catch (err) {
+        console.error("Error deleting comment:", err);
+        Swal.fire('Error', 'Failed to delete comment.', 'error');
+      }
+    });
+  }
+}

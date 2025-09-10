@@ -7,11 +7,13 @@ import lk.ijse.gdse.back_end.entity.BlogPost;
 import lk.ijse.gdse.back_end.service.BlogService;
 import lk.ijse.gdse.back_end.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -34,16 +36,22 @@ public class BlogController {
 
     // ---------------- CREATE POST ----------------
     @PostMapping("/create")
-    public ResponseEntity<BlogPostDTO> createBlog(
+    public ResponseEntity<?> createBlog(
             @RequestHeader("Authorization") String authHeader,
             @RequestParam String title,
             @RequestParam String content,
             @RequestParam(required = false) MultipartFile image
-    ) throws IOException {
-        String email = validateAndGetEmail(authHeader);
-        BlogPost post = blogService.createBlogPost(title, content, image, email);
-        BlogPostDTO dto = mapToDTO(post);
-        return ResponseEntity.ok(dto);
+    ) {
+        try {
+            String email = validateAndGetEmail(authHeader);
+            BlogPost post = blogService.createBlogPost(title, content, image, email);
+            BlogPostDTO dto = mapToDTO(post);
+            return ResponseEntity.ok(dto);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error while creating blog: " + e.getMessage());
+        }
     }
 
     // ---------------- GET ALL POSTS ----------------
@@ -119,13 +127,15 @@ public class BlogController {
 
     // ---------------- Helper ----------------
     private BlogPostDTO mapToDTO(BlogPost post) {
-        List<CommentDTO> comments = post.getComments().stream()
+        List<CommentDTO> comments = post.getComments() != null
+                ? post.getComments().stream()
                 .map(c -> new CommentDTO(
                         c.getCommentId(),
                         c.getCommentText(),
-                        c.getUser().getUsername()
+                        c.getUser() != null ? c.getUser().getUsername() : "Anonymous"
                 ))
-                .collect(Collectors.toList());
+                .collect(Collectors.toList())
+                : new ArrayList<>();
 
         return new BlogPostDTO(
                 post.getPostId(),
@@ -133,7 +143,7 @@ public class BlogController {
                 post.getContent(),
                 post.getImageUrl(),
                 post.getCreatedAt().toString(),
-                post.getAuthor().getUsername(),
+                post.getAuthor() != null ? post.getAuthor().getUsername() : "Unknown",
                 comments
         );
     }
