@@ -38,7 +38,7 @@ async function loadPets() {
         const token = localStorage.getItem('jwtToken');
         if (!token) throw new Error('No JWT token found');
 
-        const res = await fetch('http://localhost:8080/pet-adoption/all');
+        const res = await fetch('http://localhost:8080/pet-adoption/available');
         const result = await res.json();
 
         pets = Array.isArray(result.data) ? result.data : [];

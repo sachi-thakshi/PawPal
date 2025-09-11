@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface AdoptionService {
     PetAdoption addPetByEmailWithImage(PetAdoption pet, MultipartFile image, String ownerEmail) throws IOException;
-    List<PetAdoption> getAllPets();
+    List<PetAdoption> getAvailablePets();
     List<PetAdoption> getPetsByOwnerEmail(String ownerEmail);
     void deletePetByOwner(Long petId, String email);
     PetAdoption updatePetByOwner(PetAdoption pet, MultipartFile image, String email) throws IOException;

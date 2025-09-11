@@ -12,5 +12,6 @@ import java.util.List;
 public interface AdoptionRequestRepository extends JpaRepository<AdoptionRequest, Long> {
     List<AdoptionRequest> findByPet_Owner(User owner);
     boolean existsByPetAndRequester(PetAdoption pet, User requester);
+    List<AdoptionRequest> findByPetAndApprovedIsNull(PetAdoption pet);
 
 }

@@ -122,13 +122,13 @@ public class PetAdoptionController {
         return ResponseEntity.ok(new ApiResponse<>(200, "Pet deleted successfully", null));
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<ApiResponse<List<PetAdoptionDTO>>> getAllPets() {
-        List<PetAdoptionDTO> pets = adoptionService.getAllPets().stream()
+    @GetMapping("/available")
+    public ResponseEntity<ApiResponse<List<PetAdoptionDTO>>> getAvailablePets() {
+        List<PetAdoptionDTO> availablePets = adoptionService.getAvailablePets().stream()
                 .map(this::convertToDTO)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(new ApiResponse<>(200, "All pets retrieved successfully", pets));
+        return ResponseEntity.ok(new ApiResponse<>(200, "Available pets retrieved successfully", availablePets));
     }
 
     @GetMapping("/owner")

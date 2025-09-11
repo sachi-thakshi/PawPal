@@ -49,8 +49,8 @@ public class AdoptionServiceImpl implements AdoptionService {
     }
 
     @Override
-    public List<PetAdoption> getAllPets() {
-        return petRepo.findAll();
+    public List<PetAdoption> getAvailablePets() {
+        return petRepo.findAllAvailablePets();
     }
 
     @Override
