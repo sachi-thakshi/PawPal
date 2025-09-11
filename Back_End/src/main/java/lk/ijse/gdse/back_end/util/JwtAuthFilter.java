@@ -29,7 +29,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String path = request.getRequestURI();
 
         // Allow public endpoints
-        if (path.startsWith("/pet-gallery") || path.startsWith("/auth")) {
+        if (path.startsWith("/pet-gallery") || path.startsWith("/auth") || (path.startsWith("/pet-adoption") && request.getMethod().equals("GET"))) {
             filterChain.doFilter(request, response);
             return;
         }

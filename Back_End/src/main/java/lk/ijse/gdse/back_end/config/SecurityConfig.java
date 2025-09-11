@@ -2,9 +2,9 @@ package lk.ijse.gdse.back_end.config;
 
 import lk.ijse.gdse.back_end.util.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.autoconfigure.graphql.GraphQlProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -43,6 +43,10 @@ public class SecurityConfig {
                                 .requestMatchers("/admin/add").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/blog/all").permitAll()
+                                .requestMatchers("/api/email/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/pet-adoption/**").permitAll()     // anyone can view pets
+                                .requestMatchers(HttpMethod.POST, "/pet-adoption/add").authenticated() // only registered users
+                                .requestMatchers(HttpMethod.PUT, "/pet-adoption/update/**").authenticated()
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

@@ -19,7 +19,6 @@ public class PetAdoption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long petAdoptionId;
 
-    @Column(nullable = true)
     private String petName;
     private String type;
     private String breed;
@@ -30,5 +29,14 @@ public class PetAdoption {
 
     @Column(name = "adopted_pet_img", nullable = true)
     private String petImage;
-    private LocalDate date;
+
+    @Column(name = "adopted_pet_img_public_id", nullable = true)
+    private String publicId;
+
+    @Column(nullable = false)
+    private LocalDate date = LocalDate.now();
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id", nullable = false)
+    private User owner;
 }
