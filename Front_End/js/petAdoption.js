@@ -38,11 +38,20 @@ async function loadPets() {
         const token = localStorage.getItem('jwtToken');
         if (!token) throw new Error('No JWT token found');
 
-        const res = await fetch('http://localhost:8080/pet-adoption/available');
-        const result = await res.json();
+        // Fetch pets from back-end
+        const res = await fetch('http://localhost:8080/pet-adoption/available', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
+        const result = await res.json();
         pets = Array.isArray(result.data) ? result.data : [];
-        filteredPets = [...pets];
+
+        // Filter out pets with approved requests
+        filteredPets = pets.filter(pet => !pet.hasApprovedRequest);
 
         await processPetCoordinates(filteredPets);
         renderPets(filteredPets);
@@ -103,8 +112,13 @@ function renderPets(petsArray) {
         card.dataset.index = index;
         card.dataset.petId = pet.petAdoptionId;
 
+        const pendingBadge = pet.hasPendingRequest
+            ? `<span class="badge bg-warning text-dark position-absolute" style="top:10px; right:10px;">Pending Approval</span>`
+            : '';
+
         card.innerHTML = `
-            <div class="card shadow-sm h-100">
+            <div class="card shadow-sm h-100 position-relative">
+                ${pendingBadge}
                 <img src="${pet.petImage || ''}" class="card-img-top" alt="${pet.petName || 'No name'}" style="height:220px; object-fit:cover;">
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">${pet.petName || "(No name)"}</h5>

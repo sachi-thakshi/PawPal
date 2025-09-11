@@ -13,5 +13,6 @@ public interface AdoptionRequestRepository extends JpaRepository<AdoptionRequest
     List<AdoptionRequest> findByPet_Owner(User owner);
     boolean existsByPetAndRequester(PetAdoption pet, User requester);
     List<AdoptionRequest> findByPetAndApprovedIsNull(PetAdoption pet);
-
+    boolean existsByPetAndApprovedIsNull(PetAdoption pet);
+    boolean existsByPetAndApprovedTrue(PetAdoption pet);
 }

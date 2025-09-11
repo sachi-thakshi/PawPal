@@ -21,4 +21,7 @@ public class PetAdoptionDTO {
     private String petImage;
     private String ownerUsername;
     private String ownerEmail;
+
+    private boolean hasApprovedRequest;
+    private boolean hasPendingRequest;
 }

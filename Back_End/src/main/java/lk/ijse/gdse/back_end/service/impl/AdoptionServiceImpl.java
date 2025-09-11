@@ -3,6 +3,7 @@ package lk.ijse.gdse.back_end.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.transaction.Transactional;
+import lk.ijse.gdse.back_end.dto.PetAdoptionDTO;
 import lk.ijse.gdse.back_end.entity.AdoptionRequest;
 import lk.ijse.gdse.back_end.entity.PetAdoption;
 import lk.ijse.gdse.back_end.entity.User;
@@ -22,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -49,8 +51,27 @@ public class AdoptionServiceImpl implements AdoptionService {
     }
 
     @Override
-    public List<PetAdoption> getAvailablePets() {
-        return petRepo.findAllAvailablePets();
+    public List<PetAdoptionDTO> getAllPets() {
+        List<PetAdoption> pets = petRepo.findAll(); // Or only available pets
+        return pets.stream().map(pet -> {
+                    boolean hasApprovedRequest = requestRepo.existsByPetAndApprovedTrue(pet);
+                    boolean hasPendingRequest = requestRepo.existsByPetAndApprovedIsNull(pet);
+
+                    return PetAdoptionDTO.builder()
+                            .petAdoptionId(pet.getPetAdoptionId())
+                            .petName(pet.getPetName())
+                            .type(pet.getType())
+                            .breed(pet.getBreed())
+                            .age(pet.getAge())
+                            .gender(pet.getGender())
+                            .location(pet.getLocation())
+                            .description(pet.getDescription())
+                            .petImage(pet.getPetImage())
+                            .hasApprovedRequest(hasApprovedRequest)
+                            .hasPendingRequest(hasPendingRequest)
+                            .build();
+                }).filter(dto -> !dto.isHasApprovedRequest())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -112,6 +133,13 @@ public class AdoptionServiceImpl implements AdoptionService {
         }
 
         petRepo.delete(pet);
+    }
+
+    @Override
+    public boolean hasPendingRequest(Long petId) {
+        PetAdoption pet = petRepo.findById(petId)
+                .orElseThrow(() -> new RuntimeException("Pet not found"));
+        return !requestRepo.findByPetAndApprovedIsNull(pet).isEmpty();
     }
 
     // ------------------ Adoption Request Sending ----------------------------

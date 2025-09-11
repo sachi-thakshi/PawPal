@@ -426,3 +426,8 @@ Caused by: java.sql.SQLIntegrityConstraintViolationException: Cannot add or upda
 2025-09-12T00:12:51.710+05:30 DEBUG 16728 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
 2025-09-12T00:12:51.721+05:30 DEBUG 16728 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Success, data=[AdoptionRequestDTO(requestId=1, approved=true, reques (truncated)...]
 2025-09-12T00:12:51.727+05:30 DEBUG 16728 --- [Back_End] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-12T00:32:35.126+05:30  INFO 16728 --- [Back_End] [SpringApplicationShutdownHook] o.s.b.w.e.tomcat.GracefulShutdown        : Commencing graceful shutdown. Waiting for active requests to complete
+2025-09-12T00:32:35.140+05:30  INFO 16728 --- [Back_End] [tomcat-shutdown] o.s.b.w.e.tomcat.GracefulShutdown        : Graceful shutdown complete
+2025-09-12T00:32:35.146+05:30  INFO 16728 --- [Back_End] [SpringApplicationShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-09-12T00:32:35.146+05:30  INFO 16728 --- [Back_End] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-09-12T00:32:35.162+05:30  INFO 16728 --- [Back_End] [SpringApplicationShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.

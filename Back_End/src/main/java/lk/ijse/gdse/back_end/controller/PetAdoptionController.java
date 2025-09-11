@@ -124,11 +124,14 @@ public class PetAdoptionController {
 
     @GetMapping("/available")
     public ResponseEntity<ApiResponse<List<PetAdoptionDTO>>> getAvailablePets() {
-        List<PetAdoptionDTO> availablePets = adoptionService.getAvailablePets().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+        List<PetAdoptionDTO> pets = adoptionService.getAllPets(); // method above
+        return ResponseEntity.ok(new ApiResponse<>(200, "Available pets retrieved successfully", pets));
+    }
 
-        return ResponseEntity.ok(new ApiResponse<>(200, "Available pets retrieved successfully", availablePets));
+    @GetMapping("/pending/{petId}")
+    public ResponseEntity<ApiResponse<Boolean>> checkPending(@PathVariable Long petId) {
+        boolean hasPending = adoptionService.hasPendingRequest(petId);
+        return ResponseEntity.ok(new ApiResponse<>(200, "Checked successfully", hasPending));
     }
 
     @GetMapping("/owner")
