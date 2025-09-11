@@ -11,9 +11,11 @@ public interface AdoptionService {
     PetAdoption addPetByEmailWithImage(PetAdoption pet, MultipartFile image, String ownerEmail) throws IOException;
     List<PetAdoption> getAllPets();
     List<PetAdoption> getPetsByOwnerEmail(String ownerEmail);
-    AdoptionRequest createRequestByEmail(Long petId, String requesterEmail);
-    List<AdoptionRequest> getPendingRequestsByOwnerEmail(String ownerEmail);
-    AdoptionRequest approveRequestWithOwnerCheck(Long requestId, String ownerEmail);
     void deletePetByOwner(Long petId, String email);
     PetAdoption updatePetByOwner(PetAdoption pet, MultipartFile image, String email) throws IOException;
+
+    AdoptionRequest createRequestByEmail(Long petId, String requesterEmail);
+    List<AdoptionRequest> getRequestsByOwnerEmail(String ownerEmail);
+    AdoptionRequest approveRequestWithOwnerCheck(Long requestId, String ownerEmail);
+    AdoptionRequest declineRequestWithOwnerCheck(Long requestId, String ownerEmail);
 }

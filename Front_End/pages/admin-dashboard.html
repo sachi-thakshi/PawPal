@@ -1,21 +1,174 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/css/lost-&found.css">
-    <link rel="icon" href="/assets/images/logo.png">
+    <div class="header d-flex justify-content-between align-items-center">
+        <div>
+            <h2 class="mb-0">Pet Dashboard <span></span></h2>
+            <small class="text-muted">Welcome back! Here's what's happening with your pet website.</small>
+        </div>
+        <div class="d-flex align-items-center">
+            <div class="me-3">
+                <i class="fas fa-bell text-muted"></i>
+                <span class="badge bg-danger position-absolute translate-middle">3</span>
+            </div>
+            <div class="dropdown">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=00d4aa&color=fff"
+                     class="rounded-circle" width="40" height="40" alt="Admin">
+            </div>
+        </div>
+    </div>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <!-- Stats Cards Row 1 -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Daily Pet Adoptions</div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-arrow-up text-success me-2"></i>
+                    <div class="stats-value text-primary animate-counter">12</div>
+                </div>
+                <div class="text-success small mb-2">+15% from yesterday</div>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar primary" style="width: 67%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Monthly Registrations</div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-arrow-down text-danger me-2"></i>
+                    <div class="stats-value text-secondary animate-counter">348</div>
+                </div>
+                <div class="text-danger small mb-2">-8% from last month</div>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar secondary" style="width: 36%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="stats-card">
+                <div class="stats-label">Total Active Pets</div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-arrow-up text-success me-2"></i>
+                    <div class="stats-value text-warning animate-counter">1,247</div>
+                </div>
+                <div class="text-success small mb-2">+22% this year</div>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar warning" style="width: 80%;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <!-- Rating and Users Row -->
+<!--    <div class="row">-->
+<!--        <div class="col-md-6">-->
+<!--            <div class="rating-section">-->
+<!--                <h5 class="mb-4">Pet Service Ratings</h5>-->
+<!--                <div class="text-center mb-4">-->
+<!--                    <div class="display-4 fw-bold text-warning">4.8</div>-->
+<!--                    <div class="text-muted">Overall Rating</div>-->
+<!--                </div>-->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-</head>
-<body>
-    <h1>Welcome to Admin Dashboard</h1>
-</body>
-</html>
+<!--                <div class="rating-item">-->
+<!--                    <div class="rating-stars">★★★★★</div>-->
+<!--                    <div class="rating-bar">-->
+<!--                        <div class="rating-fill" style="width: 78%;"></div>-->
+<!--                    </div>-->
+<!--                    <div class="text-end" style="width: 50px;">425</div>-->
+<!--                </div>-->
+
+<!--                <div class="rating-item">-->
+<!--                    <div class="rating-stars">★★★★</div>-->
+<!--                    <div class="rating-bar">-->
+<!--                        <div class="rating-fill" style="width: 65%;"></div>-->
+<!--                    </div>-->
+<!--                    <div class="text-end" style="width: 50px;">187</div>-->
+<!--                </div>-->
+
+<!--                <div class="rating-item">-->
+<!--                    <div class="rating-stars">★★★</div>-->
+<!--                    <div class="rating-bar">-->
+<!--                        <div class="rating-fill" style="width: 25%;"></div>-->
+<!--                    </div>-->
+<!--                    <div class="text-end" style="width: 50px;">43</div>-->
+<!--                </div>-->
+
+<!--                <div class="rating-item">-->
+<!--                    <div class="rating-stars">★★</div>-->
+<!--                    <div class="rating-bar">-->
+<!--                        <div class="rating-fill" style="width: 8%;"></div>-->
+<!--                    </div>-->
+<!--                    <div class="text-end" style="width: 50px;">12</div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <div class="col-md-6">
+            <div class="rating-section">
+                <h5 class="mb-4">Recent Pet Adoption Requests</h5>
+
+                <div class="user-item">
+                    <div class="user-avatar">SC</div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">Sarah Chen</div>
+                        <div class="text-muted small">Interested in adopting Golden Retriever puppy...</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="status-dot status-online"></div>
+                            <small class="text-muted">2 hrs ago</small>
+                        </div>
+                        <button class="btn btn-reject btn-sm">Review</button>
+                        <button class="btn btn-approve btn-sm">Approve</button>
+                    </div>
+                </div>
+
+                <div class="user-item">
+                    <div class="user-avatar">MJ</div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">Mike Johnson</div>
+                        <div class="text-muted small">Application for senior cat adoption...</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="status-dot status-online"></div>
+                            <small class="text-muted">5 hrs ago</small>
+                        </div>
+                        <button class="btn btn-reject btn-sm">Review</button>
+                        <button class="btn btn-approve btn-sm">Approve</button>
+                    </div>
+                </div>
+
+                <div class="user-item">
+                    <div class="user-avatar">EW</div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">Emma Wilson</div>
+                        <div class="text-muted small">Volunteer application for pet care...</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="status-dot status-offline"></div>
+                            <small class="text-muted">1 day ago</small>
+                        </div>
+                        <button class="btn btn-reject btn-sm">Review</button>
+                        <button class="btn btn-approve btn-sm">Approve</button>
+                    </div>
+                </div>
+
+                <div class="user-item border-0">
+                    <div class="user-avatar">DM</div>
+                    <div class="flex-grow-1">
+                        <div class="fw-semibold">David Martinez</div>
+                        <div class="text-muted small">Foster home application for rescued pets...</div>
+                    </div>
+                    <div class="text-end">
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="status-dot status-offline"></div>
+                            <small class="text-muted">2 days ago</small>
+                        </div>
+                        <button class="btn btn-reject btn-sm">Review</button>
+                        <button class="btn btn-approve btn-sm">Approve</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

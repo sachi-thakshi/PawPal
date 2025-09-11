@@ -1,0 +1,236 @@
+:root {
+    --primary-color: #f7fafc;
+    --secondary-color: #667eea;
+    --dark-bg: #4a5568;
+    --light-bg: #f7fafc;
+    --text-dark: #2d3748;
+    --text-light: #8caddc;
+}
+
+body {
+    background-color: var(--light-bg);
+    font-family: "Ubuntu", sans-serif !important;
+    font-weight: 500 !important;
+}
+
+.sidebar {
+    background: linear-gradient(to bottom, #7C4585, #003092);
+    width: 250px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.sidebar .brand {
+    padding: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar .brand h4 {
+    color: var(--primary-color);
+    font-weight: bold;
+    margin: 0;
+}
+
+.sidebar .nav-section {
+    padding: 20px 0 10px 20px;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.sidebar .nav-link {
+    color: #cbd5e0;
+    padding: 12px 20px;
+    border: none;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.sidebar .nav-link:hover, .sidebar .nav-link.active {
+    background-color: rgba(0, 212, 170, 0.1);
+    color: var(--primary-color);
+    border-right: 3px solid var(--primary-color);
+}
+
+.sidebar .nav-link i {
+    margin-right: 10px;
+    width: 20px;
+}
+
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+.header {
+    background: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    margin-bottom: 30px;
+}
+
+.stats-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.stats-value {
+    font-size: 2rem;
+    font-weight: bold;
+    margin: 10px 0;
+}
+
+.stats-label {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    height: 6px;
+    border-radius: 3px;
+}
+
+.progress-bar.primary {
+    background-color: var(--primary-color);
+}
+
+.progress-bar.secondary {
+    background-color: var(--secondary-color);
+}
+
+.progress-bar.warning {
+    background-color: #fbbf24;
+}
+
+.rating-section {
+    width: 200% !important;
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.rating-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.rating-bar {
+    flex: 1;
+    height: 8px;
+    background-color: #e2e8f0;
+    border-radius: 4px;
+    margin: 0 15px;
+    overflow: hidden;
+}
+
+.rating-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    transition: width 1s ease;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #e2e8f0;
+    transition: background-color 0.3s ease;
+}
+
+.user-item:hover {
+    background-color: #f7fafc;
+}
+
+.user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    background: linear-gradient(135deg, #7C4585, #003092);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.btn-approve {
+    background-color: var(--primary-color);
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.btn-reject {
+    background-color: #6366f1;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    color: white;
+    font-size: 0.8rem;
+    margin-right: 5px;
+}
+
+.status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.status-online { background-color: var(--primary-color); }
+.status-offline { background-color: #ef4444; }
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+.animate-counter {
+    animation: countUp 2s ease-out;
+}
+
+@keyframes countUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-icon {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}

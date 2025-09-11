@@ -191,242 +191,16 @@ body {
   text-transform: uppercase;
 }
 
- .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
-            margin: 3rem 0;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 30px 5px 30px 5px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            cursor: pointer;
-            text-decoration: none;
-            color: inherit;
-            display: block;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(45deg);
-            transition: all 0.6s ease;
-            opacity: 0;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px) rotate(-1deg);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-            color: inherit;
-            border-radius: 5px 30px 5px 30px;
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-            top: -10%;
-            left: -10%;
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(45deg, #003092, #7C4585);;
-        }
-
-        /* .adoption-icon { background: linear-gradient(45deg, #ff6b6b, #ee5a24); }
-        .vet-icon { background: linear-gradient(45deg, #4ecdc4, #2ed573); }
-        .lost-found-icon { background: linear-gradient(45deg, #ffa726, #ff7043); }
-        .care-tips-icon { background: linear-gradient(45deg, #ab47bc, #8e24aa); }
-        .blogs-icon { background: linear-gradient(45deg, #5c6bc0, #3949ab); } */
-
-        .service-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #333;
-        }
-
-        .service-description {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-
-        .service-cta {
-            position: relative;
-            overflow: hidden;
-            background: white;
-            color: #7C4585;
-            padding: 0.5rem 1rem;
-            border: 1px solid #7C4585;
-            border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            z-index: 1;
-            transition: color 0.3s ease;
-
-        }
-
-.service-cta::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 0%;
-    background-color: #003092;
-    z-index: 0;
-    transition: height 0.6s ease;
-}
-
-.service-cta:hover::before {
-    height: 100%;
-}
-
-.service-cta span {
-    position: relative;
-    z-index: 2;
-    transition: color 0.3s ease;
-}
-
-.service-cta:hover span {
-    color: white;
-}
-
 .welcome-h1 {
-            width: 100%;
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #00256e;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
-
-
-        .notifications-section {
-            /* background-color: #00256e; */
-            background: rgba(0, 37, 110, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 30px 5px 30px 5px;
-            padding: 2rem;
-            margin: 2rem 0;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .notifications-title {
-            color: rgb(12, 12, 12);
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-align: center;
-        }
-
-        .notification-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .notification-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
-            border-left: 5px solid;
-            transition: all 0.3s ease;
-        }
-
-        .notification-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .lost-found-notification {
-            border-left-color: #ff6b6b;
-        }
-
-        .vaccination-notification {
-            border-left-color: #4ecdc4;
-        }
-
-        .notification-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .notification-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: white;
-            font-size: 1.2rem;
-        }
-
-        .lost-found-icon { background: #ff6b6b; }
-        .vaccination-icon { background: #4ecdc4; }
-
-        .notification-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #333;
-            margin: 0;
-        }
-
-        .notification-content {
-            color: #666;
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .notification-time {
-            font-size: 0.9rem;
-            color: #999;
-            font-style: italic;
-        }
-
-        .notification-badge {
-            background: #ff6b6b;
-            color: white;
-            border-radius: 50%;
-            width: 20px;
-            height: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            margin-left: auto;
-        }
+    margin-left: 3rem;
+    padding-top: 1rem;
+    width: 100%;
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #00256e;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
 
 .welcome-container {
     padding-top: 1rem;
@@ -441,8 +215,8 @@ body {
 
 #logged-user-name{
     color: #7C4585;
-    font-weight: 800;
-    font-size: 4rem;
+    font-weight: 700;
+    font-size: 3rem;
 }
 
 .avatar-initial {
@@ -456,4 +230,270 @@ body {
     color: #fff;
     font-weight: bold;
     font-size: 16px;
+}
+
+/* Main Content Styles */
+.admin-container {
+    padding: 2rem 0;
+}
+
+/* Notifications Section */
+.notifications-section {
+    background: rgba(0, 37, 110, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+    border: 1px solid rgba(0, 37, 110, 0.2);
+}
+
+.notifications-title {
+    color: #00256e;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.notification-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.notification-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    border-left: 5px solid;
+    transition: all 0.3s ease;
+}
+
+.notification-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.adoption-notification {
+    border-left-color: #28a745;
+}
+
+.lost-found-notification {
+    border-left-color: #ff6b6b;
+}
+
+.vaccination-notification {
+    border-left-color: #4ecdc4;
+}
+
+.notification-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    color: white;
+    font-size: 1.2rem;
+}
+
+.adoption-icon { background: #28a745; }
+.lost-found-icon { background: #ff6b6b; }
+.vaccination-icon { background: #4ecdc4; }
+
+.notification-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.notification-badge {
+    background: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    margin-left: auto;
+}
+
+.notification-content {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.notification-time {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+}
+
+/* Adoption Requests Table */
+.table-section {
+    background: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 2rem;
+}
+
+.table-title {
+    color: #00256e;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.table {
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #003092, #00256e);
+    color: white;
+    font-weight: 600;
+    border: none;
+    padding: 1rem 0.75rem;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.table tbody td {
+    padding: 1rem 0.75rem;
+    vertical-align: middle;
+    text-align: center;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(0, 48, 146, 0.05);
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+}
+
+.pet-image {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #ddd;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-approve {
+    background: linear-gradient(45deg, #28a745, #20c997);
+    border: none;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-approve:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+    color: white;
+}
+
+.btn-decline {
+    background: linear-gradient(45deg, #dc3545, #e74c3c);
+    border: none;
+    color: white;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.btn-decline:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+    color: white;
+}
+
+.status-badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-approved {
+    background: #d1edff;
+    color: #0c5460;
+}
+
+.status-declined {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .footer-col {
+        margin-bottom: 2rem;
+    }
+
+    .footer-bottom .row > div {
+        text-align: center !important;
+        margin-bottom: 1rem;
+    }
+
+    .welcome-h1 {
+        font-size: 2rem;
+    }
+
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+
+    .notification-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Animation for new notifications */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.notification-new {
+    animation: pulse 2s infinite;
 }

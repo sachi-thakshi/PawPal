@@ -27,7 +27,7 @@ public class AdoptionRequest {
     @JoinColumn(name = "requester_id", nullable = false)
     private User requester;
 
-    private boolean approved = false;
+    private Boolean approved = false;
 
     private LocalDateTime requestDate = LocalDateTime.now();
 }

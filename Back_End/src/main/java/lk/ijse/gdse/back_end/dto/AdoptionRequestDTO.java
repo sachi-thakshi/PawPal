@@ -5,15 +5,27 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class AdoptionRequestDTO {
     private Long requestId;
+    private Boolean approved;
+    private LocalDateTime requestDate;
+
+    // requester info
+    private Long requesterId;
+    private String requesterName;
+    private String requesterEmail;
+
+    // pet info
     private Long petId;
     private String petName;
-    private String requesterUsername;
-    private String requesterEmail;
-    private boolean approved;
+    private String petType;
+    private String petImage;
+    private String petLocation;
+
 }

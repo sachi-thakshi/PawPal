@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface AdoptionRequestRepository extends JpaRepository<AdoptionRequest, Long> {
-    List<AdoptionRequest> findByPetOwnerAndApprovedFalse(User owner);
+    List<AdoptionRequest> findByPet_Owner(User owner);
     boolean existsByPetAndRequester(PetAdoption pet, User requester);
 
 }
