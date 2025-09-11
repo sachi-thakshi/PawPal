@@ -58,27 +58,44 @@ async function loadAdoptionRequests() {
 
   requests.forEach(req => {
     const row = document.createElement("tr");
+
     row.innerHTML = `
-        <td>${req.petType || "Unknown"}</td>
-        <td><img src="${req.petImage || ''}" class="pet-image" /></td>
-        <td>${req.petName || "Unknown"}</td>
-        <td>${req.petLocation || "Unknown"}</td> 
-        <td>${req.requestDate ? new Date(req.requestDate).toLocaleDateString() : "Unknown"}</td>
-        <td>${req.requesterName || "Unknown"}</td>
-        <td><a href="mailto:${req.requesterEmail || ""}">${req.requesterEmail || "Unknown"}</a></td>
-        <td>
-          ${req.approved === null
-                ? '<span class="status-pending">Pending</span>'
-                : (req.approved ? '<span class="status-approved">Approved</span>' : '<span class="status-declined">Declined</span>')}
-        </td>
-        <td>
-          ${req.approved === null
-              ? `<button class="btn btn-approve" onclick="approveRequest(${req.requestId}, '${req.petName || ''}')">Approve</button>
-                 <button class="btn btn-decline" onclick="declineRequest(${req.requestId})">Decline</button>`
-              : "Action Complete"}
-        </td>
+      <td>${req.petType || "Unknown"}</td>
+      <td><img src="${req.petImage || ''}" class="pet-image" /></td>
+      <td>${req.petName || "Unknown"}</td>
+      <td>${req.petLocation || "Unknown"}</td> 
+      <td>${req.requestDate ? new Date(req.requestDate).toLocaleDateString() : "Unknown"}</td>
+      <td>${req.requesterName || "Unknown"}</td>
+      <td><a href="mailto:${req.requesterEmail || ""}">${req.requesterEmail || "Unknown"}</a></td>
+      <td>
+        ${req.approved === null
+        ? '<span class="status-pending">Pending</span>'
+        : (req.approved ? '<span class="status-approved">Approved</span>' : '<span class="status-declined">Declined</span>')}
+      </td>
+      <td class="action-cell">
+        ${req.approved === null ? "" : "Action Complete"}
+      </td>
     `;
+
     tableBody.appendChild(row);
+
+    // Attach buttons via event listeners
+    if (req.approved === null) {
+      const actionCell = row.querySelector(".action-cell");
+
+      const approveBtn = document.createElement("button");
+      approveBtn.className = "btn btn-approve me-2";
+      approveBtn.textContent = "Approve";
+      approveBtn.addEventListener("click", () => approveRequest(req.requestId, req.petName));
+
+      const declineBtn = document.createElement("button");
+      declineBtn.className = "btn btn-decline";
+      declineBtn.textContent = "Decline";
+      declineBtn.addEventListener("click", () => declineRequest(req.requestId));
+
+      actionCell.appendChild(approveBtn);
+      actionCell.appendChild(declineBtn);
+    }
   });
 
   updateNotificationBadge(requests);
@@ -107,7 +124,7 @@ async function approveRequest(requestId, petName) {
       const data = await response.json();
 
       if (data.status === 200) {
-        Swal.fire('Approved!', `Request for ${petName} has been approved. An email has been sent to the requester.`, 'success');
+        Swal.fire('Approved!', `Request for ${petName} has been approved.Other requests for this pet have been declined. An email has been sent to the requester.`, 'success');
         loadAdoptionRequests(); // refresh table
       } else {
         Swal.fire('Error', data.message, 'error');

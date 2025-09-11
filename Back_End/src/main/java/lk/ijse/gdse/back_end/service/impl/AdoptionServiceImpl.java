@@ -186,6 +186,14 @@ public class AdoptionServiceImpl implements AdoptionService {
         request.setApproved(true);
         requestRepo.save(request);
 
+        List<AdoptionRequest> otherRequests = requestRepo.findByPetAndApprovedIsNull(request.getPet());
+        for (AdoptionRequest r : otherRequests) {
+            if (!r.getRequestId().equals(requestId)) {
+                r.setApproved(false);
+                requestRepo.save(r);
+            }
+        }
+
         // Send email to requester
         String subject = "Your adoption request has been approved!";
         String body = "<p>Hi " + request.getRequester().getUsername() + ",</p>"
