@@ -7,3 +7,21 @@
 2025-09-13T00:02:33.409+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
 2025-09-13T00:02:34.023+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
 2025-09-13T00:02:34.023+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<java.lang.String, java.lang.Object>]
+2025-09-13T00:03:05.729+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : HTTP POST https://oauth2.googleapis.com/token
+2025-09-13T00:03:05.729+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-09-13T00:03:05.729+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AVMBsJi2WoPgn3pVuCYg3zBfr3IsoYGlJOzl1SeJQbdYBXlnoyw5aGZb26oGP4R7ysF1zA], redirect_uri=[http://localhost:8080/login/oauth2/code/google]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2025-09-13T00:03:06.278+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2025-09-13T00:03:06.279+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Reading to [org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse] as "application/json;charset=utf-8"
+2025-09-13T00:03:06.281+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : HTTP GET https://www.googleapis.com/oauth2/v3/userinfo
+2025-09-13T00:03:06.282+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-09-13T00:03:07.098+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Response 200 OK
+2025-09-13T00:03:07.099+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-4] o.s.web.client.RestTemplate              : Reading to [java.util.Map<java.lang.String, java.lang.Object>]
+2025-09-13T00:03:07.106+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : HTTP POST https://oauth2.googleapis.com/token
+2025-09-13T00:03:07.107+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-09-13T00:03:07.108+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Writing [{grant_type=[authorization_code], code=[4/0AVMBsJgIMgtrt1KOkndWEYFuCj_LsA1gV6PcKuWg1yUZkjk6Jlqzr_1apQAGD_0pkSglqg], redirect_uri=[http://localhost:8080/login/oauth2/code/google]}] as "application/x-www-form-urlencoded;charset=UTF-8"
+2025-09-13T00:03:07.302+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2025-09-13T00:03:07.302+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [org.springframework.security.oauth2.core.endpoint.OAuth2AccessTokenResponse] as "application/json;charset=utf-8"
+2025-09-13T00:03:07.304+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : HTTP GET https://www.googleapis.com/oauth2/v3/userinfo
+2025-09-13T00:03:07.305+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Accept=[application/json, application/*+json]
+2025-09-13T00:03:07.609+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Response 200 OK
+2025-09-13T00:03:07.611+05:30 DEBUG 21708 --- [Back_End] [http-nio-8080-exec-7] o.s.web.client.RestTemplate              : Reading to [java.util.Map<java.lang.String, java.lang.Object>]
