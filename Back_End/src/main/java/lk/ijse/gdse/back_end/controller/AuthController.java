@@ -32,4 +32,10 @@ public class AuthController {
                 authService.authenticate(authDTO)
         ));
     }
+
+    @GetMapping("/google-login-success")
+    public ApiResponse googleLoginSuccess() {
+        // Here you can handle any post-login operations, such as saving user details in your DB
+        return new ApiResponse(200, "Login successful with Google", null);
+    }
 }

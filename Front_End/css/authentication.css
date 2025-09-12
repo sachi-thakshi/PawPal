@@ -223,18 +223,37 @@ input {
 }
 
 .social-container {
-	margin: 20px 0;
+	display: flex;
+	justify-content: center;
+	gap: 15px;
 }
 
-.social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
+.social-container a.social {
+	display: flex;
 	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
+	justify-content: center;
+	gap: 10px;
+	background-color: #fff;
+	border-radius: 5px;
+	padding: 8px 12px;
+	text-decoration: none;
+	color: #555;
+	font-weight: 500;
+	transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.social-container a.social:hover {
+	transform: scale(1.05);
+	box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.social-container a.social img {
+	width: 20px;
+	height: 20px;
+}
+
+.social-text {
+	font-size: 14px;
 }
 
 .password-container {

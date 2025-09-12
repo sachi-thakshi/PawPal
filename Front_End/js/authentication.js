@@ -11,6 +11,32 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
 
+// --- Handle Google login JWT from redirect ---
+document.addEventListener("DOMContentLoaded", () => {
+	const urlParams = new URLSearchParams(window.location.search);
+	const token = urlParams.get('token');
+
+	if (token) {
+		// Save JWT to localStorage
+		localStorage.setItem("jwtToken", token);
+		console.log("Google JWT saved:", token);
+
+		// Clean URL
+		window.history.replaceState({}, document.title, window.location.pathname);
+
+		// Redirect to dashboard
+		window.location.href = "../pages/pet-owner-dashboard.html";
+	}
+});
+
+// --- Google login button ---
+document.querySelectorAll(".social").forEach(button => {
+	button.addEventListener("click", () => {
+		// Redirect user to backend OAuth2 endpoint
+		window.location.href = "http://localhost:8080/oauth2/authorization/google";
+	});
+});
+
 document.addEventListener("DOMContentLoaded", () => {
 
 	// ----- SIGN-UP -----

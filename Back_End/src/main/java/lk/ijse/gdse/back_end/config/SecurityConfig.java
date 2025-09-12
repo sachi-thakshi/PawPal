@@ -1,6 +1,8 @@
 package lk.ijse.gdse.back_end.config;
 
+import lk.ijse.gdse.back_end.service.CustomOAuth2UserService;
 import lk.ijse.gdse.back_end.util.JwtAuthFilter;
+import lk.ijse.gdse.back_end.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,6 +15,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -28,6 +34,8 @@ public class SecurityConfig {
     private final UserDetailsService userDetailsService;
     private final JwtAuthFilter jwtAuthFilter;
     private final PasswordEncoder passwordEncoder;
+    private final CustomOAuth2UserService customOAuth2UserService;
+    private final JwtUtil  jwtUtil;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +44,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth ->
                         auth
-                                .requestMatchers("/auth/**").permitAll()              // login/register
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/oauth2/**").permitAll()
                                 .requestMatchers("/pet-gallery/**").permitAll() // allow public gallery viewing
                                 .requestMatchers("/pet-report/all").permitAll()       // reports listing
                                 .requestMatchers("/pet-report/type/**").permitAll()  // LOST/FOUND reports
@@ -55,7 +64,14 @@ public class SecurityConfig {
 
                 .authenticationProvider(authenticationProvider())
 
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("http://localhost:63342/PawPal/Front_End/pages/authentication.html")
+                        .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
+                        .defaultSuccessUrl("http://localhost:63342/PawPal/Front_End/pages/pet-owner-dashboard.html", true)
+                        .failureUrl("http://localhost:63342/PawPal/Front_End/pages/authentication.html?error=true")
+                );
 
         return http.build();
     }
