@@ -1,0 +1,199 @@
+body {
+    /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
+    background-color: #d1edff;
+    min-height: 100vh;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.dashboard-container {
+    padding: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.stats-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    height: 100%;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stats-label {
+    font-size: 14px;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: 500;
+}
+
+.stats-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.chart-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+    height: 400px;
+}
+
+.info-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.progress {
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+.progress-bar {
+    border-radius: 10px;
+}
+
+.progress-bar.primary { background: linear-gradient(90deg, #667eea, #764ba2); }
+.progress-bar.secondary { background: linear-gradient(90deg, #f093fb, #f5576c); }
+.progress-bar.warning { background: linear-gradient(90deg, #4facfe, #00f2fe); }
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.user-item:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 15px 10px;
+}
+
+.user-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-right: 15px;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-online { background-color: #28a745; }
+.status-offline { background-color: #6c757d; }
+
+.btn-approve {
+    background: linear-gradient(135deg, #28a745, #20c997);
+    border: none;
+    color: white;
+    margin-left: 5px;
+}
+
+.btn-reject {
+    background: linear-gradient(135deg, #ffc107, #fd7e14);
+    border: none;
+    color: white;
+}
+
+.table-responsive {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    font-weight: 600;
+    padding: 15px;
+}
+
+.table tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.badge {
+    border-radius: 20px;
+    padding: 8px 12px;
+}
+
+.lost-found-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.lost-found-item {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+}
+
+.lost-found-item:hover {
+    transform: scale(1.05);
+}
+
+.lost-found-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.animate-counter {
+    transition: all 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+    animation: fadeIn 0.6s ease-out;
+}

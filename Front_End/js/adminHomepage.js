@@ -31,6 +31,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     initSubmittedGallery();
                 }else if (url.includes("admin-blog.html") && typeof initBlogs === "function") {
                     initBlogs();
+                }else if (url.includes("pet-adoption-details.html") && typeof initAdoptivePets  === "function") {
+                    initAdoptivePets ();
                 }
             })
             .catch(error => {

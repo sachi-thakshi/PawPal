@@ -42,8 +42,8 @@ public class PetAdoptionController {
                 .location(pet.getLocation())
                 .description(pet.getDescription())
                 .petImage(pet.getPetImage())
-                .ownerUsername(pet.getOwner().getUsername())
-                .ownerEmail(pet.getOwner().getEmail())
+                .ownerUsername(pet.getOwner() != null ? pet.getOwner().getUsername() : "Unknown")
+                .ownerEmail(pet.getOwner() != null ? pet.getOwner().getEmail() : "Unknown")
                 .build();
     }
 

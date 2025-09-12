@@ -28,4 +28,7 @@ public class AdoptionRequestDTO {
     private String petImage;
     private String petLocation;
 
+    private String ownerUsername;
+    private String ownerEmail;
+
 }

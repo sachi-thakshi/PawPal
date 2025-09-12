@@ -1,23 +1,24 @@
-    <div class="header d-flex justify-content-between align-items-center">
+<div class="dashboard-container">
+    <div class="header d-flex justify-content-between align-items-center fade-in">
         <div>
             <h2 class="mb-0">Pet Dashboard <span></span></h2>
             <small class="text-muted">Welcome back! Here's what's happening with your pet website.</small>
         </div>
         <div class="d-flex align-items-center">
-            <div class="me-3">
+            <div class="me-3 position-relative">
                 <i class="fas fa-bell text-muted"></i>
-                <span class="badge bg-danger position-absolute translate-middle">3</span>
+                <span class="badge bg-danger position-absolute translate-middle" style="top: -5px; right: -5px;">3</span>
             </div>
             <div class="dropdown">
-                <img src="https://ui-avatars.com/api/?name=Admin&background=00d4aa&color=fff"
+                <img src="https://ui-avatars.com/api/?name=Admin&background=667eea&color=fff"
                      class="rounded-circle" width="40" height="40" alt="Admin">
             </div>
         </div>
     </div>
 
-    <!-- Stats Cards Row 1 -->
+    <!-- Stats Cards Row -->
     <div class="row mb-4">
-        <div class="col-md-4">
+        <div class="col-md-3 mb-4 fade-in" style="animation-delay: 0.1s">
             <div class="stats-card">
                 <div class="stats-label">Daily Pet Adoptions</div>
                 <div class="d-flex align-items-center">
@@ -30,7 +31,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 mb-4 fade-in" style="animation-delay: 0.2s">
             <div class="stats-card">
                 <div class="stats-label">Monthly Registrations</div>
                 <div class="d-flex align-items-center">
@@ -43,7 +44,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3 mb-4 fade-in" style="animation-delay: 0.3s">
             <div class="stats-card">
                 <div class="stats-label">Total Active Pets</div>
                 <div class="d-flex align-items-center">
@@ -56,55 +57,208 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-3 mb-4 fade-in" style="animation-delay: 0.4s">
+            <div class="stats-card">
+                <div class="stats-label">Shop Sales Today</div>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-arrow-up text-success me-2"></i>
+                    <div class="stats-value text-info animate-counter">$2,847</div>
+                </div>
+                <div class="text-success small mb-2">+32% from yesterday</div>
+                <div class="progress" style="height: 6px;">
+                    <div class="progress-bar" style="width: 85%; background: linear-gradient(90deg, #17a2b8, #20c997);"></div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- Rating and Users Row -->
-<!--    <div class="row">-->
-<!--        <div class="col-md-6">-->
-<!--            <div class="rating-section">-->
-<!--                <h5 class="mb-4">Pet Service Ratings</h5>-->
-<!--                <div class="text-center mb-4">-->
-<!--                    <div class="display-4 fw-bold text-warning">4.8</div>-->
-<!--                    <div class="text-muted">Overall Rating</div>-->
-<!--                </div>-->
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <div class="col-md-8 fade-in" style="animation-delay: 0.5s">
+            <div class="chart-card">
+                <h5 class="mb-4"><i class="fas fa-chart-bar me-2 text-primary"></i>Pet Adoption Trends</h5>
+                <canvas id="adoptionChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+        <div class="col-md-4 fade-in" style="animation-delay: 0.6s">
+            <div class="chart-card">
+                <h5 class="mb-4"><i class="fas fa-shopping-cart me-2 text-success"></i>Shop Performance</h5>
+                <canvas id="shopChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
 
-<!--                <div class="rating-item">-->
-<!--                    <div class="rating-stars">★★★★★</div>-->
-<!--                    <div class="rating-bar">-->
-<!--                        <div class="rating-fill" style="width: 78%;"></div>-->
-<!--                    </div>-->
-<!--                    <div class="text-end" style="width: 50px;">425</div>-->
-<!--                </div>-->
+    <!-- Lost & Found and Recent Users Row -->
+    <div class="row mb-4">
+        <div class="col-md-4 fade-in" style="animation-delay: 0.7s">
+            <div class="info-card">
+                <h5 class="mb-4"><i class="fas fa-search me-2 text-warning"></i>Lost & Found Status</h5>
+                <div class="lost-found-grid">
+                    <div class="lost-found-item">
+                        <div class="lost-found-icon">
+                            <i class="fas fa-heart-broken"></i>
+                        </div>
+                        <div class="fw-bold fs-4 text-danger">23</div>
+                        <div class="small text-muted">Lost Pets</div>
+                    </div>
+                    <div class="lost-found-item">
+                        <div class="lost-found-icon">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="fw-bold fs-4 text-success">18</div>
+                        <div class="small text-muted">Found Pets</div>
+                    </div>
+                    <div class="lost-found-item">
+                        <div class="lost-found-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <div class="fw-bold fs-4 text-primary">31</div>
+                        <div class="small text-muted">Reunited</div>
+                    </div>
+                    <div class="lost-found-item">
+                        <div class="lost-found-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="fw-bold fs-4 text-info">5</div>
+                        <div class="small text-muted">This Week</div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="small text-muted mb-2">Success Rate</div>
+                    <div class="progress" style="height: 10px;">
+                        <div class="progress-bar bg-success" style="width: 76%;">76%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!--                <div class="rating-item">-->
-<!--                    <div class="rating-stars">★★★★</div>-->
-<!--                    <div class="rating-bar">-->
-<!--                        <div class="rating-fill" style="width: 65%;"></div>-->
-<!--                    </div>-->
-<!--                    <div class="text-end" style="width: 50px;">187</div>-->
-<!--                </div>-->
+        <div class="col-md-8 fade-in" style="animation-delay: 0.8s">
+            <div class="info-card">
+                <h5 class="mb-4"><i class="fas fa-users me-2 text-info"></i>Recent Registered Users (Last 3 Days)</h5>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Registration Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody id="recentUsersTable">
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=Sarah+Johnson&background=667eea&color=fff" class="rounded-circle me-2" width="35" height="35">
+                                    <div>
+                                        <div class="fw-semibold">Sarah Johnson</div>
+                                        <small class="text-muted">Pet Adopter</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>sarah.j@email.com</td>
+                            <td>
+                                <small>Sep 12, 2025</small>
+                                <div class="text-muted" style="font-size: 0.75rem;">2 hours ago</div>
+                            </td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=Mike+Chen&background=f093fb&color=fff" class="rounded-circle me-2" width="35" height="35">
+                                    <div>
+                                        <div class="fw-semibold">Mike Chen</div>
+                                        <small class="text-muted">Volunteer</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>mike.chen@email.com</td>
+                            <td>
+                                <small>Sep 11, 2025</small>
+                                <div class="text-muted" style="font-size: 0.75rem;">1 day ago</div>
+                            </td>
+                            <td><span class="badge bg-warning">Pending</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=Emma+Wilson&background=4facfe&color=fff" class="rounded-circle me-2" width="35" height="35">
+                                    <div>
+                                        <div class="fw-semibold">Emma Wilson</div>
+                                        <small class="text-muted">Pet Adopter</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>emma.w@email.com</td>
+                            <td>
+                                <small>Sep 10, 2025</small>
+                                <div class="text-muted" style="font-size: 0.75rem;">2 days ago</div>
+                            </td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=David+Martinez&background=20c997&color=fff" class="rounded-circle me-2" width="35" height="35">
+                                    <div>
+                                        <div class="fw-semibold">David Martinez</div>
+                                        <small class="text-muted">Foster Parent</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>david.m@email.com</td>
+                            <td>
+                                <small>Sep 10, 2025</small>
+                                <div class="text-muted" style="font-size: 0.75rem;">2 days ago</div>
+                            </td>
+                            <td><span class="badge bg-info">Verified</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="https://ui-avatars.com/api/?name=Lisa+Brown&background=fd7e14&color=fff" class="rounded-circle me-2" width="35" height="35">
+                                    <div>
+                                        <div class="fw-semibold">Lisa Brown</div>
+                                        <small class="text-muted">Pet Owner</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>lisa.b@email.com</td>
+                            <td>
+                                <small>Sep 9, 2025</small>
+                                <div class="text-muted" style="font-size: 0.75rem;">3 days ago</div>
+                            </td>
+                            <td><span class="badge bg-success">Active</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">View</button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!--                <div class="rating-item">-->
-<!--                    <div class="rating-stars">★★★</div>-->
-<!--                    <div class="rating-bar">-->
-<!--                        <div class="rating-fill" style="width: 25%;"></div>-->
-<!--                    </div>-->
-<!--                    <div class="text-end" style="width: 50px;">43</div>-->
-<!--                </div>-->
-
-<!--                <div class="rating-item">-->
-<!--                    <div class="rating-stars">★★</div>-->
-<!--                    <div class="rating-bar">-->
-<!--                        <div class="rating-fill" style="width: 8%;"></div>-->
-<!--                    </div>-->
-<!--                    <div class="text-end" style="width: 50px;">12</div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-
-        <div class="col-md-6">
-            <div class="rating-section">
-                <h5 class="mb-4">Recent Pet Adoption Requests</h5>
+    <!-- Recent Adoption Requests -->
+    <div class="row">
+        <div class="col-12 fade-in" style="animation-delay: 0.9s">
+            <div class="info-card">
+                <h5 class="mb-4"><i class="fas fa-clipboard-list me-2 text-primary"></i>Recent Pet Adoption Requests</h5>
 
                 <div class="user-item">
                     <div class="user-avatar">SC</div>
@@ -172,3 +326,4 @@
             </div>
         </div>
     </div>
+</div>

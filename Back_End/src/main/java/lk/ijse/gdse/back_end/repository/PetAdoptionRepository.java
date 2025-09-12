@@ -14,4 +14,7 @@ public interface PetAdoptionRepository extends JpaRepository<PetAdoption, Long> 
     @Query("SELECT p FROM PetAdoption p WHERE NOT EXISTS (" +
             "SELECT r FROM AdoptionRequest r WHERE r.pet = p AND r.approved = true)")
     List<PetAdoption> findAllAvailablePets();
+
+    @Query("SELECT p FROM PetAdoption p JOIN FETCH p.owner")
+    List<PetAdoption> findAllWithOwner();
 }

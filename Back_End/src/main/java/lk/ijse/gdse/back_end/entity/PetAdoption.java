@@ -36,7 +36,7 @@ public class PetAdoption {
     @Column(nullable = false)
     private LocalDate date = LocalDate.now();
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 }

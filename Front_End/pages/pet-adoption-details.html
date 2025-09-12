@@ -1,0 +1,104 @@
+<div class="container">
+    <div class="header-adoptivePets">
+        <h1><i class="fas fa-heart"></i>Pet Adoption Details</h1>
+        <p>View all Adoption Requests and Approvals</p>
+    </div>
+
+    <div class="controls-container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search pets by name, requesterName, or requesterEmail...">
+            <i class="fas fa-search"></i>
+        </div>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-list"></i> All Adoptive Pets
+            </button>
+            <button class="filter-btn" data-filter="pending">
+                <i class="fas fa-hourglass-half"></i> Adoption Requests
+            </button>
+            <button class="filter-btn" data-filter="approved">
+                <i class="fas fa-user-check"></i> Approved Pet Requests
+            </button>
+            <button class="filter-btn" data-filter="declined">
+                <i class="fas fa-user-times"></i> Declined Pet Requests
+            </button>
+        </div>
+        <div class="adoptivePet-count">
+            <i class="fas fa-chart-bar"></i>
+            <span id="adoptivePetCount">0 Pets</span>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="adoptivePets-table">
+            <thead>
+            <tr>
+                <th>Pet Type</th>
+                <th>Pet Image</th>
+                <th>Pet Name</th>
+                <th>Location</th>
+                <th>Owner Email</th>
+                <th>Request Date</th>
+                <th>Requester Email</th>
+                <th>Status</th>
+            </tr>
+            </thead>
+            <tbody id="adoptivePetsTableBody">
+            <!-- adoptivePets data populated dynamically -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Adoptive Pet Details Modal -->
+<div id="adoptivePetModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="modalTitle">Pet Adoption Details</h2>
+            <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+            <!-- Pet Info Section -->
+            <div class="pet-info-section">
+                <div class="pet-image-container">
+                    <img id="modalPetImage" src="" alt="Pet Image" class="pet-image" style="max-width: 150px; border-radius: 8px;">
+                </div>
+                <div class="pet-details">
+                    <div class="info-item">
+                        <span class="info-label">Pet Type:</span>
+                        <span class="info-value" id="modalPetType"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Pet Name:</span>
+                        <span class="info-value" id="modalPetName"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Location:</span>
+                        <span class="info-value" id="modalLocation"></span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Owner Email:</span>
+                        <span class="info-value" id="modalOwnerEmail"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Request Info Section -->
+            <div class="request-info-section" style="margin-top: 20px;">
+                <div class="info-item">
+                    <span class="info-label">Request Date:</span>
+                    <span class="info-value" id="modalRequestDate"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Requester Email:</span>
+                    <span class="info-value" id="modalRequesterEmail"></span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">Status:</span>
+                    <span class="info-value" id="modalStatus"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

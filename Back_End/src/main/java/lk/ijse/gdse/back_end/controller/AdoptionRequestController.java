@@ -33,14 +33,23 @@ public class AdoptionRequestController {
                 .requestId(request.getRequestId())
                 .approved(request.getApproved())
                 .requestDate(request.getRequestDate())
+
+                // requester info
                 .requesterId(request.getRequester().getUserId())
                 .requesterName(request.getRequester().getUsername())
                 .requesterEmail(request.getRequester().getEmail())
+
+                // pet info
                 .petId(request.getPet().getPetAdoptionId())
                 .petName(request.getPet().getPetName())
                 .petType(request.getPet().getType())
                 .petImage(request.getPet().getPetImage())
                 .petLocation(request.getPet().getLocation())
+
+                // owner info
+                .ownerUsername(request.getPet().getOwner().getUsername())
+                .ownerEmail(request.getPet().getOwner().getEmail())
+
                 .build();
     }
 
@@ -92,5 +101,18 @@ public class AdoptionRequestController {
         } catch (RuntimeException ex) {
             return ResponseEntity.badRequest().body(new ApiResponse<>(400, ex.getMessage(), null));
         }
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse<List<AdoptionRequestDTO>>> getAllRequests(
+            @RequestHeader("Authorization") String authHeader) {
+
+        List<AdoptionRequest> requests = service.getAllRequests();
+
+        List<AdoptionRequestDTO> dtoList = requests.stream()
+                .map(this::toRequestDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(new ApiResponse<>(200, "Success", dtoList));
     }
 }

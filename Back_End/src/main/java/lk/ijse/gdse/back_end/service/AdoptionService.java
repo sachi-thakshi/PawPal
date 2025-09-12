@@ -22,4 +22,5 @@ public interface AdoptionService {
     AdoptionRequest approveRequestWithOwnerCheck(Long requestId, String ownerEmail);
     AdoptionRequest declineRequestWithOwnerCheck(Long requestId, String ownerEmail);
     List<AdoptionRequestDTO> getPendingRequestsForOwner(String ownerEmail);
+    List<AdoptionRequest> getAllRequests();
 }

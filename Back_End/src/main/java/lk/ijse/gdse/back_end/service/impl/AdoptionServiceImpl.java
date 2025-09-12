@@ -53,7 +53,8 @@ public class AdoptionServiceImpl implements AdoptionService {
 
     @Override
     public List<PetAdoptionDTO> getAllPets() {
-        List<PetAdoption> pets = petRepo.findAll(); // Or only available pets
+        List<PetAdoption> pets = petRepo.findAll();
+
         return pets.stream().map(pet -> {
                     boolean hasApprovedRequest = requestRepo.existsByPetAndApprovedTrue(pet);
                     boolean hasPendingRequest = requestRepo.existsByPetAndApprovedIsNull(pet);
@@ -68,6 +69,12 @@ public class AdoptionServiceImpl implements AdoptionService {
                             .location(pet.getLocation())
                             .description(pet.getDescription())
                             .petImage(pet.getPetImage())
+                            .ownerUsername(
+                                    pet.getOwner() != null ? pet.getOwner().getUsername() : null
+                            )
+                            .ownerEmail(
+                                    pet.getOwner() != null ? pet.getOwner().getEmail() : null
+                            )
                             .hasApprovedRequest(hasApprovedRequest)
                             .hasPendingRequest(hasPendingRequest)
                             .build();
@@ -280,5 +287,10 @@ public class AdoptionServiceImpl implements AdoptionService {
                         .requestDate(req.getRequestDate())
                         .build())
                 .toList();
+    }
+
+    @Override
+    public List<AdoptionRequest> getAllRequests() {
+        return requestRepo.findAll();
     }
 }
