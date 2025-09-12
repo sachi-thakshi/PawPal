@@ -47,6 +47,7 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/pet-adoption/**").permitAll()     // anyone can view pets
                                 .requestMatchers(HttpMethod.POST, "/pet-adoption/add").authenticated() // only registered users
                                 .requestMatchers(HttpMethod.PUT, "/pet-adoption/update/**").authenticated()
+                                .requestMatchers("/forgot-password/**").permitAll()
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

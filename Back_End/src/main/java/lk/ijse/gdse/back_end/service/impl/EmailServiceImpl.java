@@ -5,6 +5,7 @@ import jakarta.mail.internet.MimeMessage;
 import lk.ijse.gdse.back_end.service.EmailService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
@@ -38,5 +39,16 @@ public class EmailServiceImpl implements EmailService {
             log.error("Unexpected error while sending email: {}", ex.getMessage(), ex);
             throw new RuntimeException("Unexpected error while sending email: " + ex.getMessage(), ex);
         }
+    }
+
+    @Override
+    public void sendOtpEmail(String to, String otp) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject("PawPal Password Reset OTP");
+        message.setText("Hello,\n\nYour OTP for password reset is: " + otp +
+                "\nIt will expire in 5 minutes.\n\nThank you,\nPawPal Team");
+
+        mailSender.send(message);
     }
 }
