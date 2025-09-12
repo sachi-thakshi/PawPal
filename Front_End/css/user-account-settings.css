@@ -34,6 +34,19 @@ body {
 
 }
 
+.avatar-initial {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background: linear-gradient(135deg, #7C4585, #003092);
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
 .custom-navbar {
     background-color: #003092 !important;
 }

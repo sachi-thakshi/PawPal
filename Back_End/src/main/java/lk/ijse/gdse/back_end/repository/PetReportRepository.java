@@ -21,4 +21,6 @@ public interface PetReportRepository extends JpaRepository<PetReport, Long> {
 
     // Get all reports ordered by latest
     List<PetReport> findAllByOrderByReportedAtDesc();
+
+    List<PetReport> findByOwnerEmailOrderByReportedAtDesc(String ownerEmail);
 }

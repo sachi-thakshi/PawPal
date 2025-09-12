@@ -9,7 +9,9 @@ import lk.ijse.gdse.back_end.service.PetVaccinationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,5 +53,20 @@ public class PetVaccinationServiceImpl implements PetVaccinationService {
         PetVaccination vaccination = petVaccinationRepository.findById(vaccinationId)
                 .orElseThrow(() -> new RuntimeException("Vaccination not found with id: " + vaccinationId));
         petVaccinationRepository.delete(vaccination);
+    }
+
+    @Override
+    public List<PetVaccinationDTO> getUpcomingVaccinationsForOwner(String ownerEmail, LocalDate fromDate) {
+        List<PetVaccination> vaccinations = petVaccinationRepository.findByPet_Owner_EmailAndDueDateAfterOrderByDueDateAsc(ownerEmail, fromDate);
+
+        return vaccinations.stream()
+                .map(v -> new PetVaccinationDTO(
+                        v.getPetVaccinationId(),
+                        v.getVaccineName(),
+                        v.getDateGiven(),
+                        v.getDueDate()
+                ))
+                .collect(Collectors.toList());
+
     }
 }

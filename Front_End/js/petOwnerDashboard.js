@@ -1,4 +1,5 @@
 const BASE_URL = "http://localhost:8080/adoption-requests";
+const NOTIFICATIONS_URL = "http://localhost:8080/notifications";
 const TOKEN = localStorage.getItem("jwtToken");
 
 // Show welcome message
@@ -8,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (welcomeSpan) welcomeSpan.textContent = username;
 
   loadAdoptionRequests();
+  loadNotifications();
 });
 
 // Show notification
@@ -177,4 +179,74 @@ function updateNotificationBadge(requests) {
   const pendingCount = requests.filter(r => r.approved === null).length;
   badge.textContent = pendingCount;
   badge.style.display = pendingCount > 0 ? "flex" : "none";
+}
+
+// Fetch notifications from backend
+async function fetchNotifications() {
+  try {
+    const response = await fetch(NOTIFICATIONS_URL, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.data || []; // assuming backend returns { status, data }
+  } catch (err) {
+    console.error("Error fetching notifications:", err);
+    return [];
+  }
+}
+
+// Populate notification cards
+async function loadNotifications() {
+  const notifications = await fetchNotifications();
+
+  // Select the notification cards in HTML
+  const adoptionCard = document.querySelector(".adoption-notification .notification-content");
+  const adoptionBadge = document.getElementById("adoption-badge");
+
+  const lostFoundCard = document.querySelector(".lost-found-notification .notification-content");
+  const lostFoundBadge = document.querySelector(".lost-found-notification .notification-badge");
+
+  const vaccinationCard = document.querySelector(".vaccination-notification .notification-content");
+  const vaccinationBadge = document.querySelector(".vaccination-notification .notification-badge");
+
+  // Clear previous content
+  adoptionCard.innerHTML = "";
+  lostFoundCard.innerHTML = "";
+  vaccinationCard.innerHTML = "";
+
+  let adoptionCount = 0;
+  let lostFoundCount = 0;
+  let vaccinationCount = 0;
+
+  notifications.forEach(item => {
+    if (item.type === "ADOPTION") {
+      adoptionCard.innerHTML += `<p><strong>${item.title}</strong> ${item.message}</p>`;
+      adoptionCount++;
+    } else if (item.type === "LOST_FOUND") {
+      lostFoundCard.innerHTML += `<p><strong>${item.title}</strong> ${item.message}</p>`;
+      lostFoundCount++;
+    } else if (item.type === "VACCINATION") {
+      vaccinationCard.innerHTML += `<p><strong>${item.title}</strong> ${item.message}</p>`;
+      vaccinationCount++;
+    }
+  });
+
+  // Update badges
+  adoptionBadge.textContent = adoptionCount;
+  adoptionBadge.style.display = adoptionCount > 0 ? "flex" : "none";
+
+  lostFoundBadge.textContent = lostFoundCount;
+  lostFoundBadge.style.display = lostFoundCount > 0 ? "flex" : "none";
+
+  vaccinationBadge.textContent = vaccinationCount;
+  vaccinationBadge.style.display = vaccinationCount > 0 ? "flex" : "none";
 }

@@ -21,4 +21,6 @@ public interface PetReportService {
     List<PetReport> getAllReportsSorted();
 
     PetReport getReportById(Long reportId);
+
+    List<PetReportDTO> getLatestReportsForOwner(String ownerEmail);
 }

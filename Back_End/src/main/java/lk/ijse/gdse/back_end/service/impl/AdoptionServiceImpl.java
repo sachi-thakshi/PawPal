@@ -3,6 +3,7 @@ package lk.ijse.gdse.back_end.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import jakarta.transaction.Transactional;
+import lk.ijse.gdse.back_end.dto.AdoptionRequestDTO;
 import lk.ijse.gdse.back_end.dto.PetAdoptionDTO;
 import lk.ijse.gdse.back_end.entity.AdoptionRequest;
 import lk.ijse.gdse.back_end.entity.PetAdoption;
@@ -260,5 +261,24 @@ public class AdoptionServiceImpl implements AdoptionService {
         );
 
         return request;
+    }
+
+    @Override
+    public List<AdoptionRequestDTO> getPendingRequestsForOwner(String ownerEmail) {
+        User owner = userRepo.findByEmail(ownerEmail)
+                .orElseThrow(() -> new RuntimeException("Owner not found"));
+
+        List<AdoptionRequest> requests = requestRepo.findByPet_OwnerAndApprovedIsNull(owner);
+
+        return requests.stream()
+                .map(req -> AdoptionRequestDTO.builder()
+                        .requestId(req.getRequestId())
+                        .petName(req.getPet().getPetName())
+                        .petType(req.getPet().getType())
+                        .requesterName(req.getRequester().getUsername())
+                        .requesterEmail(req.getRequester().getEmail())
+                        .requestDate(req.getRequestDate())
+                        .build())
+                .toList();
     }
 }

@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -140,4 +141,22 @@ public class PetReportServiceImpl implements PetReportService {
         return petReportRepository.findById(reportId)
                 .orElseThrow(() -> new RuntimeException("Pet report not found with ID: " + reportId));
     }
+
+    @Override
+    public List<PetReportDTO> getLatestReportsForOwner(String ownerEmail) {
+        List<PetReport> reports = petReportRepository.findByOwnerEmailOrderByReportedAtDesc(ownerEmail);
+
+        return reports.stream()
+                .map(report -> PetReportDTO.builder()
+                        .reportId(report.getReportId())
+                        .petName(report.getPetName())
+                        .description(report.getDescription())
+                        .location(report.getLocation())
+                        .type(report.getType().name()) // "LOST" or "FOUND"
+                        .reportedAt(report.getReportedAt())
+                        .imageUrl(report.getImageUrl())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
 }

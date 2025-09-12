@@ -1,5 +1,6 @@
 package lk.ijse.gdse.back_end.service;
 
+import lk.ijse.gdse.back_end.dto.AdoptionRequestDTO;
 import lk.ijse.gdse.back_end.dto.PetAdoptionDTO;
 import lk.ijse.gdse.back_end.entity.AdoptionRequest;
 import lk.ijse.gdse.back_end.entity.PetAdoption;
@@ -20,4 +21,5 @@ public interface AdoptionService {
     List<AdoptionRequest> getRequestsByOwnerEmail(String ownerEmail);
     AdoptionRequest approveRequestWithOwnerCheck(Long requestId, String ownerEmail);
     AdoptionRequest declineRequestWithOwnerCheck(Long requestId, String ownerEmail);
+    List<AdoptionRequestDTO> getPendingRequestsForOwner(String ownerEmail);
 }
