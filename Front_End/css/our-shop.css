@@ -291,3 +291,22 @@ main h1 {
     font-size: 2rem;
   }
 }
+
+#category-filters button.btn-primary {
+    background: linear-gradient(135deg, #7C4585, #003092);
+    border: none;
+    color: white;
+}
+
+#category-filters button.btn-outline-primary {
+    background: transparent;
+    border: 1px solid #003092;
+    color: #003092;
+    transition: background 0.3s, color 0.3s;
+}
+
+#category-filters button.btn-outline-primary:hover {
+    background: linear-gradient(135deg, #7C4585, #003092);
+    color: white;
+    border: none;
+}

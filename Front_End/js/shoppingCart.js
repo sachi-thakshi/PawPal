@@ -1,33 +1,9 @@
-// Simulate user data
-const user = {
-  name: "Alex", // fallback name
-  avatarUrl: null // or provide URL like "/images/alex.jpg"
-};
-
-const avatarContainer = document.getElementById("user-avatar");
-
-if (user.avatarUrl) {
-  const img = document.createElement("img");
-  img.src = user.avatarUrl;
-  img.alt = "User Avatar";
-  img.className = "rounded-circle";
-  img.width = 36;
-  img.height = 36;
-  avatarContainer.innerHTML = '';
-  avatarContainer.appendChild(img);
-} else {
-  const initial = user.name ? user.name.charAt(0) : "?";
-  avatarContainer.textContent = initial;
-}
-
-// shoppingCart.js
-
 const cartItemsContainer = document.getElementById('cart-items');
 const totalPriceEl = document.getElementById('total-price');
 const clearCartBtn = document.getElementById('clear-cart');
 
 function formatPrice(price) {
-  return `$${price.toFixed(2)}`;
+  return `LKR${price.toFixed(2)}`;
 }
 
 function renderCart() {
@@ -37,7 +13,7 @@ function renderCart() {
 
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
-    totalPriceEl.textContent = 'Total: $0.00';
+    totalPriceEl.textContent = 'Total: LKR0.00';
     clearCartBtn.disabled = true;
     return;
   }
@@ -70,7 +46,6 @@ function renderCart() {
 
   totalPriceEl.textContent = `Total: ${formatPrice(total)}`;
 
-  // Add event listeners for quantity changes and remove buttons
   document.querySelectorAll('.quantity-input').forEach(input => {
     input.addEventListener('change', e => {
       const id = e.target.dataset.id;
@@ -131,7 +106,6 @@ clearCartBtn.addEventListener('click', () => {
   });
 });
 
-// Initial render
 renderCart();
 
 document.getElementById("checkout-btn").addEventListener("click", () => {
@@ -146,6 +120,5 @@ document.getElementById("checkout-btn").addEventListener("click", () => {
     return;
   }
 
-  // Redirect to checkout page if cart has items
   window.location.href = "/pages/checkout.html";
 });

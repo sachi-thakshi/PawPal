@@ -93,52 +93,21 @@
     <main class="container my-5">
         <h1 class="mb-4 text-center">Our Shop</h1>
 
+        <!-- Category Buttons -->
+        <div id="category-filters" class="mb-3 text-center">
+        </div>
+
+        <!-- Items Grid -->
         <div class="row" id="shop-items">
-        <!-- Pet Food -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-            <img src="../assets/images/OurShop/item1.jpg" class="card-img-top" alt="Pet Food">
-            <div class="card-body">
-                <h5 class="card-title">Premium Pet Food</h5>
-                <p class="card-text">Healthy dry food for dogs and cats.</p>
-                <p class="card-text"><strong>$15.99</strong></p>
-                <button class="btn btn-primary add-to-cart" data-id="1" data-name="Premium Pet Food" data-price="15.99">Add to Cart</button>
-            </div>
-            </div>
-        </div>
-
-        <!-- Medicine -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-            <img src="../assets/images/OurShop/item2.jpg" class="card-img-top" alt="Pet Medicine">
-            <div class="card-body">
-                <h5 class="card-title">Pet Vitamins</h5>
-                <p class="card-text">Boost your pet's immune system.</p>
-                <p class="card-text"><strong>$8.49</strong></p>
-                <button class="btn btn-primary add-to-cart" data-id="2" data-name="Pet Vitamins" data-price="8.49">Add to Cart</button>
-            </div>
-            </div>
-        </div>
-
-        <!-- Toy -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100">
-            <img src="../assets/images/OurShop/item3.jpg" class="card-img-top" alt="Pet Toy">
-            <div class="card-body">
-                <h5 class="card-title">Squeaky Toy</h5>
-                <p class="card-text">Fun toy to keep pets entertained.</p>
-                <p class="card-text"><strong>$5.99</strong></p>
-                <button class="btn btn-primary add-to-cart" data-id="3" data-name="Squeaky Toy" data-price="5.99">Add to Cart</button>
-            </div>
-            </div>
-        </div>
+            <!-- JavaScript will dynamically load items here based on selected category -->
         </div>
 
         <!-- Go to Cart Button -->
         <div class="text-center mt-4">
-        <a href="../pages/shopping-cart.html" class="btn btn-success btn-lg">Go to Cart</a>
+            <a href="../pages/shopping-cart.html" class="btn btn-success btn-lg">Go to Cart</a>
         </div>
     </main>
+
 
     <footer class="footer" id="footer">
         <div class="container">
