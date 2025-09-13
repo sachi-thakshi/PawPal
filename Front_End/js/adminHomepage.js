@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
                     initBlogs();
                 }else if (url.includes("pet-adoption-details.html") && typeof initAdoptivePets  === "function") {
                     initAdoptivePets ();
+                }else if (url.includes("pet-items.html") && typeof initPetItemsManagement  === "function") {
+                    initPetItemsManagement();
                 }
             })
             .catch(error => {

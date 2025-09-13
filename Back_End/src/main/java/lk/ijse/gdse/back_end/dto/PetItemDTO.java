@@ -1,26 +1,20 @@
-package lk.ijse.gdse.back_end.entity;
+package lk.ijse.gdse.back_end.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Builder
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
-public class PetItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class PetItemDTO {
     private Long petItemId;
-
     private String petItemName;
     private String petItemCategory;
     private double petItemPrice;
     private int quantity;
     private String petItemDescription;
     private String petItemImageUrl;
-    private String publicId;
 }
