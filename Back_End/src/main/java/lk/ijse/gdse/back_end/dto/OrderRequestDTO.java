@@ -15,5 +15,6 @@ public class OrderRequestDTO {
     private String customerName;
     private String customerAddress;
     private String paymentMethod;
+    private String customerEmail;
     private List<OrderItemRequestDTO> items;
 }

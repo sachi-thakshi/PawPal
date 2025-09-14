@@ -1,7 +1,6 @@
 const cartItemsContainer = document.getElementById('cartItems');
 const subtotalEl = document.getElementById('subtotal');
 const shippingEl = document.getElementById('shipping');
-const taxEl = document.getElementById('tax');
 const totalEl = document.getElementById('total');
 const proceedPaymentBtn = document.getElementById('proceedPayment');
 const cardForm = document.getElementById('cardForm');
@@ -170,13 +169,14 @@ function confirmOrder(paymentMethod, customer, cart) {
     });
 }
 
-// Send order to backend
+// Send order to backend and trigger email
 function sendOrderToBackend(paymentMethod, customer, cart) {
     const token = localStorage.getItem('jwtToken');
 
     const orderRequest = {
         customerName: `${customer.firstName} ${customer.lastName}`,
         customerAddress: customer.address,
+        customerEmail: customer.email,
         paymentMethod: paymentMethod,
         items: cart.map(item => ({
             productId: item.id,
@@ -198,7 +198,7 @@ function sendOrderToBackend(paymentMethod, customer, cart) {
             Swal.fire({
                 icon: 'success',
                 title: 'Order Placed!',
-                html: `<p>Order ID: ${data.orderId || 'N/A'}</p><p>Thank you for your purchase!</p>`,
+                html: `<p>Order ID: ${data.orderId || 'N/A'}</p><p>An invoice has been sent to your email.</p>`,
                 confirmButtonText: 'Continue Shopping'
             }).then(() => {
                 localStorage.removeItem('cart');

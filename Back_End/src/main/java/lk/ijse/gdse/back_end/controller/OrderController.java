@@ -1,5 +1,6 @@
 package lk.ijse.gdse.back_end.controller;
 
+import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpServletRequest;
 import lk.ijse.gdse.back_end.dto.OrderHistoryResponseDTO;
 import lk.ijse.gdse.back_end.dto.OrderRequestDTO;
@@ -23,7 +24,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<OrderResponseDTO> placeOrder(
             @RequestBody OrderRequestDTO request,
-            HttpServletRequest httpRequest) {
+            HttpServletRequest httpRequest) throws MessagingException {
 
         String authHeader = httpRequest.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {

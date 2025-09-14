@@ -26,6 +26,8 @@ public class Order {
     private Double total;
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    private String customerEmail;
+
     @Column(name = "user_id")
     private Long userId; // from JWT
 

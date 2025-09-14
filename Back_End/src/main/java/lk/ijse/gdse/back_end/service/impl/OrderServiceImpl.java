@@ -1,8 +1,10 @@
 package lk.ijse.gdse.back_end.service.impl;
 
+import jakarta.mail.MessagingException;
 import lk.ijse.gdse.back_end.dto.*;
 import lk.ijse.gdse.back_end.entity.*;
 import lk.ijse.gdse.back_end.repository.*;
+import lk.ijse.gdse.back_end.service.EmailService;
 import lk.ijse.gdse.back_end.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,15 +20,17 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderDetailRepository orderDetailRepository;
     private final PetItemRepository petItemRepository;
+    private final EmailService emailService;
 
     @Override
     @Transactional
-    public OrderResponseDTO placeOrder(OrderRequestDTO request, Long userId) {
+    public OrderResponseDTO placeOrder(OrderRequestDTO request, Long userId) throws MessagingException {
         double total = 0.0;
 
         Order order = Order.builder()
                 .customerName(request.getCustomerName())
                 .customerAddress(request.getCustomerAddress())
+                .customerEmail(request.getCustomerEmail())
                 .paymentMethod(request.getPaymentMethod())
                 .userId(userId)
                 .createdAt(LocalDateTime.now())
@@ -64,6 +68,12 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderDetails(details);
 
         orderRepository.save(order);
+
+        try {
+            emailService.sendOrderInvoice(order);
+        } catch (Exception e) {
+            System.err.println("Failed to send invoice email: " + e.getMessage());
+        }
 
         return new OrderResponseDTO(order.getId(), "Order placed successfully");
     }
