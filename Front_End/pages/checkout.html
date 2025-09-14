@@ -91,46 +91,93 @@
     </header>
 
     <main class="container my-5">
-        <h1 class="mb-4 text-center">Checkout</h1>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h1>🛒 Checkout</h1>
+            <p>Secure payment powered by PayHere</p>
+        </div>
 
-        <form id="checkout-form">
-            <div class="mb-3">
-            <label for="fullName" class="form-label">Full Name</label>
-            <input type="text" class="form-control" id="fullName" required>
+        <div class="checkout-container">
+            <div class="order-summary">
+                <h2>📋 Order Summary</h2>
+                <!-- Order items will be dynamically inserted here -->
             </div>
 
-            <div class="mb-3">
-            <label for="address" class="form-label">Address</label>
-            <input type="text" class="form-control" id="address" required>
+            <div class="checkout-form">
+                <h2>💳 Payment Details</h2>
+
+    <div class="alert alert-success" id="successAlert" style="display: none;">
+        Payment initiated successfully!
+    </div>
+
+    <div class="alert alert-error" id="errorAlert" style="display: none;">
+        <span id="errorMessage"></span>
+    </div>
+
+    <form id="checkoutForm">
+        <div class="form-row">
+            <div class="form-group">
+                <label for="firstName">First Name *</label>
+                <input type="text" id="firstName" name="firstName" required>
             </div>
-
-            <div class="mb-3">
-            <label for="paymentMethod" class="form-label">Payment Method</label>
-            <select class="form-select" id="paymentMethod" required>
-                <option value="">Select...</option>
-                <option value="card">Card</option>
-                <option value="cod">Cash on Delivery</option>
-            </select>
+            <div class="form-group">
+                <label for="lastName">Last Name *</label>
+                <input type="text" id="lastName" name="lastName" required>
             </div>
+        </div>
 
-            <!-- ✅ Add this here: Card Element will only show if 'Card' is selected -->
-            <div id="card-container" style="display: none;">
-            <div class="mb-3">
-                <label for="card-element" class="form-label">Card Details</label>
-                <div id="card-element" class="form-control">
-                <!-- Stripe card input will be inserted here -->
-                </div>
-                <div id="card-errors" class="text-danger mt-2" role="alert"></div>
+        <div class="form-group">
+            <label for="email">Email Address *</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="phone">Phone Number *</label>
+            <input type="tel" id="phone" name="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address *</label>
+            <input type="text" id="address" name="address" required>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="city">City *</label>
+                <input type="text" id="city" name="city" required>
             </div>
+            <div class="form-group">
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="Sri Lanka">Sri Lanka</option>
+                    <option value="India">India</option>
+                    <option value="Other">Other</option>
+                </select>
             </div>
+        </div>
 
-            <button type="submit" class="btn btn-success w-100">Place Order</button>
-        </form>
-    </main>
+        <button type="submit" class="pay-button" id="payButton">
+            <span id="buttonText">🔒 Pay with PayHere</span>
+            <div class="loading" id="loading" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+        </button>
+    </form>
 
+    <div class="payhere-logo">
+        <small>Secured by PayHere Payment Gateway</small>
+    </div>
+            </div>
+        </div>
+    </div>
 
+    <!-- Hidden form for PayHere submission -->
+    <form id="payhere-payment" method="post" style="display: none;">
+        <!-- Payment data will be populated here -->
+    </form>
+</main>
 
-     <footer class="footer" id="footer">
+    <footer class="footer" id="footer">
         <div class="container">
             <div class="row">
                 <div class="col-lg-4 col-md-6 footer-col">
@@ -178,6 +225,7 @@
         </div>
     </footer>
 
+    <script type="text/javascript" src="https://www.payhere.lk/lib/payhere.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
     <script src="../js/checkout.js"></script>
     <script src="../js/navBarAvatar.js"></script>
@@ -185,6 +233,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="https://js.stripe.com/v3/"></script>
-    
+
 </body>
 </html>
+
+

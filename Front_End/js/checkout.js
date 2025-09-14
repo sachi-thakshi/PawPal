@@ -1,159 +1,209 @@
-// Simulate user data
-const user = {
-  name: "Alex",
-  avatarUrl: null
-};
+const API_BASE_URL = 'http://localhost:8080/payment';
 
-const avatarContainer = document.getElementById("user-avatar");
-if (user.avatarUrl) {
-  const img = document.createElement("img");
-  img.src = user.avatarUrl;
-  img.alt = "User Avatar";
-  img.className = "rounded-circle";
-  img.width = 36;
-  img.height = 36;
-  avatarContainer.innerHTML = '';
-  avatarContainer.appendChild(img);
-} else {
-  const initial = user.name ? user.name.charAt(0).toUpperCase() : "?";
-  avatarContainer.textContent = initial;
-  avatarContainer.style.fontWeight = "700";
-  avatarContainer.style.fontSize = "1.2rem";
-  avatarContainer.style.userSelect = "none";
-}
+// Store total globally for payment submission
+let orderTotal = 0;
 
-document.addEventListener("DOMContentLoaded", async () => {
-  const checkoutItemsContainer = document.getElementById("checkout-items");
-  const checkoutTotal = document.getElementById("checkout-total");
-  const checkoutForm = document.getElementById("checkout-form");
-  const paymentMethodSelect = document.getElementById("paymentMethod");
-  const cardContainer = document.getElementById("card-container");
-  const cardErrors = document.getElementById("card-errors");
-
-  let stripe, cardElement;
-
-  function formatPrice(price) {
-    return `$${price.toFixed(2)}`;
-  }
-
-  function calculateCartTotal() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    return Math.round(cart.reduce((acc, item) => acc + item.price * item.quantity, 0) * 100); // in cents
-  }
-
-  function renderCheckoutItems() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-    checkoutItemsContainer.innerHTML = '';
+// Render cart summary from localStorage
+function renderOrderSummary() {
+    const orderSummaryDiv = document.querySelector('.order-summary');
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
     if (cart.length === 0) {
-      checkoutItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
-      checkoutForm.style.display = 'none';
-      checkoutTotal.textContent = 'Total: $0.00';
-      return;
+        orderSummaryDiv.innerHTML = '<h2>📋 Order Summary</h2><p>Your cart is empty.</p>';
+        return 0;
     }
 
-    let total = 0;
+    orderSummaryDiv.innerHTML = '<h2>📋 Order Summary</h2>';
 
+    // Add cart items
     cart.forEach(item => {
-      const itemTotal = item.price * item.quantity;
-      total += itemTotal;
-
-      const itemDiv = document.createElement('div');
-      itemDiv.className = "checkout-item border-bottom py-3 d-flex justify-content-between";
-
-      itemDiv.innerHTML = `
-        <div>
-          <h5>${item.name}</h5>
-          <p>Quantity: ${item.quantity}</p>
-          <p>Unit Price: ${formatPrice(item.price)}</p>
-        </div>
-        <div class="fw-bold align-self-center">${formatPrice(itemTotal)}</div>
-      `;
-
-      checkoutItemsContainer.appendChild(itemDiv);
+        const itemDiv = document.createElement('div');
+        itemDiv.classList.add('order-item');
+        itemDiv.innerHTML = `
+            <span>${item.name} x${item.quantity}</span>
+            <span>LKR ${(item.price * item.quantity).toFixed(2)}</span>
+        `;
+        orderSummaryDiv.appendChild(itemDiv);
     });
 
-    checkoutTotal.textContent = `Total: ${formatPrice(total)}`;
-  }
+    // Totals
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const shipping = 300.00;
+    const total = subtotal + shipping;
 
-  // 💳 Initialize Stripe (only if needed)
-  if (window.Stripe) {
-    stripe = Stripe("YOUR_STRIPE_PUBLISHABLE_KEY"); //  Replace this with your real key
-    const elements = stripe.elements();
-    cardElement = elements.create("card");
-    cardElement.mount("#card-element");
-  }
+    const summaryData = [
+        { label: 'Subtotal', value: subtotal },
+        { label: 'Shipping', value: shipping },
+        { label: 'Total', value: total },
+    ];
 
-  // Show/hide card input dynamically
-  paymentMethodSelect.addEventListener("change", () => {
-    if (paymentMethodSelect.value === "card") {
-      cardContainer.style.display = "block";
-    } else {
-      cardContainer.style.display = "none";
-      cardErrors.textContent = '';
+    summaryData.forEach(item => {
+        const div = document.createElement('div');
+        div.classList.add('order-item');
+        div.innerHTML = `<span>${item.label}</span><span>LKR ${item.value.toFixed(2)}</span>`;
+        orderSummaryDiv.appendChild(div);
+    });
+
+    const buttonText = document.getElementById('buttonText');
+    if (buttonText) {
+        buttonText.textContent = `🔒 Pay LKR ${total.toFixed(2)} with PayHere`;
     }
-  });
 
-  checkoutForm.addEventListener("submit", async (e) => {
+    return total;
+}
+
+// Load summary on page ready
+document.addEventListener('DOMContentLoaded', () => {
+    orderTotal = renderOrderSummary();
+    testBackendConnection();
+});
+
+// Form submission
+document.getElementById('checkoutForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const fullName = document.getElementById("fullName").value.trim();
-    const address = document.getElementById("address").value.trim();
-    const paymentMethod = paymentMethodSelect.value;
+    const payButton = document.getElementById('payButton');
+    const buttonText = document.getElementById('buttonText');
+    const loading = document.getElementById('loading');
+    const successAlert = document.getElementById('successAlert');
+    const errorAlert = document.getElementById('errorAlert');
+    const errorMessage = document.getElementById('errorMessage');
 
-    if (!fullName || !address || !paymentMethod) {
-      Swal.fire("Incomplete!", "Please fill in all required fields.", "warning");
-      return;
-    }
+    successAlert.style.display = 'none';
+    errorAlert.style.display = 'none';
 
-    // 💵 If COD
-    if (paymentMethod !== "card") {
-      Swal.fire("Order Placed!", "Cash on delivery selected.", "success").then(() => {
-        localStorage.removeItem("cart");
-        window.location.href = "/pages/pet-owner-dashboard.html";
-      });
-      return;
-    }
-
-    // 💳 Card Payment Flow
-    try {
-      const response = await fetch("/create-payment-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ amount: calculateCartTotal() })
-      });
-
-      const { clientSecret, error: backendError } = await response.json();
-
-      if (backendError) throw new Error(backendError);
-
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            name: fullName
-          }
-        }
-      });
-
-      if (error) {
-        cardErrors.textContent = error.message;
+    if (!validateForm()) {
+        showError('Please fill in all required fields correctly.');
         return;
-      }
-
-      if (paymentIntent.status === "succeeded") {
-        Swal.fire("Payment Successful", "Thank you for your purchase!", "success").then(() => {
-          localStorage.removeItem("cart");
-          window.location.href = "/pages/pet-owner-dashboard.html";
-        });
-      }
-    } catch (err) {
-      console.error(err);
-      Swal.fire("Error", "Something went wrong while processing your payment.", "error");
     }
-  });
 
-  renderCheckoutItems();
+    payButton.disabled = true;
+    buttonText.style.display = 'none';
+    loading.style.display = 'block';
+
+    const formData = new FormData(this);
+
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const itemDescription = cart.map(i => `${i.name} x${i.quantity}`).join(', ') || 'No items';
+
+    const paymentRequest = {
+        amount: orderTotal || 3300.00,
+        currency: 'LKR',
+        firstName: formData.get('firstName'),
+        lastName: formData.get('lastName'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        address: formData.get('address'),
+        city: formData.get('city'),
+        country: formData.get('country'),
+        itemDescription
+    };
+
+    console.log('Sending payment request:', paymentRequest);
+
+    fetch(`${API_BASE_URL}/process`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(paymentRequest)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            const contentType = response.headers.get('content-type');
+            if (!contentType.includes('application/json')) throw new Error('Expected JSON response');
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                successAlert.style.display = 'block';
+
+                const payhereForm = document.getElementById('payhere-payment');
+                payhereForm.action = data.paymentUrl;
+                payhereForm.innerHTML = '';
+
+                Object.entries(data.paymentData).forEach(([key, value]) => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    payhereForm.appendChild(input);
+                });
+
+                if (!payhereForm.action || payhereForm.action.includes('undefined')) {
+                    showError('Invalid payment URL. Please try again.');
+                    return;
+                }
+
+                setTimeout(() => payhereForm.submit(), 1500);
+            } else {
+                showError(data.error || 'Payment failed');
+            }
+        })
+        .catch(error => {
+            console.error('Payment error:', error);
+            if (error.message.includes('fetch')) {
+                showError('Could not connect to backend. Make sure it is running.');
+            } else {
+                showError(error.message);
+            }
+        });
+
+    function showError(message) {
+        errorMessage.textContent = message;
+        errorAlert.style.display = 'block';
+        resetButton();
+    }
+
+    function resetButton() {
+        payButton.disabled = false;
+        buttonText.style.display = 'block';
+        loading.style.display = 'none';
+    }
 });
+
+// Validate form fields
+function validateForm() {
+    const requiredFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city'];
+    let isValid = true;
+
+    requiredFields.forEach(id => {
+        const field = document.getElementById(id);
+        if (!field.value.trim()) {
+            field.style.borderColor = '#003092';
+            isValid = false;
+        } else {
+            field.style.borderColor = '#e9ecef';
+        }
+    });
+
+    const email = document.getElementById('email').value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        document.getElementById('email').style.borderColor = '#003092';
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+// Validate email on blur
+document.getElementById('email').addEventListener('blur', function () {
+    const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+    this.style.borderColor = valid ? '#e9ecef' : '#003092';
+});
+
+// Validate phone on blur (Sri Lankan format)
+document.getElementById('phone').addEventListener('blur', function () {
+    const phone = this.value.replace(/\s/g, '');
+    const valid = /^(\+94|94|0)?[0-9]{9}$/.test(phone);
+    this.style.borderColor = valid ? '#e9ecef' : '#003092';
+});
+
+// Ping backend server on load
+function testBackendConnection() {
+    fetch(`${API_BASE_URL.replace('/payment', '')}/health`)
+        .then(res => res.text())
+        .then(msg => console.log('✅ Backend connection:', msg))
+        .catch(err => console.error('❌ Backend down:', err));
+}

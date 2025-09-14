@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="../css/payment-result.css">
+</head>
+<body>
+<div class="success-container">
+    <div class="success-icon">✅</div>
+    <h1>Payment Successful!</h1>
+    <p>Thank you for your purchase. Your payment has been processed successfully.</p>
+
+    <div class="order-details" id="orderDetails">
+        <div class="detail-row">
+            <span>Order ID:</span>
+            <span id="orderId">Loading...</span>
+        </div>
+        <div class="detail-row">
+            <span>Payment ID:</span>
+            <span id="paymentId">Loading...</span>
+        </div>
+        <div class="detail-row">
+            <span>Amount:</span>
+            <span>LKR 3,300.00</span>
+        </div>
+        <div class="detail-row">
+            <span>Status:</span>
+            <span>✅ Completed</span>
+        </div>
+    </div>
+
+    <p>A confirmation email has been sent to your registered email address.</p>
+
+    <div>
+        <a href="index.html" class="btn">Continue Shopping</a>
+        <a href="orders.html" class="btn btn-secondary">View Orders</a>
+    </div>
+</div>
+
+<script>
+    // Extract URL parameters
+    function getUrlParams() {
+        const params = new URLSearchParams(window.location.search);
+        return {
+            orderId: params.get('order_id'),
+            paymentId: params.get('payment_id')
+        };
+    }
+
+    // Update page with payment details
+    window.addEventListener('load', function() {
+        const params = getUrlParams();
+
+        if (params.orderId) {
+            document.getElementById('orderId').textContent = params.orderId;
+        }
+
+        if (params.paymentId) {
+            document.getElementById('paymentId').textContent = params.paymentId;
+        }
+    });
+</script>
+</body>
+</html>

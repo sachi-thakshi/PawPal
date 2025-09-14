@@ -1,0 +1,166 @@
+/* styles/payment-result.css */
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Success Page Styles */
+body:has(.success-container) {
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+}
+
+/* Cancel Page Styles */
+body:has(.cancel-container) {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.success-container,
+.cancel-container {
+    background: white;
+    padding: 50px;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+}
+
+.success-icon {
+    font-size: 4rem;
+    color: #4CAF50;
+    margin-bottom: 20px;
+}
+
+.cancel-icon {
+    font-size: 4rem;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2.5rem;
+}
+
+p {
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.order-details {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 30px 0;
+    text-align: left;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0;
+    padding: 8px 0;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.detail-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.btn {
+    display: inline-block;
+    padding: 15px 30px;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+    margin: 10px;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+}
+
+.success-container .btn {
+    background: #4CAF50;
+}
+
+.success-container .btn:hover {
+    background: #45a049;
+    transform: translateY(-2px);
+}
+
+.cancel-container .btn {
+    background: #ff6b6b;
+}
+
+.cancel-container .btn:hover {
+    background: #ee5a52;
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    background: #6c757d !important;
+}
+
+.btn-secondary:hover {
+    background: #545b62 !important;
+}
+
+.help-text {
+    background: #fff3cd;
+    color: #856404;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border-left: 4px solid #ffc107;
+    text-align: left;
+}
+
+.help-text strong {
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .success-container,
+    .cancel-container {
+        padding: 30px 20px;
+        margin: 10px;
+    }
+
+    h1 {
+        font-size: 2rem;
+    }
+
+    .success-icon,
+    .cancel-icon {
+        font-size: 3rem;
+    }
+
+    .btn {
+        display: block;
+        margin: 10px 0;
+        text-align: center;
+    }
+
+    .detail-row {
+        flex-direction: column;
+        gap: 5px;
+        text-align: center;
+    }
+
+    .detail-row span:first-child {
+        font-weight: bold;
+        color: #666;
+    }
+}

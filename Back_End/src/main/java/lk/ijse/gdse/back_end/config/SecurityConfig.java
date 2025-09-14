@@ -57,6 +57,11 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.POST, "/pet-adoption/add").authenticated() // only registered users
                                 .requestMatchers(HttpMethod.PUT, "/pet-adoption/update/**").authenticated()
                                 .requestMatchers("/forgot-password/**").permitAll()
+
+                                .requestMatchers("/payment/**").permitAll()  // All payment endpoints
+                                .requestMatchers("/health").permitAll()             // Health check
+                                .requestMatchers("/").permitAll()
+
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

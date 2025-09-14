@@ -23,4 +23,8 @@ public class PetItem {
     private String petItemDescription;
     private String petItemImageUrl;
     private String publicId;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id")
+    private Order order;
 }

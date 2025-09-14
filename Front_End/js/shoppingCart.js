@@ -120,5 +120,5 @@ document.getElementById("checkout-btn").addEventListener("click", () => {
     return;
   }
 
-  window.location.href = "/pages/checkout.html";
+  window.location.href = "../pages/checkout.html";
 });
