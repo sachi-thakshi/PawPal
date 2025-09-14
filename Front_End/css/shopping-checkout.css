@@ -1,0 +1,301 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+}
+
+body {
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
+    overflow-x: hidden;
+    background-color: #F2F0EF !important;
+
+}
+
+@keyframes floatDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    animation: floatDown 0.6s ease-out 0.1s;
+}
+
+.custom-navbar {
+    background-color: #003092;
+}
+
+.avatar-initial {
+    display: inline-block;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    background: linear-gradient(135deg, #7C4585, #003092);
+    color: #fff;
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+#nav-logo{
+    padding-right: 2rem;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo::before {
+    content: '🐾';
+    font-size: 1.5rem;
+}
+
+.header-a{
+    color: #ffffff !important;
+    font-weight: 500 !important;
+    font-family: "Ubuntu", sans-serif !important;
+
+}
+
+.header-a:hover {
+    color: #7C4585 !important;
+}
+
+.header-a.nav-link {
+    padding: 15px !important;
+}
+
+.nav-a{
+    color: #003092 !important;
+    font-weight: 500 !important;
+    font-family: "Ubuntu", sans-serif !important;
+}
+
+.nav-a:hover {
+    color: #7C4585 !important;
+}
+
+.nav-a.nav-link {
+    padding: 15px !important;
+}
+
+.navbar .rounded-circle {
+    object-fit: cover;
+    border: 2px solid #ccc;
+}
+
+.user-avatar-placeholder {
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(45deg, #b0b7c5, #7C4585);
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* footer */
+.footer {
+    background: linear-gradient(135deg, #003092 0%, #00256e 100%);
+    color: white;
+    padding: 3rem 0 1rem;
+    font-family: 'Ubuntu', sans-serif;
+    animation: floatDown 0.6s ease-out 0.1s;
+}
+
+.footer h3 {
+    color: white;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: #ffb6ff;
+}
+
+.footer address {
+    font-style: normal;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer ul li {
+    margin-bottom: 0.8rem;
+}
+
+.footer ul li a {
+    color: #e8d6ff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.footer ul li a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.footer-newsletter {
+    margin-top: 1.5rem;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1.5rem;
+    margin-top: 2rem;
+}
+
+.copyright p {
+    color: #e8d6ff;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.footer-social {
+    text-align: right;
+}
+
+.footer-social a {
+    color: white;
+    margin: 0 0.3rem;
+    transition: all 0.3s ease;
+}
+
+.footer-social a:hover {
+    color: #ffb6ff;
+    transform: scale(1.2);
+}
+
+@media (max-width: 768px) {
+    .footer-col {
+        margin-bottom: 2rem;
+    }
+
+    .footer-bottom .row > div {
+        text-align: center !important;
+        margin-bottom: 1rem;
+    }
+}
+
+/*checkout*/
+.checkout-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .card {
+            border: none;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #7C4585, #003092);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+            padding: 20px;
+        }
+        .cart-item {
+            border-bottom: 1px solid #eee;
+            padding: 15px 0;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .payment-method {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .payment-method:hover {
+            border-color: #003092;
+        }
+        .payment-method.selected {
+            border-color: #003092;
+            background-color: #f8f9ff;
+        }
+        .payment-method input[type="radio"] {
+            margin-right: 10px;
+        }
+        .total-section {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #7C4585, #003092);
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-weight: 600;
+        }
+        .form-control:focus {
+            border-color: #003092;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .card-form {
+            display: none;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #f8f9ff;
+            border-radius: 10px;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .quantity-btn:hover {
+            background-color: #003092;
+            color: white;
+        }

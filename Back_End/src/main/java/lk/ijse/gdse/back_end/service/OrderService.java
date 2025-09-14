@@ -1,9 +1,12 @@
 package lk.ijse.gdse.back_end.service;
 
+import lk.ijse.gdse.back_end.dto.OrderHistoryResponseDTO;
 import lk.ijse.gdse.back_end.dto.OrderRequestDTO;
-import lk.ijse.gdse.back_end.entity.Order;
+import lk.ijse.gdse.back_end.dto.OrderResponseDTO;
+
+import java.util.List;
 
 public interface OrderService {
-    Order saveOrder(OrderRequestDTO dto);
-    void updateStatus(String orderId, String status);
+    OrderResponseDTO placeOrder(OrderRequestDTO request, Long userId);
+    List<OrderHistoryResponseDTO> getUserOrders(Long userId);
 }

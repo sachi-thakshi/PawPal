@@ -11,16 +11,21 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PetItem {
+@Table(name = "order_details")
+public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long petItemId;
+    private Long id;
 
-    private String petItemName;
-    private String petItemCategory;
-    private double petItemPrice;
     private int quantity;
-    private String petItemDescription;
-    private String petItemImageUrl;
-    private String publicId;
+    private double price;
+    private double subtotal;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "pet_item_id")
+    private PetItem petItem;
 }

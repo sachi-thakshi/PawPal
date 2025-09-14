@@ -10,23 +10,25 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "orders")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String orderId;
     private String customerName;
-    private String address;
+    private String customerAddress;
     private String paymentMethod;
-    private String status; // e.g., PENDING, PAID, FAILED
-    private Double totalAmount;
+    private Double total;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private List<PetItem> items;
+    @Column(name = "user_id")
+    private Long userId; // from JWT
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderDetail> orderDetails;
 }
