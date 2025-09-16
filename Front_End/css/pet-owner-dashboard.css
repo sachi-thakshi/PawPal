@@ -498,3 +498,60 @@ body {
 .notification-new {
     animation: pulse 2s infinite;
 }
+
+
+/* Chat modal messages */
+#chatMessages {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* Sent messages (you) */
+.chat-message.sent {
+    align-self: flex-end;
+    background-color: #0d6efd;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 15px 15px 0 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Received messages (other user) */
+.chat-message.received {
+    align-self: flex-start;
+    background-color: #e9ecef;
+    color: #212529;
+    padding: 8px 12px;
+    border-radius: 15px 15px 15px 0;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+/* Chat timestamp */
+.chat-message .chat-time {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4px;
+    text-align: right;
+}
+
+/* For received messages timestamp */
+.chat-message.received .chat-time {
+    color: rgba(0, 0, 0, 0.5);
+}
+
+/* Input & send button styling */
+#chatInput {
+    border-radius: 20px;
+}
+
+#sendChatBtn {
+    border-radius: 20px;
+    margin-left: 10px;
+}

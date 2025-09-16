@@ -18,4 +18,6 @@ public interface AdoptionRequestRepository extends JpaRepository<AdoptionRequest
 
     List<AdoptionRequest> findByPet_OwnerAndApprovedIsNull(User owner);
     List<AdoptionRequest> findAll();
+    List<AdoptionRequest> findByRequesterEmail(String email);
+
 }

@@ -120,12 +120,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 				if (response.ok && data.data?.accessToken) {
 					localStorage.setItem("jwtToken", data.data.accessToken);
-					localStorage.setItem("username", data.data.username); // full name
+					localStorage.setItem("username", data.data.username);
 					localStorage.setItem("userRole", data.data.role);
 					localStorage.setItem("userId", data.data.userId);
+					localStorage.setItem("email", data.data.email);
 
 					console.log(localStorage.getItem("jwtToken"));
 					console.log(localStorage.getItem("userId"));
+					console.log(localStorage.getItem("email"));
 
 					Swal.fire({ icon: 'success', title: 'Logged In', text: 'Login Successful!', timer: 1500, showConfirmButton: false })
 						.then(() => {

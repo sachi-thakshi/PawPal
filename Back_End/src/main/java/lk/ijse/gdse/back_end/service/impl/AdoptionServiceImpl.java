@@ -293,4 +293,8 @@ public class AdoptionServiceImpl implements AdoptionService {
     public List<AdoptionRequest> getAllRequests() {
         return requestRepo.findAll();
     }
+    public List<AdoptionRequest> getRequestsByRequesterEmail(String email) {
+        return requestRepo.findByRequesterEmail(email);
+    }
+
 }

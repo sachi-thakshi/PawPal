@@ -62,6 +62,8 @@ public class SecurityConfig {
                                 .requestMatchers("/health").permitAll()             // Health check
                                 .requestMatchers("/").permitAll()
 
+                                .requestMatchers("/chat/**").permitAll()
+
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

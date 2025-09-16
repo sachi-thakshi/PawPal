@@ -115,4 +115,21 @@ public class AdoptionRequestController {
 
         return ResponseEntity.ok(new ApiResponse<>(200, "Success", dtoList));
     }
+
+    @GetMapping("/requester")
+    public ResponseEntity<ApiResponse<List<AdoptionRequestDTO>>> getRequestsByRequester(
+            @RequestHeader("Authorization") String authHeader) {
+        try {
+            String requesterEmail = extractEmailFromHeader(authHeader);
+            List<AdoptionRequest> requests = service.getRequestsByRequesterEmail(requesterEmail);
+
+            List<AdoptionRequestDTO> dtoList = requests.stream()
+                    .map(this::toRequestDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(new ApiResponse<>(200, "Success", dtoList));
+        } catch (RuntimeException ex) {
+            return ResponseEntity.badRequest().body(new ApiResponse<>(400, ex.getMessage(), null));
+        }
+    }
 }
