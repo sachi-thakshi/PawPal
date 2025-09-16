@@ -11,6 +11,26 @@ signInButton.addEventListener('click', () => {
 	container.classList.remove("right-panel-active");
 });
 
+async function authFetch(url, options = {}) {
+	const token = localStorage.getItem("jwtToken");
+
+	const headers = {
+		...(options.headers || {}),
+		"Content-Type": "application/json",
+		"Authorization": token ? `Bearer ${token}` : ""
+	};
+
+	const response = await fetch(url, { ...options, headers });
+
+	if (response.status === 401) {
+		// Token expired or invalid → clear & redirect
+		localStorage.clear();
+		window.location.href = "../pages/authentication.html";
+	}
+
+	return response;
+}
+
 // --- Handle Google login JWT from redirect ---
 document.addEventListener("DOMContentLoaded", () => {
 	const urlParams = new URLSearchParams(window.location.search);
@@ -64,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const registerDTO = { username, email, contactNumber, password, role: "CUSTOMER" };
 
 			try {
-				const response = await fetch("http://localhost:8080/auth/register", {
+				const response = await authFetch("http://localhost:8080/auth/register", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(registerDTO)
@@ -109,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
 			const authDTO = { email, password };
 
 			try {
-				const response = await fetch("http://localhost:8080/auth/login", {
+				const response = await authFetch("http://localhost:8080/auth/login", {
 					method: "POST",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify(authDTO)

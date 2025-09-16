@@ -3,6 +3,7 @@ package lk.ijse.gdse.back_end.config;
 import lk.ijse.gdse.back_end.service.CustomOAuth2UserService;
 import lk.ijse.gdse.back_end.util.JwtAuthFilter;
 import lk.ijse.gdse.back_end.util.JwtUtil;
+import lk.ijse.gdse.back_end.util.OAuth2LoginAuthenticationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,6 +37,7 @@ public class SecurityConfig {
     private final PasswordEncoder passwordEncoder;
     private final CustomOAuth2UserService customOAuth2UserService;
     private final JwtUtil  jwtUtil;
+    private final OAuth2LoginAuthenticationFilter oAuth2LoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -74,9 +76,8 @@ public class SecurityConfig {
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("http://localhost:63342/PawPal/Front_End/pages/authentication.html")
                         .userInfoEndpoint(userInfo -> userInfo.userService(customOAuth2UserService))
-                        .defaultSuccessUrl("http://localhost:63342/PawPal/Front_End/pages/pet-owner-dashboard.html", true)
+                        .successHandler(oAuth2LoginSuccessHandler)  // use the bean we just created
                         .failureUrl("http://localhost:63342/PawPal/Front_End/pages/authentication.html?error=true")
                 );
 
@@ -96,9 +97,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedOrigins(List.of("http://localhost:63342"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Authorization"));
         configuration.setAllowCredentials(true);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

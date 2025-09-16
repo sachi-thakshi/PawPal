@@ -27,6 +27,8 @@ public class User {
     private String address;
     private String password;
 
+    private String provider;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
