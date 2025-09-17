@@ -13,4 +13,5 @@ public interface PetService {
     boolean deletePet(Long petId, String email);
     Pet uploadPetProfileImage(Long petId, MultipartFile file);
     List<Pet> getAllPets();
+    long getTotalPets();
 }

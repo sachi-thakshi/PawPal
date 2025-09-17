@@ -21,9 +21,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -77,6 +82,7 @@ public class AdoptionServiceImpl implements AdoptionService {
                             )
                             .hasApprovedRequest(hasApprovedRequest)
                             .hasPendingRequest(hasPendingRequest)
+                            .date(pet.getDate())
                             .build();
                 }).filter(dto -> !dto.isHasApprovedRequest())
                 .collect(Collectors.toList());
@@ -296,5 +302,73 @@ public class AdoptionServiceImpl implements AdoptionService {
     public List<AdoptionRequest> getRequestsByRequesterEmail(String email) {
         return requestRepo.findByRequesterEmail(email);
     }
+
+    @Override
+    public int getTodayAdoptionsCount() {
+        return petRepo.countTodayAdoptions();
+    }
+
+    // Count approved adoptions this week
+    @Override
+    public int countWeekAdoptions() {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
+        return petRepo.countByDateBetween(startOfWeek, endOfWeek);
+    }
+
+    // Count pending requests this week
+    @Override
+    public int countWeekRequests() {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
+        return requestRepo.countByRequestDateBetweenAndApprovedFalse(startOfWeek, endOfWeek);
+    }
+
+    @Override
+    public Map<String, Object> getWeeklyAdoptionsRequests() {
+        Map<String, Object> response = new HashMap<>();
+
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
+
+        // Fetch data from repository
+        List<PetAdoption> adoptions = petRepo.findByDateBetween(startOfWeek, endOfWeek);
+        List<AdoptionRequest> requests = requestRepo.findByRequestDateBetween(
+                startOfWeek.atStartOfDay(),
+                endOfWeek.atTime(23, 59, 59)
+        );
+
+        // Prepare chart data
+        List<String> labels = new ArrayList<>();
+        List<Long> adoptionCounts = new ArrayList<>();
+        List<Long> requestCounts = new ArrayList<>();
+
+        for (LocalDate date = startOfWeek; !date.isAfter(endOfWeek); date = date.plusDays(1)) {
+            labels.add(date.toString());
+
+            LocalDate finalDate = date;
+
+            long dailyAdoptions = adoptions.stream()
+                    .filter(a -> a.getDate().isEqual(finalDate))
+                    .count();
+
+            long dailyRequests = requests.stream()
+                    .filter(r -> r.getRequestDate().toLocalDate().isEqual(finalDate))
+                    .count();
+
+            adoptionCounts.add(dailyAdoptions);
+            requestCounts.add(dailyRequests);
+        }
+
+        response.put("labels", labels);
+        response.put("adoptions", adoptionCounts);
+        response.put("requests", requestCounts);
+
+        return response;
+    }
+
 
 }

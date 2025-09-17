@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -99,5 +100,16 @@ public class PetItemServiceImpl implements PetItemService {
     @Override
     public List<PetItem> getPetItemsByCategory(String category) {
         return petItemRepository.findByPetItemCategory(category);
+    }
+
+    @Override
+    public Map<String, Long> getPetItemCountsByCategory() {
+        Map<String, Long> counts = new HashMap<>();
+        petItemRepository.countItemsByCategory().forEach(row -> {
+            String category = (String) row[0];
+            Long count = (Long) row[1];
+            counts.put(category, count);
+        });
+        return counts;
     }
 }

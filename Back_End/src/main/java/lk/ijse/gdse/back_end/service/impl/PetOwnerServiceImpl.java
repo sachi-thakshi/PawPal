@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -66,5 +67,13 @@ public class PetOwnerServiceImpl implements PetOwnerService {
         } catch (IOException e) {
             throw new RuntimeException("Cloudinary upload failed: " + e.getMessage());
         }
+    }
+
+    @Override
+    public long getMonthlyRegistrations() {
+        LocalDateTime now = LocalDateTime.now();
+        int month = now.getMonthValue();
+        int year = now.getYear();
+        return userRepository.countUsersByMonth(month, year);
     }
 }

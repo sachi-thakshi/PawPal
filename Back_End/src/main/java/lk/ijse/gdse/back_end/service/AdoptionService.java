@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public interface AdoptionService {
     PetAdoption addPetByEmailWithImage(PetAdoption pet, MultipartFile image, String ownerEmail) throws IOException;
@@ -24,4 +25,9 @@ public interface AdoptionService {
     List<AdoptionRequestDTO> getPendingRequestsForOwner(String ownerEmail);
     List<AdoptionRequest> getAllRequests();
     List<AdoptionRequest> getRequestsByRequesterEmail(String email);
+
+    int getTodayAdoptionsCount();
+    int countWeekAdoptions();
+    int countWeekRequests();
+    Map<String, Object> getWeeklyAdoptionsRequests();
 }

@@ -1,8 +1,8 @@
 body {
-    /*background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);*/
     background-color: #d1edff;
     min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: "Ubuntu", sans-serif;
+    font-weight: 500;
 }
 
 .dashboard-container {
@@ -49,6 +49,15 @@ body {
     margin-bottom: 10px;
 }
 
+#shopChart {
+    width: 100% !important;
+    height: 400px !important;
+}
+
+#logged-admin-name{
+    color: #003092;
+}
+
 .chart-card {
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
@@ -56,7 +65,7 @@ body {
     padding: 25px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     margin-bottom: 30px;
-    height: 400px;
+    height: 500px;
 }
 
 .info-card {
@@ -108,52 +117,6 @@ body {
     margin-right: 15px;
 }
 
-.status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    margin-right: 8px;
-}
-
-.status-online { background-color: #28a745; }
-.status-offline { background-color: #6c757d; }
-
-.btn-approve {
-    background: linear-gradient(135deg, #28a745, #20c997);
-    border: none;
-    color: white;
-    margin-left: 5px;
-}
-
-.btn-reject {
-    background: linear-gradient(135deg, #ffc107, #fd7e14);
-    border: none;
-    color: white;
-}
-
-.table-responsive {
-    border-radius: 15px;
-    overflow: hidden;
-}
-
-.table {
-    margin-bottom: 0;
-}
-
-.table thead th {
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    font-weight: 600;
-    padding: 15px;
-}
-
-.table tbody td {
-    padding: 15px;
-    vertical-align: middle;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
 .badge {
     border-radius: 20px;
     padding: 8px 12px;
@@ -180,7 +143,7 @@ body {
 .lost-found-icon {
     font-size: 2.5rem;
     margin-bottom: 10px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
+    background: linear-gradient(135deg, #7C4585, #003092);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

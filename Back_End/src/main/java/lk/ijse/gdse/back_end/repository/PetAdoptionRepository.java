@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -17,4 +19,13 @@ public interface PetAdoptionRepository extends JpaRepository<PetAdoption, Long> 
 
     @Query("SELECT p FROM PetAdoption p JOIN FETCH p.owner")
     List<PetAdoption> findAllWithOwner();
+
+    @Query("SELECT COUNT(pa) FROM PetAdoption pa WHERE pa.date = CURRENT_DATE")
+    int countTodayAdoptions();
+
+    int countByDateBetween(LocalDate start, LocalDate end);
+
+    int countByDate(LocalDate date);
+
+    List<PetAdoption> findByDateBetween(LocalDate startDate, LocalDate endDate);
 }

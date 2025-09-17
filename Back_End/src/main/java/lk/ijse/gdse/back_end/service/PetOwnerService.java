@@ -9,4 +9,5 @@ public interface PetOwnerService {
     User getPetOwnerByEmail(String email);
     void updatePetOwner(String email, PetOwnerDTO dto);
     User uploadProfileImage(String email, MultipartFile file);
+    long getMonthlyRegistrations();
 }

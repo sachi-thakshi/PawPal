@@ -4,6 +4,7 @@ import lk.ijse.gdse.back_end.entity.PetItem;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface PetItemService {
@@ -13,4 +14,5 @@ public interface PetItemService {
     Optional<PetItem> getPetItemById(Long id);
     List<PetItem> getAllPetItems();
     List<PetItem> getPetItemsByCategory(String category);
+    Map<String, Long> getPetItemCountsByCategory();
 }

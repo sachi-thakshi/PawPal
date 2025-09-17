@@ -1,298 +1,247 @@
-// Enhanced Admin Dashboard JavaScript
+// ---------------- Enhanced Admin Dashboard ----------------
 function initAdminDashboard() {
-    animateCounters();
-    animateProgressBars();
-    initCharts();
-
-    // Simulate real-time updates every 30s
-    setInterval(updateStats, 30000);
-
     console.log('Enhanced Pet Admin Dashboard initialized successfully!');
 }
 
-// Counter Animation
-function animateCounters() {
-    const counters = document.querySelectorAll('.animate-counter');
-    counters.forEach(counter => {
-        const target = parseInt(counter.innerText.replace(/[$,]/g, '')) || 0;
-        const isPrice = counter.innerText.includes('$');
-        const duration = 2000;
-        const step = target / (duration / 16);
-        let current = 0;
+// ---------------- Username Setter ----------------
+function setAdminUsername() {
+    const usernameSpan = document.getElementById("logged-admin-name");
+    const username = localStorage.getItem("username");
 
-        const timer = setInterval(() => {
-            current += step;
-            if (current >= target) {
-                counter.innerText = isPrice ? '$' + target.toLocaleString() : target.toLocaleString();
-                clearInterval(timer);
-            } else {
-                const value = Math.floor(current);
-                counter.innerText = isPrice ? '$' + value.toLocaleString() : value.toLocaleString();
-            }
-        }, 16);
-    });
+    if (usernameSpan) {
+        usernameSpan.textContent = username;
+        console.log("Admin username loaded:", username);
+
+        const avatarImg = document.querySelector(".dropdown img");
+        if (avatarImg) {
+            avatarImg.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(username)}&background=667eea&color=fff`;
+            avatarImg.alt = username;
+        }
+
+        return true;
+    } else {
+        console.warn("#logged-admin-name not found yet");
+        return false;
+    }
 }
 
-// Progress Bar Animation
-function animateProgressBars() {
-    const progressBars = document.querySelectorAll('.progress-bar');
-    progressBars.forEach((bar, index) => {
-        setTimeout(() => {
-            bar.style.transition = 'width 1.5s ease-out';
-        }, index * 200);
-    });
-}
+// ---------------- Adoption Requests Chart ----------------
+let adoptionRequestChart = null;
+async function updateAdoptionsRequestsChart() {
+    try {
+        const token = localStorage.getItem("jwtToken");
+        const res = await fetch("http://localhost:8080/admin-dashboard/adoptions-requests-chart-week", {
+            headers: token ? { "Authorization": `Bearer ${token}` } : {}
+        });
 
-// Initialize Charts
-// Global chart instance variables
-let adoptionChartInstance = null;
-let shopChartInstance = null;
+        if (!res.ok) throw new Error("Failed to fetch chart data");
 
-function initCharts() {
-    const adoptionCanvas = document.getElementById('adoptionChart');
-    const shopCanvas = document.getElementById('shopChart');
+        const data = await res.json();
+        const canvas = document.getElementById("adoptionsRequestsChart");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
 
-    if (!adoptionCanvas || !shopCanvas) {
-        console.warn('Chart canvas elements not found. Skipping chart initialization.');
-        return;
-    }
+        if (adoptionRequestChart) adoptionRequestChart.destroy();
 
-    const adoptionCtx = adoptionCanvas.getContext('2d');
-    const shopCtx = shopCanvas.getContext('2d');
-
-    // Destroy existing charts if they exist
-    if (adoptionChartInstance) {
-        adoptionChartInstance.destroy();
-    }
-    if (shopChartInstance) {
-        shopChartInstance.destroy();
-    }
-
-    // Create Pet Adoption Bar Chart
-    adoptionChartInstance = new Chart(adoptionCtx, {
-        type: 'bar',
-        data: {
-            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-            datasets: [
-                {
-                    label: 'Adoptions',
-                    data: [12, 19, 8, 15, 22, 18, 25],
-                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
-                    borderColor: 'rgba(102, 126, 234, 1)',
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    borderSkipped: false,
-                },
-                {
-                    label: 'Applications',
-                    data: [20, 32, 15, 28, 35, 30, 40],
-                    backgroundColor: 'rgba(118, 75, 162, 0.6)',
-                    borderColor: 'rgba(118, 75, 162, 1)',
-                    borderWidth: 2,
-                    borderRadius: 8,
-                    borderSkipped: false,
-                }
-            ]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'top',
-                }
+        adoptionRequestChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: [
+                    {
+                        label: 'Approved Adoptions',
+                        data: data.adoptions,
+                        backgroundColor: 'rgba(102, 126, 234, 0.8)'
+                    },
+                    {
+                        label: 'Pending Requests',
+                        data: data.requests,
+                        backgroundColor: 'rgba(255, 159, 64, 0.8)'
+                    }
+                ]
             },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    grid: {
-                        color: 'rgba(0,0,0,0.1)'
-                    }
+            options: {
+                animation: { duration: 0 },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: { beginAtZero: true, title: { display: true, text: 'Count' } },
+                    x: { title: { display: true, text: 'Date' } }
                 },
-                x: {
-                    grid: {
-                        display: false
+                plugins: {
+                    legend: { position: 'top' },
+                    tooltip: { mode: 'index', intersect: false }
+                }
+            }
+        });
+
+    } catch (err) {
+        console.error("Failed to update adoption chart:", err);
+    }
+}
+
+// ---------------- Shop Performance Chart ----------------
+let shopChartInstance = null;
+async function updateShopChart() {
+    console.log("updateShopChart() called");
+
+    const shopCanvas = document.getElementById('shopChart');
+    if (!shopCanvas) return;
+
+    const ctx = shopCanvas.getContext('2d');
+
+    try {
+        const res = await fetch("http://localhost:8080/admin-dashboard/shop-categories-count");
+        console.log("Fetch response status:", res.status);
+
+        if (!res.ok) throw new Error(`Failed to fetch shop data. Status: ${res.status}`);
+
+        const data = await res.json();
+        console.log("Shop chart raw data:", data);
+
+        if (shopChartInstance) {
+            shopChartInstance.destroy();
+            shopChartInstance = null;
+        }
+
+        const labels = Object.keys(data);
+        const counts = Object.values(data);
+
+        if (labels.length === 0 || counts.length === 0) {
+            console.warn("No data to display in shop chart.");
+            ctx.clearRect(0, 0, shopCanvas.width, shopCanvas.height);
+            ctx.font = "16px Arial";
+            ctx.fillText("No shop data available", 10, 50);
+            return;
+        }
+
+        const generateColors = (num) => {
+            const baseColors = [
+                'rgba(102, 126, 234, 0.8)',
+                'rgba(118, 75, 162, 0.8)',
+                'rgba(240, 147, 251, 0.8)',
+                'rgba(79, 172, 254, 0.8)',
+                'rgba(32, 201, 151, 0.8)',
+                'rgba(255, 99, 132, 0.8)',
+                'rgba(255, 206, 86, 0.8)'
+            ];
+            return Array.from({ length: num }, (_, i) => baseColors[i % baseColors.length]);
+        };
+
+        const backgroundColors = generateColors(labels.length);
+        const borderColors = backgroundColors.map(c => c.replace('0.8', '1'));
+
+        shopChartInstance = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: counts,
+                    backgroundColor: backgroundColors,
+                    borderColor: borderColors,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { boxWidth: 20, padding: 15 }
                     }
                 }
             }
-        }
-    });
+        });
 
-    // Create Shop Performance Doughnut Chart
-    shopChartInstance = new Chart(shopCtx, {
-        type: 'doughnut',
-        data: {
-            labels: ['Pet Food', 'Toys', 'Accessories', 'Medicine', 'Grooming'],
-            datasets: [{
-                data: [35, 25, 20, 12, 8],
-                backgroundColor: [
-                    'rgba(102, 126, 234, 0.8)',
-                    'rgba(118, 75, 162, 0.8)',
-                    'rgba(240, 147, 251, 0.8)',
-                    'rgba(79, 172, 254, 0.8)',
-                    'rgba(32, 201, 151, 0.8)'
-                ],
-                borderColor: [
-                    'rgba(102, 126, 234, 1)',
-                    'rgba(118, 75, 162, 1)',
-                    'rgba(240, 147, 251, 1)',
-                    'rgba(79, 172, 254, 1)',
-                    'rgba(32, 201, 151, 1)'
-                ],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                legend: {
-                    position: 'bottom',
-                    labels: {
-                        padding: 20,
-                        usePointStyle: true
-                    }
-                }
-            }
-        }
-    });
-}
-
-
-// Notification System
-function showNotification(message, type = 'success') {
-    const notification = document.createElement('div');
-    notification.className = `alert alert-${type} alert-dismissible fade show position-fixed`;
-    notification.style.cssText = 'top: 20px; right: 20px; z-index: 1050; min-width: 300px;';
-    notification.innerHTML = `
-                ${message}
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            `;
-    document.body.appendChild(notification);
-
-    setTimeout(() => {
-        notification.remove();
-    }, 5000);
-}
-
-// Real-time Updates Simulation
-function updateStats() {
-    const dailyAdoptions = document.querySelector('.stats-value');
-    if (!dailyAdoptions) return;
-
-    const currentValue = parseInt(dailyAdoptions.textContent.replace(/,/g, '')) || 0;
-    const newValue = currentValue + Math.floor(Math.random() * 3);
-
-    dailyAdoptions.textContent = newValue.toLocaleString();
-
-    // Update shop sales
-    const shopSales = document.querySelectorAll('.stats-value')[3];
-    if (shopSales) {
-        const currentSales = parseInt(shopSales.textContent.replace(/[$,]/g, '')) || 0;
-        const newSales = currentSales + Math.floor(Math.random() * 100);
-        shopSales.textContent = '$' + newSales.toLocaleString();
-    }
-
-    if (Math.random() > 0.7) {
-        showNotification(`New pet adoption completed! Total today: ${newValue}`, 'success');
-    }
-
-    if (Math.random() > 0.8) {
-        showNotification('New shop order received!', 'info');
+    } catch (err) {
+        console.error("Failed to load shop chart:", err);
+        ctx.clearRect(0, 0, shopCanvas.width, shopCanvas.height);
+        ctx.font = "16px Arial";
+        ctx.fillText("Failed to load shop chart", 10, 50);
     }
 }
 
-// Add new user to recent users table
-function addNewUser() {
-    const tableBody = document.getElementById('recentUsersTable');
-    const names = ['Alex Thompson', 'Maria Garcia', 'John Smith', 'Anna Lee', 'Tom Wilson'];
-    const types = ['Pet Adopter', 'Volunteer', 'Foster Parent', 'Pet Owner'];
-    const statuses = ['Active', 'Pending', 'Verified'];
-    const statusClasses = ['success', 'warning', 'info'];
-
-    const randomName = names[Math.floor(Math.random() * names.length)];
-    const randomType = types[Math.floor(Math.random() * types.length)];
-    const randomStatus = Math.floor(Math.random() * statuses.length);
-
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-                <td>
-                    <div class="d-flex align-items-center">
-                        <img src="https://ui-avatars.com/api/?name=${randomName.replace(' ', '+')}&background=667eea&color=fff" class="rounded-circle me-2" width="35" height="35">
-                        <div>
-                            <div class="fw-semibold">${randomName}</div>
-                            <small class="text-muted">${randomType}</small>
-                        </div>
-                    </div>
-                </td>
-                <td>${randomName.toLowerCase().replace(' ', '.')}@email.com</td>
-                <td>
-                    <small>Sep 12, 2025</small>
-                    <div class="text-muted" style="font-size: 0.75rem;">Just now</div>
-                </td>
-                <td><span class="badge bg-${statusClasses[randomStatus]}">${statuses[randomStatus]}</span></td>
-                <td>
-                    <button class="btn btn-sm btn-outline-primary">View</button>
-                </td>
-            `;
-
-    tableBody.insertBefore(newRow, tableBody.firstChild);
-
-    // Remove last row if more than 5 users
-    if (tableBody.children.length > 5) {
-        tableBody.removeChild(tableBody.lastChild);
+function waitForCanvasAndRender() {
+    const canvas = document.getElementById('shopChart');
+    if (canvas) {
+        updateShopChart();
+    } else {
+        setTimeout(waitForCanvasAndRender, 100);
     }
-
-    // Animate new row
-    newRow.style.backgroundColor = '#e8f5e8';
-    setTimeout(() => {
-        newRow.style.backgroundColor = '';
-        newRow.style.transition = 'background-color 0.5s ease';
-    }, 2000);
 }
 
-// Use event delegation for dynamic buttons
-document.addEventListener("click", function (e) {
-    if (e.target.closest(".btn-approve")) {
-        const btn = e.target.closest(".btn-approve");
-        showNotification('Application approved successfully!', 'success');
-        btn.closest('.user-item').style.backgroundColor = '#d4edda';
-        btn.closest('.user-item').style.borderRadius = '10px';
-        btn.closest('.user-item').style.padding = '15px 10px';
-        setTimeout(() => {
-            btn.closest('.user-item').style.display = 'none';
-        }, 1000);
+// ---------------- Dashboard Stats ----------------
+async function loadDashboardStats() {
+    try {
+        const response = await fetch("http://localhost:8080/admin-dashboard/stats");
+        const stats = await response.json();
+
+        document.getElementById("dailyAdoptionsCount").textContent = stats.dailyAdoptions;
+        document.getElementById("monthlyRegistrationsCount").textContent = stats.monthlyRegistrations;
+        document.getElementById("totalPetsCount").textContent = stats.totalPets;
+        document.getElementById("todayIncome").textContent = "LKR " + stats.todayIncome.toFixed(2);
+
+    } catch (error) {
+        console.error("Error loading dashboard stats:", error);
     }
+}
 
-    if (e.target.closest(".btn-reject")) {
-        showNotification('Application moved to review queue.', 'info');
+// ---------------- Lost & Found Counts ----------------
+async function loadLostFoundCounts() {
+    try {
+        const res = await fetch("http://localhost:8080/admin-dashboard/lost-found-counts");
+        if (!res.ok) throw new Error("Failed to fetch lost & found counts");
+
+        const counts = await res.json();
+        console.log("Lost & Found counts:", counts);
+
+        document.getElementById("lostCount").textContent = counts.lost;
+        document.getElementById("foundCount").textContent = counts.found;
+
+    } catch (err) {
+        console.error("Error loading lost & found counts:", err);
     }
+}
 
-    if (e.target.closest(".btn-outline-primary")) {
-        showNotification('Opening user profile...', 'info');
-    }
-});
+// ---------------- Initialize Dashboard ----------------
+function initDashboardFeatures() {
+    if (!setAdminUsername()) return;
 
-// Simulate new user registrations every 2 minutes
-setInterval(addNewUser, 120000);
+    waitForCanvasAndRender();
+    updateAdoptionsRequestsChart();
+    loadDashboardStats();
+    loadLostFoundCounts();
 
-// Initialize dashboard when page loads
-document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(initAdminDashboard, 500);
-});
+    setInterval(() => {
+        updateAdoptionsRequestsChart();
+        updateShopChart();
+    }, 300000);
 
-// Enhanced hover effects
-document.addEventListener('DOMContentLoaded', function() {
     const cards = document.querySelectorAll('.stats-card, .chart-card, .info-card');
     cards.forEach(card => {
         card.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-5px)';
             this.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.15)';
         });
-
         card.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
             this.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
         });
     });
+}
+
+// ---------------- Static Load ----------------
+document.addEventListener("DOMContentLoaded", () => {
+    initDashboardFeatures();
 });
+
+// ---------------- Dynamic Load ----------------
+const observer = new MutationObserver(() => {
+    if (document.getElementById("logged-admin-name")) {
+        console.log("Dashboard detected dynamically, initializing…");
+        initDashboardFeatures();
+        observer.disconnect();
+    }
+});
+observer.observe(document.body, { childList: true, subtree: true });

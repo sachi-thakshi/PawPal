@@ -1,6 +1,7 @@
 package lk.ijse.gdse.back_end.repository;
 
 import lk.ijse.gdse.back_end.entity.PetReport;
+import lk.ijse.gdse.back_end.entity.PetReportType;
 import lk.ijse.gdse.back_end.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,7 +15,7 @@ public interface PetReportRepository extends JpaRepository<PetReport, Long> {
     List<PetReport> findByOwner(User owner);
 
     // Get all reports by type (LOST or FOUND)
-    List<PetReport> findByType(String type);
+    List<PetReport> findByType(PetReportType type);
 
     // Get all reports from a specific location
     List<PetReport> findByLocationContainingIgnoreCase(String location);

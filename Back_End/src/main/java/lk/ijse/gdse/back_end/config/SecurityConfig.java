@@ -66,6 +66,8 @@ public class SecurityConfig {
 
                                 .requestMatchers("/chat/**").permitAll()
 
+                                .requestMatchers("/admin-dashboard/**").permitAll()
+
                                 .anyRequest().authenticated())
 
                 .sessionManagement(session ->

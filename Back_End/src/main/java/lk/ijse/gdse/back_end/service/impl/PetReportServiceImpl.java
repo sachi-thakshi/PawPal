@@ -118,7 +118,7 @@ public class PetReportServiceImpl implements PetReportService {
 
     // Get all reports by type (LOST or FOUND)
     @Override
-    public List<PetReport> getReportsByType(String type) {
+    public List<PetReport> getReportsByType(PetReportType  type) {
         return petReportRepository.findByType(type);
     }
 

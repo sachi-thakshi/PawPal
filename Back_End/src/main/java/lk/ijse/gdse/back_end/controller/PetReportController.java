@@ -3,6 +3,7 @@ package lk.ijse.gdse.back_end.controller;
 import lk.ijse.gdse.back_end.dto.ApiResponse;
 import lk.ijse.gdse.back_end.dto.PetReportDTO;
 import lk.ijse.gdse.back_end.entity.PetReport;
+import lk.ijse.gdse.back_end.entity.PetReportType;
 import lk.ijse.gdse.back_end.service.PetReportService;
 import lk.ijse.gdse.back_end.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -75,10 +76,20 @@ public class PetReportController {
     // ------------------- GET BY TYPE (LOST or FOUND) -------------------
     @GetMapping("/type/{type}")
     public ResponseEntity<ApiResponse<List<PetReportDTO>>> getReportsByType(@PathVariable String type) {
-        List<PetReportDTO> dtoList = petReportService.getReportsByType(type.toUpperCase())
-                .stream().map(this::toDTO).collect(Collectors.toList());
+        try {
+            PetReportType reportType = PetReportType.valueOf(type.toUpperCase());
 
-        return ResponseEntity.ok(new ApiResponse<>(200, "Reports fetched successfully", dtoList));
+            List<PetReportDTO> dtoList = petReportService.getReportsByType(reportType)
+                    .stream()
+                    .map(this::toDTO)
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(new ApiResponse<>(200, "Reports fetched successfully", dtoList));
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest()
+                    .body(new ApiResponse<>(400, "Invalid report type: " + type, null));
+        }
     }
 
     @PutMapping("/{reportId}")

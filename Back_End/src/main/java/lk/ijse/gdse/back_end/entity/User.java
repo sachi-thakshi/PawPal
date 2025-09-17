@@ -29,6 +29,9 @@ public class User {
 
     private String provider;
 
+    @Column(name = "created_at", nullable = true, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

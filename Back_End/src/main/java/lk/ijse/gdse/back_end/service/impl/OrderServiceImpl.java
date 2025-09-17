@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -104,5 +105,45 @@ public class OrderServiceImpl implements OrderService {
                     items
             );
         }).toList();
+    }
+
+    @Override
+    public double getTodayIncome() {
+        LocalDate today = LocalDate.now();
+        // Assuming orderDate is LocalDateTime
+        return orderRepository
+                .findByCreatedAtBetween(today.atStartOfDay(), today.plusDays(1).atStartOfDay())
+                .stream()
+                .mapToDouble(order -> order.getTotal())
+                .sum();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map<String, Integer> getShopPerformanceThisWeek() {
+        LocalDate today = LocalDate.now();
+        LocalDate startOfWeek = today.with(java.time.DayOfWeek.MONDAY);
+        LocalDate endOfWeek = today.with(java.time.DayOfWeek.SUNDAY);
+
+        List<Order> orders = orderRepository.findByCreatedAtBetween(
+                startOfWeek.atStartOfDay(),
+                endOfWeek.atTime(23, 59, 59)
+        );
+
+        Map<String, Integer> performance = new HashMap<>();
+        performance.put("Pet Food", 0);
+        performance.put("Toys", 0);
+        performance.put("Accessories", 0);
+        performance.put("Medicine", 0);
+        performance.put("Grooming", 0);
+
+        for (Order order : orders) {
+            order.getOrderDetails().forEach(detail -> {
+                String category = detail.getPetItem().getPetItemCategory(); // Add category to PetItem entity
+                performance.put(category, performance.getOrDefault(category, 0) + detail.getQuantity());
+            });
+        }
+
+        return performance;
     }
 }
