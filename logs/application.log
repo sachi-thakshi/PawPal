@@ -68,3 +68,38 @@
 2025-09-18T00:05:15.352+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
 2025-09-18T00:05:15.352+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Vaccination records retrieved, data=[PetVaccinationDTO(petVaccinatio (truncated)...]
 2025-09-18T00:05:15.353+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:47.900+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/pets/userPets", parameters={}
+2025-09-18T00:05:47.900+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetAccountsController#getUserPets(String)
+2025-09-18T00:05:47.909+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:47.909+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Success, data=[PetDTO(petId=1, name=Shery, type=Dog, breed=Rotweiler (truncated)...]
+2025-09-18T00:05:47.909+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:50.400+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/petcare/1", parameters={}
+2025-09-18T00:05:50.400+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetCareInfoController#getCareInfo(String, Long)
+2025-09-18T00:05:50.405+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:50.405+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Care Info retrieved, data=PetCareInfoDTO(petCareInfoId=1, food=Chick (truncated)...]
+2025-09-18T00:05:50.405+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:50.427+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/pet-health/1", parameters={}
+2025-09-18T00:05:50.427+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetHealthInfoController#getPetHealthInfo(String, Long)
+2025-09-18T00:05:50.434+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:50.434+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-5] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Pet Health Info Retrieved Successfully, data=PetHealthInfoDTO(petHea (truncated)...]
+2025-09-18T00:05:50.434+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:50.454+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/vaccination/1", parameters={}
+2025-09-18T00:05:50.454+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetVaccinationController#getVaccinations(String, Long)
+2025-09-18T00:05:50.469+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:50.469+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Vaccination records retrieved, data=[PetVaccinationDTO(petVaccinatio (truncated)...]
+2025-09-18T00:05:50.470+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:57.711+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/petcare/1", parameters={}
+2025-09-18T00:05:57.711+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetCareInfoController#getCareInfo(String, Long)
+2025-09-18T00:05:57.722+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:57.723+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Care Info retrieved, data=PetCareInfoDTO(petCareInfoId=1, food=Chick (truncated)...]
+2025-09-18T00:05:57.724+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:57.734+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/pet-health/1", parameters={}
+2025-09-18T00:05:57.735+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetHealthInfoController#getPetHealthInfo(String, Long)
+2025-09-18T00:05:57.750+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:57.750+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Pet Health Info Retrieved Successfully, data=PetHealthInfoDTO(petHea (truncated)...]
+2025-09-18T00:05:57.752+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-09-18T00:05:57.767+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/vaccination/1", parameters={}
+2025-09-18T00:05:57.767+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to lk.ijse.gdse.back_end.controller.PetVaccinationController#getVaccinations(String, Long)
+2025-09-18T00:05:57.779+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [*/*] and supported [application/json, application/*+json]
+2025-09-18T00:05:57.779+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [ApiResponse(status=200, message=Vaccination records retrieved, data=[PetVaccinationDTO(petVaccinatio (truncated)...]
+2025-09-18T00:05:57.780+05:30 DEBUG 1328 --- [Back_End] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
