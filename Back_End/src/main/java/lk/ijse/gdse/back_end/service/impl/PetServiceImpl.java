@@ -2,11 +2,10 @@ package lk.ijse.gdse.back_end.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
-import lk.ijse.gdse.back_end.dto.PetDTO;
+import lk.ijse.gdse.back_end.dto.*;
 import lk.ijse.gdse.back_end.entity.Pet;
 import lk.ijse.gdse.back_end.entity.User;
-import lk.ijse.gdse.back_end.repository.PetRepository;
-import lk.ijse.gdse.back_end.repository.UserRepository;
+import lk.ijse.gdse.back_end.repository.*;
 import lk.ijse.gdse.back_end.service.PetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -115,13 +114,5 @@ public class PetServiceImpl implements PetService {
     @Override
     public long getTotalPets() {
         return petRepository.count();
-    }
-
-    private String extractPublicIdFromUrl(String imageUrl) {
-        // Example URL: https://res.cloudinary.com/demo/image/upload/v1694000000/sample.jpg
-        // Extract "sample" part (without extension)
-        String[] parts = imageUrl.split("/");
-        String filename = parts[parts.length - 1]; // sample.jpg
-        return filename.substring(0, filename.lastIndexOf('.'));
     }
 }

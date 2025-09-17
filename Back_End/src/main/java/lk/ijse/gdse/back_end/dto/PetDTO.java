@@ -17,6 +17,6 @@ public class PetDTO {
     private String age;
     private String petProfileImage;
 
-        private String ownerName;
+    private String ownerName;
     private String ownerEmail;
 }

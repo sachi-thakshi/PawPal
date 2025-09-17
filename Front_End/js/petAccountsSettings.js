@@ -1,6 +1,6 @@
 // ------------------------- CONFIG -------------------------
 const API_BASE = 'http://localhost:8080';
-const token = localStorage.getItem('jwtToken') || '';  // JWT token from localStorage
+const token = localStorage.getItem('jwtToken');
 
 // ------------------------- DOM ELEMENTS -------------------------
 const petsContainer = document.getElementById('petsContainer');
@@ -112,6 +112,15 @@ function showModal(modal) {
 
 function closeModal(modal) {
   modal.style.display = 'none';
+
+  // Restore edit/delete buttons on pet cards
+  document.querySelectorAll('.pet-card .edit-btn, .pet-card .delete-btn').forEach(btn => {
+    btn.style.display = 'inline-block';
+  });
+
+  // Also restore the modal save button
+  const saveBtn = document.getElementById('saveAllBtn');
+  if (saveBtn) saveBtn.style.display = 'block';
 }
 
 function setTextValue(field, value) {
@@ -161,6 +170,12 @@ async function loadPets() {
 
       // Edit button action
       card.querySelector('.edit-btn').addEventListener('click', () => openPetModal(pet));
+      card.addEventListener('click', (e) => {
+        // Prevent triggering read-only modal when clicking edit/delete buttons
+        if (e.target.classList.contains('edit-btn') || e.target.classList.contains('delete-btn')) return;
+        openPetModal(pet, true); // readOnly = true
+      });
+
 
       // Delete button action
       card.querySelector('.delete-btn').addEventListener('click', async () => {
@@ -203,7 +218,7 @@ async function loadPets() {
 }
 
 // ------------------------- OPEN MODALS -------------------------
-async function openPetModal(pet) {
+async function openPetModal(pet, readOnly = false) {
   currentPet = pet;
   vaccinationRecords = [];
 
@@ -213,6 +228,7 @@ async function openPetModal(pet) {
   document.getElementById('modalPetName').textContent = pet.name || '';
   document.getElementById('modalPetType').textContent = `${pet.type || ''} • ${pet.age || ''} years`;
 
+  // Fill all fields
   setTextValue('petName', pet.name);
   setTextValue('petType', pet.type);
   setTextValue('petBreed', pet.breed);
@@ -222,25 +238,24 @@ async function openPetModal(pet) {
   setTextValue('petFood', '');
   setTextValue('petRoutine', '');
 
-  hideAllInputs();
+  hideAllInputs(); // hide input fields initially
+  if (readOnly) {
+    document.getElementById('saveAllBtn').style.display = 'none'; // hide save button
+    document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'none'); // hide edit buttons
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.style.display = 'none'); // hide delete buttons
+  } else {
+    document.getElementById('saveAllBtn').style.display = 'block'; // show save button
+    document.querySelectorAll('.edit-btn').forEach(btn => btn.style.display = 'inline-block');
+  }
 
-  if (pet.id) {
-    await fetchCareInfo(pet.id);
-    await fetchHealthInfo(pet.id);
-    await fetchVaccinations(pet.id);
+  // Fetch other info
+  if (pet.petId) {
+    await fetchCareInfo(pet.petId);
+    await fetchHealthInfo(pet.petId);
+    await fetchVaccinations(pet.petId);
   }
 
   showModal(petModal);
-
-  const saveAllBtn = document.getElementById('saveAllBtn');
-  if (saveAllBtn) {
-    saveAllBtn.onclick = async () => {
-      await saveBasicInfo();
-      await saveCareInfo();
-      await saveHealthInfo();
-      await saveVaccinations();
-    };
-  }
 }
 
 function openAddPetModal() {
@@ -266,6 +281,8 @@ async function fetchCareInfo(petId) {
     if (!res.ok) return;
 
     const data = await res.json();
+    console.log('Care info response:', data);
+
     if (data.status === 200 && data.data) {
       setTextValue('petFood', data.data.food);
       setTextValue('petRoutine', data.data.routine);
@@ -284,6 +301,8 @@ async function fetchHealthInfo(petId) {
     if (!res.ok) return;
 
     const data = await res.json();
+    console.log('Health info response:', data);
+
     if (data.status === 200 && data.data) {
       setTextValue('petVet', data.data.veterinarian);
       setTextValue('petMedical', data.data.medicalNotes);
@@ -302,6 +321,8 @@ async function fetchVaccinations(petId) {
     if (!res.ok) return;
 
     const data = await res.json();
+    console.log('Vaccination response:', data);
+
     if (data.status === 200 && Array.isArray(data.data)) {
       vaccinationRecords = data.data;
       populateVaccinationsTable(vaccinationRecords);
