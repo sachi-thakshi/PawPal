@@ -18,7 +18,7 @@ function initAdminManagement() {
 
     let admins = [];
 
-    // Fetch all admins
+    // ---------------- Fetch all admins ----------------
     async function fetchAdmins() {
         try {
             const res = await fetch(`${API_BASE_ADMIN}/all`, {
@@ -35,22 +35,26 @@ function initAdminManagement() {
         }
     }
 
-    // Render admins table
+    // ---------------- Render admins table ----------------
     function renderAdminsTable() {
         adminsTableBody.innerHTML = '';
         admins.forEach((admin, index) => {
             const row = document.createElement('tr');
             row.innerHTML = `
-                <td>${index + 1}</td>
-                <td><img src="${admin.profileImageUrl || 'default-image.jpg'}" alt="Profile" class="profile-thumb" style="width:40px; height:40px; object-fit:cover; border-radius:50%;"></td>
-                <td>${admin.username}</td>
-                <td>${admin.email}</td>
-                <td>${admin.contactNumber || '-'}</td>
-                <td>${admin.address || '-'}</td>
-                <td>
-                    <button class="delete-btn" data-email="${admin.email}">Delete</button>
-                </td>
-            `;
+        <td>${index + 1}</td>
+        <td>
+          <img src="${admin.profileImageUrl || '../assets/images/default-image.jpg'}" 
+               alt="Profile" class="profile-thumb" 
+               style="width:40px; height:40px; object-fit:cover; border-radius:50%;">
+        </td>
+        <td>${admin.username}</td>
+        <td>${admin.email}</td>
+        <td>${admin.contactNumber || '-'}</td>
+        <td>${admin.address || '-'}</td>
+        <td>
+          <button class="delete-btn" data-email="${admin.email}">Delete</button>
+        </td>
+      `;
             adminsTableBody.appendChild(row);
         });
 
@@ -60,7 +64,7 @@ function initAdminManagement() {
         });
     }
 
-    // Add new admin
+    // ---------------- Add new admin ----------------
     adminForm.addEventListener('submit', async (e) => {
         e.preventDefault();
 
@@ -81,20 +85,24 @@ function initAdminManagement() {
             const formData = new FormData();
             formData.append("username", name);
             formData.append("email", email);
-            formData.append("contactNumber", phone);
-            formData.append("address", address);
             formData.append("password", password);
+            if (phone) formData.append("contactNumber", phone);
+            if (address) formData.append("address", address);
             if (imageFile) formData.append("profileImage", imageFile);
 
             const res = await fetch(`${API_BASE_ADMIN}/add`, {
                 method: "POST",
-                headers: { "Authorization": `Bearer ${token}` },
+                headers: {
+                    "Authorization": `Bearer ${token}`
+                    // ❌ Do NOT set 'Content-Type' when sending FormData
+                },
                 body: formData
             });
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Failed to add admin");
+            const data = await res.json();
+
+            if (!res.ok || data.status !== 200) {
+                throw new Error(data.message || "Failed to add admin");
             }
 
             Swal.fire("Success", "Admin added successfully!", "success");
@@ -106,7 +114,7 @@ function initAdminManagement() {
         }
     });
 
-    // Delete admin
+    // ---------------- Delete admin ----------------
     async function deleteAdmin(email) {
         const confirmed = await Swal.fire({
             title: "Are you sure?",
@@ -124,9 +132,10 @@ function initAdminManagement() {
                 headers: { "Authorization": `Bearer ${token}` }
             });
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Failed to delete admin");
+            const data = await res.json();
+
+            if (!res.ok || data.status !== 200) {
+                throw new Error(data.message || "Failed to delete admin");
             }
 
             Swal.fire("Deleted!", "Admin removed successfully", "success");
@@ -137,6 +146,6 @@ function initAdminManagement() {
         }
     }
 
-    // Initialize
+    // ---------------- Initialize ----------------
     fetchAdmins();
 }

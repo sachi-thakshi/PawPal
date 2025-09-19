@@ -37,21 +37,22 @@ imageUpload.addEventListener("change", async (e) => {
   const file = e.target.files[0];
   if (!file || !currentPet) return;
 
+  // Preview immediately
   const reader = new FileReader();
   reader.onload = (event) => {
     modalPetImage.src = event.target.result;
   };
   reader.readAsDataURL(file);
 
-  // Prepare FormData to upload
+  // Use correct petId
   const formData = new FormData();
   formData.append("petProfileImage", file);
-  formData.append("petId", currentPet.id);
+  formData.append("petId", currentPet.petId); // Corrected
 
   try {
     const res = await fetch(`${API_BASE}/pets/addPetProfileImage`, {
       method: "POST",
-      headers: { "Authorization": `Bearer ${token}` },
+      headers: { "Authorization": `Bearer ${token}` }, // Do NOT set Content-Type with FormData
       body: formData
     });
 
@@ -60,35 +61,37 @@ imageUpload.addEventListener("change", async (e) => {
     if (res.ok && data.status === 200) {
       Swal.fire("Success", "Pet profile image updated!", "success");
 
-      console.log("Upload response data:", data);
+      // Update local reference
+      currentPet.petProfileImage = data.data.petProfileImage;
 
-      // Update pet image reference
-      currentPet.petProfileImage = data.data.petProfileImage ;
-
-      console.log("Updated currentPet.image:", currentPet.petProfileImage);
-
-      // Set updated image with cache-busting timestamp
+      // Set updated image with cache-busting
       const updatedImageUrl = getPetImageUrl(currentPet.petProfileImage) + '?t=' + new Date().getTime();
       modalPetImage.src = updatedImageUrl;
 
-      console.log("Modal image src set to:", updatedImageUrl);
-
-      // await loadPets();
+      // Update pet card without reload
       const petCardImg = document.querySelector(`.pet-card img[alt="${currentPet.name}"]`);
-      if (petCardImg) {
-        petCardImg.src = updatedImageUrl;
-        console.log("Pet card image updated without reload.");
-      }
+      if (petCardImg) petCardImg.src = updatedImageUrl;
 
+      console.log("Pet image updated:", updatedImageUrl);
     } else {
       Swal.fire("Error", data.message || "Failed to upload pet image", "error");
     }
-
   } catch (err) {
     console.error(err);
     Swal.fire("Error", "Something went wrong while uploading.", "error");
   }
 });
+
+// ------------------------- Set Pet Image on Modal Open -------------------------
+function setPetImage() {
+  if (!currentPet) return;
+
+  if (currentPet.petProfileImage) {
+    modalPetImage.src = getPetImageUrl(currentPet.petProfileImage);
+  } else {
+    modalPetImage.src = '../assets/images/default-image.jpg';
+  }
+}
 
 // ------------------------- Set Pet Image on Modal Open -------------------------
 function setPetImage() {
@@ -190,7 +193,7 @@ async function loadPets() {
 
         if (confirmDelete.isConfirmed) {
           try {
-            const res = await fetch(`${API_BASE}/pets/${pet.id}`, {
+            const res = await fetch(`${API_BASE}/pets/${pet.petId}`, {
               method: 'DELETE',
               headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -463,7 +466,7 @@ async function saveBasicInfo() {
   };
 
   try {
-    const res = await fetch(`${API_BASE}/pets/${currentPet.id}`, {
+    const res = await fetch(`${API_BASE}/pets/${currentPet.petId}`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -501,7 +504,7 @@ async function saveCareInfo() {
   };
 
   try {
-    const res = await fetch(`${API_BASE}/petcare/${currentPet.id}`, {
+    const res = await fetch(`${API_BASE}/petcare/${currentPet.petId}`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(careDTO)
@@ -532,7 +535,7 @@ async function saveHealthInfo() {
   };
 
   try {
-    const res = await fetch(`${API_BASE}/pet-health/${currentPet.id}`, {
+    const res = await fetch(`${API_BASE}/pet-health/${currentPet.petId}`, {
       method: 'POST',
       headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify(healthDTO)
@@ -572,7 +575,7 @@ async function saveVaccinations() {
         dueDate: vax.dueDate ? new Date(vax.dueDate).toISOString().split('T')[0] : null
       };
 
-      const res = await fetch(`${API_BASE}/vaccination/${currentPet.id}`, {
+      const res = await fetch(`${API_BASE}/vaccination/${currentPet.petId}`, {
         method: 'PUT',  // or POST if adding new
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -618,7 +621,7 @@ async function savePet() {
   try {
     let res;
     if (currentPet) {
-      res = await fetch(`${API_BASE}/pets/${currentPet.id}`, {
+      res = await fetch(`${API_BASE}/pets/${currentPet.petId}`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify(petDTO)
